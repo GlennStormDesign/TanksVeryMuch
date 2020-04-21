@@ -2,8 +2,6 @@
 
 // VFX Handling
 
-// TODO: create VFXEffect class with multiple particle layers
-
 const float ENTITY_MIN_VELOCITY = 0.001f;
 
 class Entity {
@@ -226,7 +224,7 @@ public:
     void UpdateEmitter( const float& timeDelta )
     {
         if ( !active )
-            return; // TODO: cleanup if not active
+            return; // REVIEW: cleanup if not active?
         if ( playing )
         {
             if ( emitting )
@@ -339,7 +337,7 @@ private:
         m_particles[index].SetColor( RangeColor( m_particleStartColor.baseValue, m_particleStartColor.maxValue ) );
         m_particles[index].GetSprite().setColor( m_particles[index].GetColor() );
         sf::IntRect rct;
-        int s = 32.f; // TODO: find actual texture width in pixels
+        int s = 32.f; // REVIEW: find actual texture width in pixels
         if ( m_particleTexDivisions > 1 )
         {
             float sz = static_cast<int>( s / m_particleTexDivisions );

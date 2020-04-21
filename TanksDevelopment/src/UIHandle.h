@@ -2,9 +2,6 @@
 
 // UI Element Handling
 
-// TODO: take 32x32 from UI Element image, use corners as-is, and stretch remainder to fit rect
-// TODO: use fonts as header levels for labels
-// TODO: UIElement manager class that sorts layer draw order
 // NICETOHAVE: UIElement manager class animates position, adds vfx, animated image
 // NICETOHAVE: drop shadow option for labels
 

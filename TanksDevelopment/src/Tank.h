@@ -33,7 +33,7 @@ static sf::FloatRect GetHitBox( const sf::Sprite& sprite, const float& boxSize )
 class TankController
 {
 public:
-    unsigned int controllerScore = 0; // TODO: migrate to a player class
+    unsigned int controllerScore = 0;
 private:
     bool m_active = true;
     std::bitset<8> controlBits = 0; // wait, forward, back, left, right, turL, turR, fire
@@ -190,7 +190,6 @@ public:
                 SetControl( BIT_TUR_R,  (sf::Joystick::isButtonPressed(m_localJoy,2)) );
                 SetControl( BIT_FIRE,   (sf::Joystick::isButtonPressed(m_localJoy,1)) );
 
-                // FIXME: for PS3 controller
                 debugText = "DEBUG -";
                 debugText += " JOYID ";
                 debugText += m_localJoy;
@@ -213,7 +212,6 @@ public:
 
                 break;
             case TouchScreen:
-                // TODO: implement UI controls
                 break;
         }
         // if no controls, wait
@@ -352,7 +350,7 @@ public:
     float fwdMove = 0.f;
     float baseRot = 0.f;
     float turretRot = 0.f;
-    TankShot* shots = new TankShot[4]; // FIXME: plug mem leak with delete[] in destructor, but why does that crash?
+    TankShot* shots = new TankShot[4]; // REVIEW: plug mem leak with delete[] in destructor, but why does that crash?
 private:
     bool m_active = true;
     float m_posX, m_posY, m_baseR, m_turretR;
@@ -386,7 +384,7 @@ public:
         SetBaseRotation(rot);
         SetTankScale(scale);
         m_dust.LaunchVFX(xPos,yPos,rot);
-        m_dustOffset *= scale; // TODO: test scale vfx
+        m_dustOffset *= scale; // TEST: test scale vfx
         m_exhaust.LaunchVFX(xPos,yPos,rot);
         m_exhaustOffset *= scale;
     }
@@ -562,7 +560,7 @@ public:
         for ( int i=0; i<4; i++ ) { shots[i].UpdateShot( timeDelta ); }
         m_dust.VFXTankDustEmit( controller.GetControl( BIT_FWD ) || controller.GetControl( BIT_BACK ) ||
                                     controller.GetControl( BIT_LEFT ) || controller.GetControl( BIT_RIGHT ) );
-        if ( (int)(timeDelta*10000.f) % 2 == 0 ) m_dustOffset.x *= -1.f; // TODO: find another way
+        if ( (int)(timeDelta*10000.f) % 2 == 0 ) m_dustOffset.x *= -1.f; // REVIEW: find another way
         m_dust.UpdateEmitter( timeDelta, m_base.getPosition(), m_base.getRotation(), m_dustOffset );
         m_exhaust.UpdateEmitter( timeDelta, m_base.getPosition(), m_base.getRotation(), m_exhaustOffset );
         m_killStain.UpdateEmitter( timeDelta );
@@ -613,7 +611,7 @@ public:
         }
         TransformTank();
         if ( controller.GetControllerType() == LocalPlayer ) {
-            // TODO: handle spacial sound and non-player tank sound (SoundSource)
+            // REVIEW: handle spacial sound and non-player tank sound (SoundSource)
             sfxMgr.pIdleEngaged = m_tankMoving;
             sfxMgr.pTurretEngaged = m_turretMoving;
             sfxMgr.SFXLoopUpdate(timeDelta);
@@ -683,7 +681,7 @@ public:
     }
     void DestroyTank()
     {
-        // TODO: signal to player class they have died
+        // REVIEW: signal to player class they have died
         controller.SetActiveState(false);
         SetActiveState(false);
         SetSprites( texMgr.texTankBase, texMgr.texTankTurret, texMgr.texVFXShot1 );

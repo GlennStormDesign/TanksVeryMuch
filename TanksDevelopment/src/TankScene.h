@@ -93,11 +93,11 @@ public:
         LevelInit();
 
         // specific configuration
-        // TODO: set terrainMgr view offset
+        // REVIEW: set terrainMgr view offset
         terrainMgr.SetTerrain( m_terrain );
 
         // launch scene
-        // TODO: remove once LoadScene() is implemented
+        // REVIEW: remove once LoadScene() is implemented
         stats.isSceneActive = true;
     }
 
@@ -132,18 +132,18 @@ public:
 
     void AddTank( Tank& t ) // REVISE: passing local var tank no worky
     {
-        // TODO: check if max players will be exceeded
+        // REVIEW: check if max players will be exceeded
         m_tankPool.push_back(t); // TEST: investigate using emplace_back with complex constructor
         t.SetTankID( m_tankIndex++ );
-        if ( t.controller.GetControllerType() == LocalPlayer ) // TODO: handle remote tank player
+        if ( t.controller.GetControllerType() == LocalPlayer )
         {
             PlayerStats ps; // REVISE: passing local var player stats no worky
-            AddPlayer( ps, t.GetTankID() ); // FIXME:
+            AddPlayer( ps, t.GetTankID() );
         }
     }
     void RemoveTank( Tank& t )
     {
-        if ( t.controller.GetControllerType() == LocalPlayer ) // TODO: handle remote tank player
+        if ( t.controller.GetControllerType() == LocalPlayer )
         {
             RemovePlayer( GetLocalPlayer() );
         }
@@ -262,7 +262,7 @@ public:
             m_tankPool[i].UpdateTank(timeDelta);
         }
         // perform collision checks among tanks
-        // TODO: devise method that does not duplicate this check between tanks
+        // REVIEW: devise method that does not duplicate this check between tanks
         for ( int i=0; i<m_tankPool.size(); i++ )
         {
             if ( !m_tankPool[i].GetActiveState() )
@@ -281,14 +281,14 @@ public:
                         pos = m_tankPool[i].GetBaseSprite().getPosition();
                         other = m_tankPool[n].GetBaseSprite().getPosition();
                         m_tankPool[i].SetPosition( pos.x + ((pos.x-other.x)*timeDelta), pos.y + ((pos.y-other.y)*timeDelta) );
-                        // TODO: could do other movement at same time, if check not duplicated
+                        // REVIEW: could do other movement at same time, if check not duplicated
                     }
                 }
             }
         }
         // perform collision checks between shots and tanks
         //   handle shot detonations and tank damage
-        // TODO: think about a way to combine with the above iteration through pool
+        // REVIEW: think about a way to combine with the above iteration through pool
         for ( int i=0; i<m_tankPool.size(); i++ )
         {
             for ( int n=0; n<m_tankPool.size(); n++ )
@@ -301,7 +301,7 @@ public:
                         {
                             if ( m_tankPool[n].DamageTank(m_tankPool[i].shots[s].GetPower()) )
                             {
-                                // TODO: other tank sfx loop kill
+                                // REVIEW: other tank sfx loop kill
                                 if ( !GetLocalPlayerTank().GetActiveState() )
                                     sfxMgr.SFXLoopKill();
                                 sfxMgr.LaunchSFXKill();
@@ -330,7 +330,7 @@ public:
         }
         // perform scene object updates (animated deco)
         // perform scene object collision checks tanks or shots (collidable, destructable, trigger)
-        // TODO: set view port position to match local player tank position
+        // set view port position to match local player tank position
     }
 
     void DrawScene( sf::RenderWindow& window, const sf::Vector2f& viewPos )
@@ -380,7 +380,7 @@ public:
         // terrain
         m_terrain = SubstanceSoil();
         // tanks
-        // TODO: the following belongs in a simple add tank function, or the like
+        // REVIEW: the following belongs in a simple add tank function, or the like
         m_tankPool.reserve(4);
 
         m_tankPool.push_back( Tank( LocalPlayer, 512.f, 512.f, 0.f, 1.f ) );

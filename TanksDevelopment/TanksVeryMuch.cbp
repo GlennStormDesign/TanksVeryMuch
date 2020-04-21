@@ -48,7 +48,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add directory="../../../../../Program Files (x86)/CodeBlocks/SFML-2.5.1/include" />
+			<Add directory="../../../../../../Program Files (x86)/CodeBlocks/SFML-2.5.1/include" />
 		</Compiler>
 		<Linker>
 			<Add library="vorbisenc" />
@@ -61,7 +61,7 @@
 			<Add library="opengl32" />
 			<Add library="gdi32" />
 			<Add library="winmm" />
-			<Add directory="../../../../../Program Files (x86)/CodeBlocks/SFML-2.5.1/lib" />
+			<Add directory="../../../../../../Program Files (x86)/CodeBlocks/SFML-2.5.1/lib" />
 		</Linker>
 		<Unit filename="src/AudioHandle.h" />
 		<Unit filename="src/EntryPoint.cpp" />

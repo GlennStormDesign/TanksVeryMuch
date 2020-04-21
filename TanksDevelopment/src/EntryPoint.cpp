@@ -11,14 +11,10 @@
 #include "FontHandle.h"
 #include "EntryPoint.h"
 #include "AudioHandle.h"
-// TODO: SoundSource setup
-// FIXME: [BUG] Launching silent loop from other 1st time causes instant duck down
 #include "ImageHandle.h"
 #include "UIHandle.h"
 #include "VFXHandle.h"
-// FIXME: [BUG] VFXShotImpact fails to launch appropriately on subsequent shots (effectively just one?)
 #include "Tank.h"
-// FIXME: [BUG] tank idle sfx can 'restart' after player killed (yet, controller and tank are inactive)
 #include "Terrain.h"
 #include "SceneObject.h"
 #include "TankScene.h"
@@ -64,14 +60,11 @@ int main()
     frameTimer.restart();
 
     // ui
-    // TODO: ui manager class
-    // TODO: various ui element definitions
 
     // scene
     currentScene = TestTankScene();
 
     // terrain configuration
-    // TODO: migrate to TankScene class
     terrainMgr.SetViewOffset( -vw.getCenter() );
 
     // debug feedback display
@@ -119,7 +112,6 @@ int main()
         currentScene.UpdateScene( timeDelta );
 
         // view follows player tank
-        // TODO: migrate this to TankScene, and in the process, eliminate need to pass this on scene update
         if ( currentScene.GetLocalPlayerTank().GetActiveState() )
             vw.setCenter( currentScene.GetLocalPlayerTank().GetBaseSprite().getPosition() );
 

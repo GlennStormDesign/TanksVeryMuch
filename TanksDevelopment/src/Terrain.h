@@ -52,8 +52,7 @@ private:
     sf::Uint8* m_noiseMap = new sf::Uint8[1024]; // 32x32 alpha values 0-255
     sf::Shader m_tileBlendShader;
     bool m_shaderLoaded = false;
-    // TODO: handle view zooming functionality with view range values
-    float m_vwRangeX = 1024.f * globalScale; // TODO: associate with # of tiles and resolution of tile
+    float m_vwRangeX = 1024.f * globalScale; // REVIEW: associate with # of tiles and resolution of tile
     float m_vwRangeY = 1024.f * globalScale;
     sf::Vector2f m_viewPos = sf::Vector2f(0.f,0.f);
     sf::Vector2f m_viewOffset = sf::Vector2f(0.f,0.f);

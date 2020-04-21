@@ -116,12 +116,12 @@ public:
 private:
     // TEST: migrate GetHitBox() from Tank.h? use this? alongside?
     sf::FloatRect m_hitbox = sf::FloatRect(0.f,0.f,0.f,0.f);
-	float m_mass = 1.f; // TODO: evaluate mass value against tank and shot behavior
+	float m_mass = 1.f; // REVIEW: evaluate mass value against tank and shot behavior
 public:
     CollidableObject() { }
     ~CollidableObject() { }
 
-    virtual void CollisionTrigger( const sf::Vector2f& hitVector, const float& hitForce ) { /* subclass define */ } // TODO: define collider object as type enum
+    virtual void CollisionTrigger( const sf::Vector2f& hitVector, const float& hitForce ) { /* subclass define */ } // REVIEW: define collider object as type enum
 private:
 };
 

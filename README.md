@@ -1,11 +1,11 @@
-# TanksVeryMuch
+# Tanks Very Much
 
 ![TanksVeryMuch](/TanksDevelopment/TANKS%20Dev%204-19.png?raw=true "TanksVeryMuch")
 
 C++ SFML 2D Top-Down Tank Game (Learning GLSL, Object Pooling, and practice practice practice)
 
 ## Try it
-[Download .zip Prototype](/TanksDevelopment/Tanks%20Prototype.zip)
+[Download .zip Windows Prototype](/TanksDevelopment/Tanks%20Prototype.zip)
 
 ## Who, What, Why?
 I've been making games with code for over three decades, and since 2009, working with C# (in unity). So, while learning C++ (and before that C) has been challenging in the past, since Sept 2019, I've been able to get past major hurdles and get down to it.

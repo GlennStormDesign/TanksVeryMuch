@@ -1,5 +1,7 @@
 #pragma once
 
+// Font Handling
+
 sf::Font titleFont, headingFont, textFont, detailFont;
 
 bool FontInit() {

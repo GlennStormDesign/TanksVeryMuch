@@ -3,6 +3,8 @@
 
 #include "AudioHandle.h"
 
+// Audio Definitions
+
 sf::Clock fxsStep; // temp?
 
 int LaunchSFXLoop( const sf::SoundBuffer& sb )

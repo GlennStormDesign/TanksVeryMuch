@@ -2,7 +2,7 @@
 
 #include <SFML/Audio.hpp>
 
-// Audio Handling
+// Audio Declarations
 
 #define MAX_SFX_LOOPS 8
 #define MAX_SFX_STINGS 8

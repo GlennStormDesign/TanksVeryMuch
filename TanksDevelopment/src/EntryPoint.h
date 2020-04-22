@@ -1,5 +1,12 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
+#include <SFML/Window/VideoMode.hpp>
+#include <SFML/Audio.hpp>
+
+#include "TankCore.h"
+#include "FontHandle.h"
+
 // Startup Handling
 
 namespace Tanks {

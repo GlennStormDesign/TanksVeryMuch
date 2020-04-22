@@ -1,8 +1,8 @@
 #pragma once
 
-// Core Definitions
+// Core Declarations
 
-static const std::string TANKSVERYMUCH_VERSION = "v.0.08.04.20.20";
+static const std::string TANKSVERYMUCH_VERSION = "v.0.09.04.22.20";
 static const float DEG2RAD = 0.0174532f;
 
 static std::string debugText = "";

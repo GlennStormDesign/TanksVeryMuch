@@ -63,19 +63,24 @@
 			<Add library="winmm" />
 			<Add directory="../../../../../../Program Files (x86)/CodeBlocks/SFML-2.5.1/lib" />
 		</Linker>
+		<Unit filename="src/AudioHandle.cpp" />
 		<Unit filename="src/AudioHandle.h" />
 		<Unit filename="src/EntryPoint.cpp" />
 		<Unit filename="src/EntryPoint.h" />
 		<Unit filename="src/FontHandle.h" />
+		<Unit filename="src/ImageHandle.cpp" />
 		<Unit filename="src/ImageHandle.h" />
 		<Unit filename="src/SceneObject.h" />
+		<Unit filename="src/Tank.cpp" />
 		<Unit filename="src/Tank.h" />
 		<Unit filename="src/TankCore.h" />
 		<Unit filename="src/TankGame.h" />
 		<Unit filename="src/TankScene.h" />
+		<Unit filename="src/Terrain.cpp" />
 		<Unit filename="src/Terrain.h" />
 		<Unit filename="src/TerrainTileBlend.glsl" />
 		<Unit filename="src/UIHandle.h" />
+		<Unit filename="src/VFXHandle.cpp" />
 		<Unit filename="src/VFXHandle.h" />
 		<Extensions>
 			<code_completion />

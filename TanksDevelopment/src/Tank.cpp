@@ -205,14 +205,6 @@ void TankShot::Shoot( const float& x, const float& y, const float& r )
     ShotInit();
     active = true;
 }
-unsigned int TankShot::GetShotID()
-{
-    return shotID;
-}
-void TankShot::SetShotID( unsigned int id )
-{
-    shotID = id;
-}
 float& TankShot::GetSpeed()
 {
     return m_speed;

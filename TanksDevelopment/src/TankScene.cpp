@@ -6,10 +6,6 @@ bool operator== ( const Tank& l, const Tank& r )
 {
     return (l.tankID == r.tankID);
 }
-bool operator== ( const TankShot& l, const TankShot& r )
-{
-    return (l.shotID == r.shotID);
-}
 bool operator== ( const SceneObject& l, const SceneObject& r )
 {
     return (l.objectID == r.objectID);
@@ -25,7 +21,6 @@ void TankScene::SceneInit()
 {
     // general configuration
     m_tankIndex = time(NULL);
-    m_shotIndex = time(NULL);
     m_objIndex = time(NULL);
     m_playerIndex = time(NULL);
 
@@ -69,16 +64,25 @@ void TankScene::SetSceneType( const SceneType& type )
     m_type = type;
 }
 
-void TankScene::AddTank( Tank& t ) // REVISE: passing local var tank no worky
+void TankScene::AddTank( Tank t ) // explicitly copying tank here, expecting to create in local scope and pass here
 {
-    // REVIEW: check if max players will be exceeded
-    m_tankPool.push_back(t); // TEST: investigate using emplace_back with complex constructor
+    // REVIEW: check if max players will be exceeded, handle reject new player
+    t.SetSprites( texMgr.texTankBase, texMgr.texTankTurret, texMgr.texVFXShot1 );
+    t.SetSpriteScale( globalScale );
+    t.SetTankDustColor( m_terrain.GetDustColor() );
     t.SetTankID( m_tankIndex++ );
     if ( t.controller.GetControllerType() == LocalPlayer )
     {
-        PlayerStats ps; // REVISE: passing local var player stats no worky
-        AddPlayer( ps, t.GetTankID() );
+        PlayerStats ps;
+        ps.playerTankID = t.GetTankID();
+        AddPlayer( ps );
     }
+    m_tankPool.push_back(t); // TODO: c++11 enhancement using emplace_back with complex constructor
+}
+void TankScene::AddTank( Tank t, sf::Color c )
+{
+    t.SetTankColor( c );
+    AddTank( t );
 }
 void TankScene::RemoveTank( Tank& t )
 {
@@ -117,23 +121,10 @@ unsigned int TankScene::GetActiveTankCount()
     }
     return cnt;
 }
-void TankScene::AddShot( TankShot& s )
+void TankScene::AddObject( SceneObject o )
 {
-    m_shotPool.push_back(s);
-    s.SetShotID( m_shotIndex++ );
-}
-void TankScene::RemoveShot( const TankShot& s )
-{
-    m_shotPool.erase( std::remove( m_shotPool.begin(), m_shotPool.end(), s ) );
-}
-TankShot& TankScene::GetShot( const unsigned int& index )
-{
-    return m_shotPool[index];
-}
-void TankScene::AddObject( SceneObject& o )
-{
-    m_objectPool.push_back(o);
     o.SetObjectID( m_objIndex++ );
+    m_objectPool.push_back(o);
 }
 void TankScene::RemoveObject( const SceneObject& o )
 {
@@ -143,11 +134,10 @@ SceneObject& TankScene::GetObject( const unsigned int& index )
 {
     return m_objectPool[index];
 }
-void TankScene::AddPlayer( PlayerStats& p, const unsigned int& tankID )
+void TankScene::AddPlayer( PlayerStats p )
 {
-    m_playerPool.push_back(p);
-    p.playerTankID = tankID;
     p.isPlayerActive = true;
+    m_playerPool.push_back(p);
     stats.currentPlayers++;
 }
 void TankScene::RemovePlayer( const PlayerStats p )
@@ -194,7 +184,7 @@ void TankScene::UpdateScene( const float& timeDelta )
             // TODO: other player stats by shots, kills and respawns
         }
     }
-    // handle player jump in/out (netbattle)
+    // handle player jump in/out (net battle)
     // update tanks
     for ( int i=0; i<m_tankPool.size(); i++ ) // REVIEW [why this fails?] for ( Tank& t : m_tankPool )
     {
@@ -257,7 +247,6 @@ void TankScene::UpdateScene( const float& timeDelta )
                                 musicMgr.LaunchMusicSting(Lose, false);
                                 musicMgr.LaunchMusicLoop(Silent, true);
                             }
-                            m_tankPool[n].controller.SetActiveState(false); // unnecessary : see DestroyTank()
                         }
                         else
                             sfxMgr.LaunchSFXImpact();

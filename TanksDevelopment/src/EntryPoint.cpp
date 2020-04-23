@@ -60,11 +60,9 @@ int main()
 
     // ui
 
-    // terrain configuration
-    terrainMgr.SetViewOffset( -vw.getCenter() );
-
     // scene
     currentScene = TestTankScene();
+    // TEST: if no local player tank, does terrainMgr set correct viewOffset ?
 
     // debug feedback display
     sf::Text debugLine;
@@ -109,22 +107,17 @@ int main()
         // scene update
         currentScene.UpdateScene( timeDelta );
 
-        // view follows player tank
-        if ( currentScene.GetLocalPlayerTank().GetActiveState() )
-            vw.setCenter( currentScene.GetLocalPlayerTank().GetBaseSprite().getPosition() );
-
         // draw calls
         rWin.clear();
-        rWin.setView( vw );
 
-        // draw scene
-        currentScene.DrawScene( rWin, vw.getCenter() );
+        // draw scene (includes repositioning and setting view)
+        currentScene.DrawScene( rWin );
 
         // ui draw
 
         // debug draw
         debugLine.setString( debugText );
-        debugLine.setPosition( vw.getCenter() + debugLineOffset );
+        debugLine.setPosition( rWin.getView().getCenter() + debugLineOffset );
         if ( debugLine.getString() != "" )
             rWin.draw( debugLine );
         rWin.display();

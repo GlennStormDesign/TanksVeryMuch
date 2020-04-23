@@ -98,7 +98,7 @@ public:
 
     void UpdateScene( const float& timeDelta );
 
-    void DrawScene( sf::RenderWindow& window, const sf::Vector2f& viewPos );
+    void DrawScene( sf::RenderWindow& window );
 private:
 };
 
@@ -109,8 +109,6 @@ public:
     {
         // level specific config
         m_type = Sandbox;
-        // terrain
-        m_terrain = SubstanceSoil();
         // tanks
         m_tankPool.reserve(4);
         Tank tempTank = Tank( LocalPlayer, 512.f, 512.f, 0.f, 1.f );
@@ -121,6 +119,9 @@ public:
         AddTank( tempTank, sf::Color(200.f,200.f,32.f,255.f) );
         tempTank = Tank( Drone, 420.f, 580.f, 180.f, 1.f );
         AddTank( tempTank, sf::Color(16.f,32.f,200.f,255.f) );
+        // terrain
+        m_terrain = SubstanceSoil();
+        terrainMgr.SetViewOffset( -GetLocalPlayerTank().GetBaseSprite().getPosition() );
         // scene objects
         // player setup (automatic?)
         // scene setup

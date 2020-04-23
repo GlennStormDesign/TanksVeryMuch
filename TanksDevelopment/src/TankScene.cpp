@@ -258,13 +258,17 @@ void TankScene::UpdateScene( const float& timeDelta )
     }
     // perform scene object updates (animated deco)
     // perform scene object collision checks tanks or shots (collidable, destructable, trigger)
-    // set view port position to match local player tank position
 }
 
-void TankScene::DrawScene( sf::RenderWindow& window, const sf::Vector2f& viewPos )
+void TankScene::DrawScene( sf::RenderWindow& window )
 {
+    // first reposition view to match player tank position, if active, and re-set view to window
+    sf::View v = window.getView();
+    if ( GetLocalPlayerTank().GetActiveState() )
+        v.setCenter( GetLocalPlayerTank().GetBaseSprite().getPosition() );
+    window.setView(v);
     // do draw calls for terrain, tanks, shots and vfx
-    terrainMgr.DrawTerrain( window, viewPos );
+    terrainMgr.DrawTerrain( window, v.getCenter() );
     // REVIEW: [sanity check below] draw layers appropriately ( all under vfx, then all tank dust, etc)
     for ( int t=0; t<m_tankPool.size(); t++ )
         m_tankPool[t].DrawKillUnderVFX( window );

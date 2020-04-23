@@ -60,11 +60,11 @@ int main()
 
     // ui
 
-    // scene
-    currentScene = TestTankScene();
-
     // terrain configuration
     terrainMgr.SetViewOffset( -vw.getCenter() );
+
+    // scene
+    currentScene = TestTankScene();
 
     // debug feedback display
     sf::Text debugLine;

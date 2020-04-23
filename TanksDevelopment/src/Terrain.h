@@ -48,7 +48,7 @@ private:
     float m_vwRangeY = 1024.f * globalScale;
     sf::Vector2f m_viewPos = sf::Vector2f(0.f,0.f);
     sf::Vector2f m_viewOffset = sf::Vector2f(0.f,0.f);
-    float m_drawThreshold = 1.0f; // >0.5, <1.f for testing
+    float m_drawThreshold = 1.25f; // >0.5, <1.f for testing, REVIEW: 1.25 is change (check not centered in 1024 * globalScale)
 public:
     TerrainManager() { Init(); }
     ~TerrainManager() { }

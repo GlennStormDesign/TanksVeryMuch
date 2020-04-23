@@ -75,6 +75,7 @@
 		<Unit filename="src/Tank.h" />
 		<Unit filename="src/TankCore.h" />
 		<Unit filename="src/TankGame.h" />
+		<Unit filename="src/TankScene.cpp" />
 		<Unit filename="src/TankScene.h" />
 		<Unit filename="src/Terrain.cpp" />
 		<Unit filename="src/Terrain.h" />

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <bitset>
+
 #include <SFML/Graphics.hpp>
 
 #include "VFXHandle.h"

@@ -152,7 +152,6 @@ public:
         m_exhaust.LaunchVFX(xPos,yPos,rot);
         m_exhaustOffset *= scale;
     }
-    // REVIEW: per TankScene vector of tanks, need copy constructor?
     Tank( const Tank &t )
     {
         tankID = t.tankID;
@@ -160,7 +159,7 @@ public:
         fwdMove = t.fwdMove;
         baseRot = t.baseRot;
         turretRot = t.turretRot;
-        shots = new TankShot[4]; // TEST: make shot (pointer), then copy values?
+        shots = new TankShot[4];
         *shots = *t.shots;
         m_active = t.m_active; // wow, copy constructor ignores private modifier? (automatic friend?)
         m_posX = t.m_posX;

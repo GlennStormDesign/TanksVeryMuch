@@ -7,7 +7,7 @@
 #include "TankCore.h"
 #include "FontHandle.h"
 
-// Startup Handling
+// Startup Handling (declaration and definition)
 
 namespace Tanks {
 

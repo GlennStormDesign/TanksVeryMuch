@@ -28,26 +28,26 @@ public:
     Entity() { }
     ~Entity() { }
 
-    bool& GetVisible() { return m_visible; }
-    sf::Color& GetColor() { return m_color; }
-    float GetLife() { return (m_lifeTime/m_maxLife); }
-    float& GetStartScale() { return m_startScale; }
-    void SetVisible( const bool& show ) { m_visible = show; }
-    void SetColor( const sf::Color& color ) { m_color = color; }
-    void SetTexture( const sf::Texture& entityTexture ) { m_sprite.setTexture(entityTexture); }
-    void SetDrag( const float& drag ) { m_drag = drag; }
-    void SetAngularDrag( const float& angleDrag ) { m_angularDrag = angleDrag; }
-    void SetVelocity( const float& velocity ) { m_fwdVelocity = velocity; }
-    void SetAngleVelocity( const float& velocity ) { m_angleVelocity = velocity; }
-    void SetLife( const float& lifeTime ) { m_lifeTime = lifeTime; m_maxLife = lifeTime; }
-    void SetStartScale( const float& scale ) { m_startScale = scale; }
-    void SetSpriteSpin( const bool& spin ) { m_spriteSpin = spin; }
-    void SetSpriteAngle( const float& angle ) { m_spriteAngle = angle; }
-    sf::Sprite& GetSprite() { return m_sprite; }
+    bool& GetVisible();
+    sf::Color& GetColor();
+    float GetLife();
+    float& GetStartScale();
+    void SetVisible( const bool& show );
+    void SetColor( const sf::Color& color );
+    void SetTexture( const sf::Texture& entityTexture );
+    void SetDrag( const float& drag );
+    void SetAngularDrag( const float& angleDrag );
+    void SetVelocity( const float& velocity );
+    void SetAngleVelocity( const float& velocity );
+    void SetLife( const float& lifeTime );
+    void SetStartScale( const float& scale );
+    void SetSpriteSpin( const bool& spin );
+    void SetSpriteAngle( const float& angle );
+    sf::Sprite& GetSprite();
 
     void UpdateEntity( const float& timeDelta );
 private:
-    void EntityDeath() { SetVisible( false ); SetVelocity( 0.f ); SetAngleVelocity( 0.f ); SetLife( 0.f ); }
+    void EntityDeath();
 };
 
 struct ParticleValueFloat {

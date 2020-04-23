@@ -58,8 +58,8 @@ public:
 
     void DrawTerrain( sf::RenderWindow& window, const sf::Vector2f& viewPos );
 
-    TerrainSubstance GetTerrain() { return m_substance; }
-    void SetTerrain( const TerrainSubstance& terrain ) { m_substance = terrain; ComposeTerrain(); }
+    TerrainSubstance GetTerrain();
+    void SetTerrain( const TerrainSubstance& terrain );
 private:
     const sf::Uint8 GetNoiseInt( const int& x, const int& y );
     const float GetNoiseFloat( const int& x, const int& y );
@@ -73,10 +73,10 @@ public:
     void TerrainInit() override
     {
         SetMaxLayers( 6 );
-        // base (dirt), rock, root, pebble, grass, flower
+        // base (soil), rocks, roots, pebble, grass, flowers
         AddLayer( texMgr.texSoilBase );
         AddLayer( texMgr.texSoilRock );
-        AddLayer( texMgr.texSoilRoot);
+        AddLayer( texMgr.texSoilRoot );
         AddLayer( texMgr.texSoilPebble );
         AddLayer( texMgr.texSoilGrass );
         AddLayer( texMgr.texSoilFlower );

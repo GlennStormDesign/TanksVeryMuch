@@ -10,6 +10,23 @@
 
 // Entity implementation
 
+bool& Entity::GetVisible() { return m_visible; }
+sf::Color& Entity::GetColor() { return m_color; }
+float Entity::GetLife() { return (m_lifeTime/m_maxLife); }
+float& Entity::GetStartScale() { return m_startScale; }
+void Entity::SetVisible( const bool& show ) { m_visible = show; }
+void Entity::SetColor( const sf::Color& color ) { m_color = color; }
+void Entity::SetTexture( const sf::Texture& entityTexture ) { m_sprite.setTexture(entityTexture); }
+void Entity::SetDrag( const float& drag ) { m_drag = drag; }
+void Entity::SetAngularDrag( const float& angleDrag ) { m_angularDrag = angleDrag; }
+void Entity::SetVelocity( const float& velocity ) { m_fwdVelocity = velocity; }
+void Entity::SetAngleVelocity( const float& velocity ) { m_angleVelocity = velocity; }
+void Entity::SetLife( const float& lifeTime ) { m_lifeTime = lifeTime; m_maxLife = lifeTime; }
+void Entity::SetStartScale( const float& scale ) { m_startScale = scale; }
+void Entity::SetSpriteSpin( const bool& spin ) { m_spriteSpin = spin; }
+void Entity::SetSpriteAngle( const float& angle ) { m_spriteAngle = angle; }
+sf::Sprite& Entity::GetSprite() { return m_sprite; }
+
 void Entity::UpdateEntity( const float& timeDelta )
 {
     if ( !m_visible )
@@ -44,6 +61,8 @@ void Entity::UpdateEntity( const float& timeDelta )
             EntityDeath();
     }
 }
+
+void Entity::EntityDeath() { SetVisible( false ); SetVelocity( 0.f ); SetAngleVelocity( 0.f ); SetLife( 0.f ); }
 
 float EvalFloat( const float& fMin, const float& fMax, const float& progress )
 {

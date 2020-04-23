@@ -37,7 +37,6 @@ int main()
 
     // splash screen
     if ( !Tanks::Splash() ) {
-        // TODO: handle no image or audio access
         return -1;
     }
 
@@ -103,12 +102,11 @@ int main()
         musicMgr.MusicLoopUpdate( timeDelta );
         musicMgr.MusicStingUpdate( timeDelta );
 
-        // ** audio testing [note: overrides normal audio handling]
+        // TEMP: audio testing [note: overrides normal audio handling]
         musicMgr.Testing( true );
         sfxMgr.Testing( false, timeDelta );
 
         // scene update
-        // tank and shot collisions with tanks requires knowledge of all tanks in scene
         currentScene.UpdateScene( timeDelta );
 
         // view follows player tank

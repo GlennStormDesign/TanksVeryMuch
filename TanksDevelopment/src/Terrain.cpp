@@ -68,6 +68,9 @@ void TerrainManager::DrawTerrain( sf::RenderWindow& window, const sf::Vector2f& 
     }
 }
 
+TerrainSubstance TerrainManager::GetTerrain() { return m_substance; }
+void TerrainManager::SetTerrain( const TerrainSubstance& terrain ) { m_substance = terrain; ComposeTerrain(); }
+
 const sf::Uint8 TerrainManager::GetNoiseInt( const int& x, const int& y )
 {
     return ( m_noiseMap[( ( ( y % 32 ) * 32 ) + ( x % 32 ) )] );

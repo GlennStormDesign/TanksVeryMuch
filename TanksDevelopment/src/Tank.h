@@ -1,5 +1,7 @@
 #pragma once
 
+#include <bitset>
+
 #include <SFML/Graphics.hpp>
 
 #include "VFXHandle.h"
@@ -64,7 +66,6 @@ public:
 
 class TankShot {
 public:
-    unsigned int shotID = 0;
     bool active = true;
     sf::RectangleShape shot;
 private:
@@ -91,8 +92,6 @@ public:
 
     void ShotInit();
     void Shoot( const float& x, const float& y, const float& r );
-    unsigned int GetShotID();
-    void SetShotID( unsigned int id );
     float& GetSpeed();
     void SetSpeed( const float& speed );
     float& GetPower();

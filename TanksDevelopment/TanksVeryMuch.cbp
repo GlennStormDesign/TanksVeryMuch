@@ -70,11 +70,13 @@
 		<Unit filename="src/FontHandle.h" />
 		<Unit filename="src/ImageHandle.cpp" />
 		<Unit filename="src/ImageHandle.h" />
+		<Unit filename="src/SceneObject.cpp" />
 		<Unit filename="src/SceneObject.h" />
 		<Unit filename="src/Tank.cpp" />
 		<Unit filename="src/Tank.h" />
 		<Unit filename="src/TankCore.h" />
 		<Unit filename="src/TankGame.h" />
+		<Unit filename="src/TankScene.cpp" />
 		<Unit filename="src/TankScene.h" />
 		<Unit filename="src/Terrain.cpp" />
 		<Unit filename="src/Terrain.h" />

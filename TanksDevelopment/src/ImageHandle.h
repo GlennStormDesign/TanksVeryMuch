@@ -16,6 +16,7 @@ public:
     sf::Texture texSnowBase, texSnowCracks, texSnowGrass, texSnowIce;
     sf::Texture texSandBase, texSandWaves, texSandRocks, texSandGrass;
     sf::Texture texMeadowBase, texMeadowRoots, texMeadowGrass, texMeadowFlowers;
+    sf::Texture texObjectBush, texObjectRock;
     sf::Texture texUIElement;
 
     sf::Sprite spPlayerBase, spPlayerTurret;
@@ -23,7 +24,7 @@ public:
     sf::Sprite spTerrain;
 private:
 public:
-    TextureManager() { TankTextureInit(); VFXTextureInit(); ParticleTextureInit(); MaskTextureInit(); TerrainTextureInit(); UITextureInit(); }
+    TextureManager() { TankTextureInit(); VFXTextureInit(); ParticleTextureInit(); MaskTextureInit(); TerrainTextureInit(); ObjectTextureInit(); UITextureInit(); }
     ~TextureManager() { }
 private:
     void TankTextureInit();
@@ -31,6 +32,7 @@ private:
     void ParticleTextureInit();
     void MaskTextureInit();
     void TerrainTextureInit();
+    void ObjectTextureInit();
     void UITextureInit();
 };
 

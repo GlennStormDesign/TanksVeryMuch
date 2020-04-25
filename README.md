@@ -20,7 +20,7 @@ Work on this project began late February 2020, and repository started here April
 * [DONE] Music / SFX
 * [DONE] Endless terrain
 * [WORKING] Arbitrary scene (level) definitions
-* Scene objects (from deco to triggers to destructables)
+* [WORKING] Scene objects (from deco to triggers to destructables)
 * Nice UI
 * Scriptable enemies (as in, they run off a timed script)
 * Reasonable enemy AI (more than opportunistic)

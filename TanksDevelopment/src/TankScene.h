@@ -64,7 +64,7 @@ protected:
     TerrainSubstance m_terrain;
     std::vector<Tank> m_tankPool;
     unsigned int m_tankIndex = 0;
-    std::vector<SceneObject> m_objectPool;
+    std::vector<SceneObject*> m_objectPool; // vector of pointers to accommodate various subclass objects
     unsigned int m_objIndex = 0;
     std::vector<PlayerStats> m_playerPool;
     unsigned int m_playerIndex = 0;
@@ -90,7 +90,8 @@ public:
     unsigned int GetActiveTankCount();
     void AddObject( SceneObject o );
     void RemoveObject( const SceneObject& o );
-    SceneObject& GetObject( const unsigned int& index );
+    void SetObject( const unsigned int& index, const SceneObject& o );
+    const SceneObject& GetObject( const unsigned int& index );
     void AddPlayer( PlayerStats p );
     void RemovePlayer( const PlayerStats p );
     PlayerStats& GetPlayer( const unsigned int& index );
@@ -111,7 +112,7 @@ public:
         m_type = Sandbox;
         // tanks
         m_tankPool.reserve(4);
-        Tank tempTank = Tank( LocalPlayer, 512.f, 512.f, 0.f, 1.f );
+        Tank tempTank = Tank( LocalPlayer, 512.f, 512.f, 0.f, 1.f ); // auto player setup
         AddTank( tempTank, DEF_TANK_COLOR );
         tempTank = Tank( Drone, 640.f, 320.f, 0.f, 1.f );
         AddTank( tempTank, sf::Color(128.f, 16.f, 32.f, 255.f) );
@@ -123,7 +124,18 @@ public:
         m_terrain = SubstanceSoil();
         terrainMgr.SetViewOffset( -GetLocalPlayerTank().GetBaseSprite().getPosition() );
         // scene objects
-        // player setup (automatic?)
+        SceneDecoration tempDeco = SceneDecoration();
+        tempDeco.SetBaseImage( texMgr.texObjectBush.copyToImage() );
+        tempDeco.SetObjPos( sf::Vector2f(512.f, 640.f) );
+        debugText += "object added to pool?\n";
+        AddObject( tempDeco );
+        SceneObstacle tempObstacle = SceneObstacle();
+        sf::Sprite tmpSprite;
+        tmpSprite.setTexture( texMgr.texObjectRock );
+        tempObstacle.SetSprite( tmpSprite );
+        tempObstacle.SetHitBox( GetHitBox( tmpSprite, 0.618f ) );
+        tempObstacle.SetObjPos( sf::Vector2f(512.f, 420.f) );
+        AddObject( tempObstacle );
         // scene setup
         stats.maxPlayers = 1;
     }

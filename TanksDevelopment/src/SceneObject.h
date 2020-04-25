@@ -1,21 +1,31 @@
 #pragma once
 
-// Scene Object Handling
+// SceneObject Declarations
+
+enum ObjectType {
+    Default,
+    Decoration,
+    Animated,
+    Trigger,
+    Obstacle,
+    Destructable
+};
 
 class SceneObject {
 public:
     unsigned int objectID = 0;
     bool active = true; // use to skip update
     bool visible = true; // use to skip draw
-    // TEST: could use object type enum to simplify update and draw checks in TankScene?
-private:
+    ObjectType type = Default;
+protected:
 	// keep object transform separate from sprite
 	sf::Vector2f m_objPos = sf::Vector2f(0.f,0.f);
 	float m_objRot = 0.f;
 	//SceneObject m_parent;
 public:
     SceneObject() { ObjectInit(); }
-    ~SceneObject() { }
+    virtual ~SceneObject() { /* virtual destructor for proper deletion of subclasses via pointer */ }
+    virtual SceneObject* clone() const { /* defined in subclasses */ }
 
     virtual void SceneObjectInit() { /* define in subclasses */ }
 
@@ -52,7 +62,7 @@ public:
     }
 
     virtual void SceneObjectUpdate( const float& timeDelta ) { /* define in subclasses */ }
-    virtual void DrawSceneObject( const sf::RenderWindow& window, const sf::Vector2f& viewPos )  { /* define in subclasses */ }
+    virtual void DrawSceneObject( sf::RenderWindow& window, const sf::Vector2f& viewPos )  { /* define in subclasses */ }
 private:
 };
 
@@ -65,6 +75,12 @@ private:
 public:
     SceneDecoration() { }
     ~SceneDecoration() { }
+    SceneObject* clone() const override { return new SceneDecoration( *this ); }
+
+    void SceneObjectInit() override
+    {
+        type = Decoration;
+    }
 
     sf::Image& GetBaseImage()
     {
@@ -76,14 +92,24 @@ public:
         // TEST: separate into other function?
         m_texture.loadFromImage(m_defaultImage);
         m_sprite.setTexture(m_texture);
+        m_sprite.setScale( globalScale, globalScale );
+        m_sprite.setOrigin( sf::Vector2f(16.f, 16.f) );
     }
     sf::Sprite& GetSprite()
     {
         return m_sprite;
     }
-    void SetSprite( const sf::Sprite sprite )
+    void SetSprite( sf::Sprite sprite )
     {
         m_sprite = sprite;
+    }
+
+    // REVIEW : Why not called?
+    void DrawSceneObject( sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
+    {
+        m_sprite.setPosition( GetObjPos() );
+        m_sprite.setRotation( GetObjRot() );
+        window.draw( m_sprite );
     }
 private:
 };
@@ -99,6 +125,12 @@ private:
 public:
     AnimatedDecoration() { }
     ~AnimatedDecoration() { }
+    SceneObject* clone() const override { return new AnimatedDecoration( *this ); }
+
+    void SceneObjectInit() override
+    {
+        type = Animated;
+    }
 
     void SceneObjectUpdate( const float& timeDelta ) override { /* increment frame */ }
 
@@ -121,6 +153,15 @@ public:
     CollidableObject() { }
     ~CollidableObject() { }
 
+    sf::FloatRect GetHitBox()
+    {
+        return m_hitbox;
+    }
+    void SetHitBox( sf::FloatRect box )
+    {
+        m_hitbox = box;
+    }
+
     virtual void CollisionTrigger( const sf::Vector2f& hitVector, const float& hitForce ) { /* subclass define */ } // REVIEW: define collider object as type enum
 private:
 };
@@ -132,6 +173,12 @@ private:
 public:
     SceneTrigger() { }
     ~SceneTrigger() { }
+    SceneObject* clone() const override { return new SceneTrigger( *this ); }
+
+    void SceneObjectInit() override
+    {
+        type = Trigger;
+    }
 
     void CollisionTrigger( const sf::Vector2f& hitVector, const float& hitForce ) override
     {
@@ -143,14 +190,37 @@ private:
 class SceneObstacle : public CollidableObject {
 public:
 private:
+    sf::Sprite m_sprite;
 public:
     SceneObstacle() { }
     ~SceneObstacle() { }
+    SceneObject* clone() const override { return new SceneObstacle( *this ); }
+
+    void SceneObjectInit() override
+    {
+        type = Obstacle;
+    }
+
+    sf::Sprite& GetSprite()
+    {
+        return m_sprite;
+    }
+    void SetSprite( sf::Sprite sprite )
+    {
+        m_sprite = sprite;
+    }
 
     void CollisionTrigger( const sf::Vector2f& hitVector, const float& hitForce ) override
     {
         // TODO: physics push
         // TODO: physics push back as resistance
+    }
+
+    void DrawSceneObject( sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
+    {
+        m_sprite.setPosition( GetObjPos() );
+        m_sprite.setRotation( GetObjRot() );
+        window.draw( m_sprite );
     }
 private:
 };
@@ -164,6 +234,12 @@ private:
 public:
     SceneDestructable() { }
     ~SceneDestructable() { }
+    SceneObject* clone() const override { return new SceneDestructable( *this ); }
+
+    void SceneObjectInit() override
+    {
+        type = Destructable;
+    }
 
     void SetDamageImages( const std::vector<sf::Image>& images )
     {

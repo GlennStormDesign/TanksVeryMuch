@@ -70,6 +70,7 @@
 		<Unit filename="src/FontHandle.h" />
 		<Unit filename="src/ImageHandle.cpp" />
 		<Unit filename="src/ImageHandle.h" />
+		<Unit filename="src/SceneObject.cpp" />
 		<Unit filename="src/SceneObject.h" />
 		<Unit filename="src/Tank.cpp" />
 		<Unit filename="src/Tank.h" />

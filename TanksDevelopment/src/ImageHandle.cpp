@@ -58,6 +58,11 @@ void TextureManager::TerrainTextureInit()
     texMeadowGrass.loadFromFile("image/Terrain_Meadow_Grass.png", tanksTexSize);
     texMeadowFlowers.loadFromFile("image/Terrain_Meadow_Flowers.png", tanksTexSize);
 }
+void TextureManager::ObjectTextureInit()
+{
+    texObjectBush.loadFromFile("image/Object_Bush.png", tanksTexSize);
+    texObjectRock.loadFromFile("image/Object_Rock.png",tanksTexSize);
+}
 void TextureManager::UITextureInit()
 {
     texUIElement.loadFromFile("image/UI_Element.png", tanksTexSize);

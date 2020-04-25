@@ -99,7 +99,7 @@ Tank& TankScene::GetTank( const unsigned int& index )
 Tank& TankScene::GetLocalPlayerTank()
 {
     unsigned int idx = 0;
-    for ( int i=0; i<m_tankPool.size(); i++ )
+    for ( unsigned int i=0; i<m_tankPool.size(); i++ )
     {
         if ( m_tankPool[i].controller.GetControllerType() == LocalPlayer )
         {
@@ -112,7 +112,7 @@ Tank& TankScene::GetLocalPlayerTank()
 unsigned int TankScene::GetActiveTankCount()
 {
     unsigned int cnt = 0;
-    for ( int i=0; i<m_tankPool.size(); i++ )
+    for ( unsigned int i=0; i<m_tankPool.size(); i++ )
     {
         if ( m_tankPool[i].GetActiveState() )
         {
@@ -123,17 +123,64 @@ unsigned int TankScene::GetActiveTankCount()
 }
 void TankScene::AddObject( SceneObject o )
 {
+    debugText += "- add object called -\n";
+    // REVIEW: SceneObject subclasses of different sizes, stored as pointers
     o.SetObjectID( m_objIndex++ );
-    m_objectPool.push_back(o);
+    // TEST: switch for SceneObject type to create proper new SceneObject in pool
+    bool objAdded = false;
+    switch ( o.type )
+    {
+    case Decoration:
+        debugText += "deco add attempt\n";
+        m_objectPool.push_back( o.clone() );
+        objAdded = true;
+        break;
+    case Animated:
+        m_objectPool.push_back( o.clone() );
+        objAdded = true;
+        break;
+    case Trigger:
+        m_objectPool.push_back( o.clone() );
+        objAdded = true;
+        break;
+    case Obstacle:
+        debugText += "obstacle add attempt\n";
+        m_objectPool.push_back( o.clone() );
+        objAdded = true;
+        break;
+    case Destructable:
+        m_objectPool.push_back( o.clone() );
+        objAdded = true;
+        break;
+    case Default:
+        debugText += "scene object add failed as default object\n";
+        break;
+    }
+    // m_objectPool.push_back( o.clone() ); // TODO: proper deletion needed
+    if ( objAdded )
+        debugText += "object added to pool\n";
+    else
+        debugText += "object add failed\n";
 }
+
+/*
 void TankScene::RemoveObject( const SceneObject& o )
 {
     m_objectPool.erase( std::remove( m_objectPool.begin(), m_objectPool.end(), o ) );
 }
-SceneObject& TankScene::GetObject( const unsigned int& index )
+*/
+
+void TankScene::SetObject( const unsigned int& index, const SceneObject& o )
 {
-    return m_objectPool[index];
+    delete m_objectPool[index];
+    m_objectPool[index] = o.clone();
 }
+
+const SceneObject& TankScene::GetObject( const unsigned int& index )
+{
+    return *m_objectPool[index];
+}
+
 void TankScene::AddPlayer( PlayerStats p )
 {
     p.isPlayerActive = true;
@@ -152,12 +199,12 @@ PlayerStats& TankScene::GetPlayer( const unsigned int& index )
 PlayerStats& TankScene::GetLocalPlayer()
 {
     PlayerStats returnPlayer;
-    for ( int i=0; i<m_tankPool.size(); i++ )
+    for ( unsigned int i=0; i<m_tankPool.size(); i++ )
     {
         if ( m_tankPool[i].controller.GetControllerType() == LocalPlayer )
         {
             unsigned int tid = m_tankPool[i].GetTankID();
-            for ( int p=0; i<m_playerPool.size(); i++ )
+            for ( unsigned int p=0; i<m_playerPool.size(); i++ )
             {
                 if ( m_playerPool[p].playerTankID == tid )
                     returnPlayer = m_playerPool[p];
@@ -176,7 +223,7 @@ void TankScene::UpdateScene( const float& timeDelta )
         // TODO: other scene stats
     }
     // handle player stats
-    for ( int p=0; p<m_playerPool.size(); p++ )
+    for ( unsigned int p=0; p<m_playerPool.size(); p++ )
     {
         if ( m_playerPool[p].isPlayerActive )
         {
@@ -186,17 +233,17 @@ void TankScene::UpdateScene( const float& timeDelta )
     }
     // handle player jump in/out (net battle)
     // update tanks
-    for ( int i=0; i<m_tankPool.size(); i++ ) // REVIEW [why this fails?] for ( Tank& t : m_tankPool )
+    for ( unsigned int i=0; i<m_tankPool.size(); i++ ) // REVIEW [why this fails?] for ( Tank& t : m_tankPool )
     {
         m_tankPool[i].UpdateTank(timeDelta);
     }
     // perform collision checks among tanks
     // REVIEW: devise method that does not duplicate this check between tanks
-    for ( int i=0; i<m_tankPool.size(); i++ )
+    for ( unsigned int i=0; i<m_tankPool.size(); i++ )
     {
         if ( !m_tankPool[i].GetActiveState() )
             continue;
-        for ( int n=0; n<m_tankPool.size(); n++ )
+        for ( unsigned int n=0; n<m_tankPool.size(); n++ )
         {
             if ( !m_tankPool[n].GetActiveState() || i == n )
                 continue;
@@ -218,9 +265,9 @@ void TankScene::UpdateScene( const float& timeDelta )
     // perform collision checks between shots and tanks
     //   handle shot detonations and tank damage
     // REVIEW: think about a way to combine with the above iteration through pool
-    for ( int i=0; i<m_tankPool.size(); i++ )
+    for ( unsigned int i=0; i<m_tankPool.size(); i++ )
     {
-        for ( int n=0; n<m_tankPool.size(); n++ )
+        for ( unsigned int n=0; n<m_tankPool.size(); n++ )
         {
             if ( i != n )
             {
@@ -258,6 +305,20 @@ void TankScene::UpdateScene( const float& timeDelta )
     }
     // perform scene object updates (animated deco)
     // perform scene object collision checks tanks or shots (collidable, destructable, trigger)
+    for ( unsigned int t=0; t<m_tankPool.size(); t++ )
+    {
+        sf::FloatRect hitBox = GetHitBox( m_tankPool[t].GetBaseSprite(), 0.381f );
+        if ( m_tankPool[t].GetActiveState() )
+        {
+            for ( unsigned int o=0; o<m_objectPool.size(); o++ )
+            {
+                if ( m_objectPool[o]->active && m_objectPool[o]->type == Obstacle ) // TODO: trigger and destructable
+                {
+                    // if ( hitBox.contains( static_cast<SceneObstacle>m_objectPool[o].GetHitBox() ) )
+                }
+            }
+        }
+    }
 }
 
 void TankScene::DrawScene( sf::RenderWindow& window )
@@ -269,33 +330,42 @@ void TankScene::DrawScene( sf::RenderWindow& window )
     window.setView(v);
     // do draw calls for terrain, tanks, shots and vfx
     terrainMgr.DrawTerrain( window, v.getCenter() );
+
+    // draw scene objects
+    // REVIEW: scene object layering
+    for ( unsigned int o=0; o<m_objectPool.size(); o++ )
+    {
+        if ( m_objectPool[o]->visible )
+            m_objectPool[o]->DrawSceneObject( window, v.getCenter() );
+    }
+
     // REVIEW: [sanity check below] draw layers appropriately ( all under vfx, then all tank dust, etc)
-    for ( int t=0; t<m_tankPool.size(); t++ )
+    for ( unsigned int t=0; t<m_tankPool.size(); t++ )
         m_tankPool[t].DrawKillUnderVFX( window );
-    for ( int t=0; t<m_tankPool.size(); t++ )
+    for ( unsigned int t=0; t<m_tankPool.size(); t++ )
         m_tankPool[t].DrawTankDustVFX( window );
-    for ( int t=0; t<m_tankPool.size(); t++ )
+    for ( unsigned int t=0; t<m_tankPool.size(); t++ )
         if ( m_tankPool[t].GetActiveState() )
             window.draw( m_tankPool[t].GetBaseSprite() );
-    for ( int t=0; t<m_tankPool.size(); t++ )
+    for ( unsigned int t=0; t<m_tankPool.size(); t++ )
         for ( int i=0; i<4; i++ )
         {
             m_tankPool[t].shots[i].DrawShot( window );
         }
-    for ( int t=0; t<m_tankPool.size(); t++ )
+    for ( unsigned int t=0; t<m_tankPool.size(); t++ )
         if ( m_tankPool[t].GetActiveState() )
             window.draw( m_tankPool[t].GetTurretSprite() );
-    for ( int t=0; t<m_tankPool.size(); t++ )
+    for ( unsigned int t=0; t<m_tankPool.size(); t++ )
         m_tankPool[t].DrawTankExhaustVFX( window );
-    for ( int t=0; t<m_tankPool.size(); t++ )
+    for ( unsigned int t=0; t<m_tankPool.size(); t++ )
         if (m_tankPool[t].GetActiveState() && m_tankPool[t].GetShotTimer() > 0.f)
             window.draw( m_tankPool[t].GetShotVFXSprite() );
-    for ( int t=0; t<m_tankPool.size(); t++ )
+    for ( unsigned int t=0; t<m_tankPool.size(); t++ )
         for ( int i=0; i<4; i++ )
         {
             m_tankPool[t].shots[i].DrawShotVFX( window );
         }
-    for ( int t=0; t<m_tankPool.size(); t++ )
+    for ( unsigned int t=0; t<m_tankPool.size(); t++ )
         m_tankPool[t].DrawKillOverVFX( window );
     // do draw calls for scene objects
 }

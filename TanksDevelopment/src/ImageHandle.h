@@ -24,7 +24,14 @@ public:
     sf::Sprite spTerrain;
 private:
 public:
-    TextureManager() { TankTextureInit(); VFXTextureInit(); ParticleTextureInit(); MaskTextureInit(); TerrainTextureInit(); ObjectTextureInit(); UITextureInit(); }
+    TextureManager() {
+        TankTextureInit();
+        VFXTextureInit();
+        ParticleTextureInit();
+        MaskTextureInit();
+        TerrainTextureInit();
+        ObjectTextureInit();
+        UITextureInit(); }
     ~TextureManager() { }
 private:
     void TankTextureInit();

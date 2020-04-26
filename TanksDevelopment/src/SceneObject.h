@@ -1,5 +1,10 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
+
+#include "TankCore.h"
+#include "VFXHandle.h"
+
 // SceneObject Declarations
 
 enum ObjectType {
@@ -24,45 +29,22 @@ protected:
 	//SceneObject m_parent;
 public:
     SceneObject() { ObjectInit(); }
-    virtual ~SceneObject() { /* virtual destructor for proper deletion of subclasses via pointer */ }
-    virtual SceneObject* clone() const { /* defined in subclasses */ }
+    virtual ~SceneObject() { } // virtual destructor for proper deletion of subclasses via pointer
+    virtual SceneObject* clone() const { } // defined in subclasses
 
-    virtual void SceneObjectInit() { /* define in subclasses */ }
+    virtual void SceneObjectInit() { } // define in subclasses
 
-    void ObjectInit()
-    {
-        // general config
-        SceneObjectInit();
-        // specific config
-    }
+    void ObjectInit();
 
-    unsigned int& GetObjectID()
-    {
-        return objectID;
-    }
-    void SetObjectID( const unsigned int& id )
-    {
-        objectID = id;
-    }
-    sf::Vector2f& GetObjPos()
-    {
-        return m_objPos;
-    }
-    void SetObjPos( const sf::Vector2f& pos )
-    {
-        m_objPos = pos;
-    }
-    float& GetObjRot()
-    {
-        return m_objRot;
-    }
-    void SetObjRot( const float& rot )
-    {
-        m_objRot = rot;
-    }
+    unsigned int& GetObjectID();
+    void SetObjectID( const unsigned int& id );
+    sf::Vector2f& GetObjPos();
+    void SetObjPos( const sf::Vector2f& pos );
+    float& GetObjRot();
+    void SetObjRot( const float& rot );
 
-    virtual void SceneObjectUpdate( const float& timeDelta ) { /* define in subclasses */ }
-    virtual void DrawSceneObject( sf::RenderWindow& window, const sf::Vector2f& viewPos )  { /* define in subclasses */ }
+    virtual void SceneObjectUpdate( const float& timeDelta ) { } // define in subclasses
+    virtual void DrawSceneObject( sf::RenderWindow& window, const sf::Vector2f& viewPos )  { } // define in subclasses
 private:
 };
 
@@ -73,7 +55,7 @@ private:
     sf::Texture m_texture;
     sf::Sprite m_sprite;
 public:
-    SceneDecoration() { }
+    SceneDecoration() { ObjectInit(); }
     ~SceneDecoration() { }
     SceneObject* clone() const override { return new SceneDecoration( *this ); }
 
@@ -82,29 +64,11 @@ public:
         type = Decoration;
     }
 
-    sf::Image& GetBaseImage()
-    {
-        return m_defaultImage;
-    }
-    void SetBaseImage( const sf::Image& img )
-    {
-        m_defaultImage = img;
-        // TEST: separate into other function?
-        m_texture.loadFromImage(m_defaultImage);
-        m_sprite.setTexture(m_texture);
-        m_sprite.setScale( globalScale, globalScale );
-        m_sprite.setOrigin( sf::Vector2f(16.f, 16.f) );
-    }
-    sf::Sprite& GetSprite()
-    {
-        return m_sprite;
-    }
-    void SetSprite( sf::Sprite sprite )
-    {
-        m_sprite = sprite;
-    }
+    sf::Image& GetBaseImage();
+    void SetBaseImage( const sf::Image& img );
+    sf::Sprite& GetSprite();
+    void SetSprite( sf::Sprite sprite );
 
-    // REVIEW : Why not called?
     void DrawSceneObject( sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
     {
         m_sprite.setPosition( GetObjPos() );
@@ -123,7 +87,7 @@ private:
     float m_animTime = 0.f;
     unsigned int m_animFrame = 0;
 public:
-    AnimatedDecoration() { }
+    AnimatedDecoration() { ObjectInit(); }
     ~AnimatedDecoration() { }
     SceneObject* clone() const override { return new AnimatedDecoration( *this ); }
 
@@ -134,12 +98,7 @@ public:
 
     void SceneObjectUpdate( const float& timeDelta ) override { /* increment frame */ }
 
-    void SetAnimSequence( const std::vector<sf::Image>& seq, const bool& loop = true, const float& rate = 0.083f )
-    {
-        m_imageSequence = seq;
-        m_animLoop = loop;
-        m_animRate = rate;
-    }
+    void SetAnimSequence( const std::vector<sf::Image>& seq, const bool& loop, const float& rate );
 private:
 };
 
@@ -150,17 +109,11 @@ private:
     sf::FloatRect m_hitbox = sf::FloatRect(0.f,0.f,0.f,0.f);
 	float m_mass = 1.f; // REVIEW: evaluate mass value against tank and shot behavior
 public:
-    CollidableObject() { }
+    CollidableObject() { ObjectInit(); }
     ~CollidableObject() { }
 
-    sf::FloatRect GetHitBox()
-    {
-        return m_hitbox;
-    }
-    void SetHitBox( sf::FloatRect box )
-    {
-        m_hitbox = box;
-    }
+    sf::FloatRect GetHitBox();
+    void SetHitBox( sf::FloatRect box );
 
     virtual void CollisionTrigger( const sf::Vector2f& hitVector, const float& hitForce ) { /* subclass define */ } // REVIEW: define collider object as type enum
 private:
@@ -171,7 +124,7 @@ public:
 private:
     // TODO: target to signal upon trigger
 public:
-    SceneTrigger() { }
+    SceneTrigger() { ObjectInit(); }
     ~SceneTrigger() { }
     SceneObject* clone() const override { return new SceneTrigger( *this ); }
 
@@ -192,7 +145,7 @@ public:
 private:
     sf::Sprite m_sprite;
 public:
-    SceneObstacle() { }
+    SceneObstacle() { ObjectInit(); }
     ~SceneObstacle() { }
     SceneObject* clone() const override { return new SceneObstacle( *this ); }
 
@@ -201,14 +154,8 @@ public:
         type = Obstacle;
     }
 
-    sf::Sprite& GetSprite()
-    {
-        return m_sprite;
-    }
-    void SetSprite( sf::Sprite sprite )
-    {
-        m_sprite = sprite;
-    }
+    sf::Sprite& GetSprite();
+    void SetSprite( sf::Sprite sprite );
 
     void CollisionTrigger( const sf::Vector2f& hitVector, const float& hitForce ) override
     {
@@ -232,7 +179,7 @@ private:
     float m_durability = 100.f;
     std::vector<ParticleEmitter> m_destroyVFX;
 public:
-    SceneDestructable() { }
+    SceneDestructable() { ObjectInit(); }
     ~SceneDestructable() { }
     SceneObject* clone() const override { return new SceneDestructable( *this ); }
 
@@ -241,24 +188,12 @@ public:
         type = Destructable;
     }
 
-    void SetDamageImages( const std::vector<sf::Image>& images )
-    {
-        m_damagedImage = images;
-    }
-    float& GetDurability()
-    {
-        return m_durability;
-    }
-    void SetDurability( const float& durability )
-    {
-        m_durability = durability;
-    }
-    void SetDestroyVFX( const std::vector<ParticleEmitter>& destroyVFX )
-    {
-        m_destroyVFX = destroyVFX;
-    }
+    void SetDamageImages( const std::vector<sf::Image>& images );
+    float& GetDurability();
+    void SetDurability( const float& durability );
+    void SetDestroyVFX( const std::vector<ParticleEmitter>& destroyVFX );
 
-    bool TakeDamage( float damageAmount ) { /* change image, if durability less than zero, destroy */ return false; }
+    bool TakeDamage( float damageAmount );
 private:
-    void Destroy() { /* switch image tex, launch vfx */ }
+    void Destroy();
 };

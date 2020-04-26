@@ -64,7 +64,8 @@ void TankScene::SetSceneType( const SceneType& type )
     m_type = type;
 }
 
-void TankScene::AddTank( Tank t ) // explicitly copying tank here, expecting to create in local scope and pass here
+// explicitly copying tank here, expecting to create in local scope and pass here
+void TankScene::AddTank( Tank t )
 {
     // REVIEW: check if max players will be exceeded, handle reject new player
     t.SetSprites( texMgr.texTankBase, texMgr.texTankTurret, texMgr.texVFXShot1 );
@@ -121,49 +122,16 @@ unsigned int TankScene::GetActiveTankCount()
     }
     return cnt;
 }
+
 void TankScene::AddObject( SceneObject o )
 {
-    debugText += "- add object called -\n";
-    // REVIEW: SceneObject subclasses of different sizes, stored as pointers
+    // SceneObject subclasses of different sizes, stored as pointers
     o.SetObjectID( m_objIndex++ );
-    // TEST: switch for SceneObject type to create proper new SceneObject in pool
-    bool objAdded = false;
-    switch ( o.type )
-    {
-    case Decoration:
-        debugText += "deco add attempt\n";
-        m_objectPool.push_back( o.clone() );
-        objAdded = true;
-        break;
-    case Animated:
-        m_objectPool.push_back( o.clone() );
-        objAdded = true;
-        break;
-    case Trigger:
-        m_objectPool.push_back( o.clone() );
-        objAdded = true;
-        break;
-    case Obstacle:
-        debugText += "obstacle add attempt\n";
-        m_objectPool.push_back( o.clone() );
-        objAdded = true;
-        break;
-    case Destructable:
-        m_objectPool.push_back( o.clone() );
-        objAdded = true;
-        break;
-    case Default:
-        debugText += "scene object add failed as default object\n";
-        break;
-    }
-    // m_objectPool.push_back( o.clone() ); // TODO: proper deletion needed
-    if ( objAdded )
-        debugText += "object added to pool\n";
-    else
-        debugText += "object add failed\n";
+    m_objectPool.push_back( o.clone() );
 }
 
 /*
+// REVIEW : with pointers as elements, no worky
 void TankScene::RemoveObject( const SceneObject& o )
 {
     m_objectPool.erase( std::remove( m_objectPool.begin(), m_objectPool.end(), o ) );

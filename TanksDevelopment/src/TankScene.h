@@ -14,14 +14,14 @@
 // handle scene stats, handle player stats
 
 // primary job of scene is to take over updating and rendering of scene elements
-// which should allow coordination of layers, batching, etc
 //  x terrain
-//  . tanks
-//  . shots
-//  . vfx
+//  x tanks
+//  x shots
+//  x vfx
 //  decoration / animated deco
 //  obstacles
 //  destructables
+// which should allow coordination of layers, batching, etc
 
 // secondary job of scene is to manage collisions between tanks and tanks, and shots and tanks
 // to do this, the scene needs a pool of tanks to work with
@@ -112,7 +112,7 @@ public:
         m_type = Sandbox;
         // tanks
         m_tankPool.reserve(4);
-        Tank tempTank = Tank( LocalPlayer, 512.f, 512.f, 0.f, 1.f ); // auto player setup
+        Tank tempTank = Tank( LocalPlayer, 512.f, 512.f, 0.f, 1.f );
         AddTank( tempTank, DEF_TANK_COLOR );
         tempTank = Tank( Drone, 640.f, 320.f, 0.f, 1.f );
         AddTank( tempTank, sf::Color(128.f, 16.f, 32.f, 255.f) );
@@ -122,20 +122,25 @@ public:
         AddTank( tempTank, sf::Color(16.f,32.f,200.f,255.f) );
         // terrain
         m_terrain = SubstanceSoil();
-        terrainMgr.SetViewOffset( -GetLocalPlayerTank().GetBaseSprite().getPosition() );
+        terrainMgr.SetViewOffset( -(GetLocalPlayerTank().GetBaseSprite().getPosition()) );
+
         // scene objects
-        SceneDecoration tempDeco = SceneDecoration();
+        SceneDecoration tempDeco;
         tempDeco.SetBaseImage( texMgr.texObjectBush.copyToImage() );
         tempDeco.SetObjPos( sf::Vector2f(512.f, 640.f) );
-        debugText += "object added to pool?\n";
-        AddObject( tempDeco );
-        SceneObstacle tempObstacle = SceneObstacle();
+        tempDeco.SetObjectID( m_objIndex++ );
+        m_objectPool.push_back( tempDeco.clone() );
+        //AddObject( tempDeco );
+
+        SceneObstacle tempObstacle;
         sf::Sprite tmpSprite;
         tmpSprite.setTexture( texMgr.texObjectRock );
         tempObstacle.SetSprite( tmpSprite );
         tempObstacle.SetHitBox( GetHitBox( tmpSprite, 0.618f ) );
         tempObstacle.SetObjPos( sf::Vector2f(512.f, 420.f) );
-        AddObject( tempObstacle );
+        tempObstacle.SetObjectID( m_objIndex++ );
+        m_objectPool.push_back( tempObstacle.clone() );
+        //AddObject( tempObstacle );
         // scene setup
         stats.maxPlayers = 1;
     }

@@ -64,7 +64,8 @@ void TankScene::SetSceneType( const SceneType& type )
     m_type = type;
 }
 
-void TankScene::AddTank( Tank t ) // explicitly copying tank here, expecting to create in local scope and pass here
+// explicitly copying tank here, expecting to create in local scope and pass here
+void TankScene::AddTank( Tank t )
 {
     // REVIEW: check if max players will be exceeded, handle reject new player
     t.SetSprites( texMgr.texTankBase, texMgr.texTankTurret, texMgr.texVFXShot1 );
@@ -122,11 +123,11 @@ unsigned int TankScene::GetActiveTankCount()
     return cnt;
 }
 
-void TankScene::AddObject( SceneObject sObj )
+void TankScene::AddObject( SceneObject o )
 {
     // SceneObject subclasses of different sizes, stored as pointers
-    sObj.SetObjectID( m_objIndex++ );
-    m_objectPool.push_back( sObj.clone() );
+    o.SetObjectID( m_objIndex++ );
+    m_objectPool.push_back( o.clone() );
 }
 
 /*

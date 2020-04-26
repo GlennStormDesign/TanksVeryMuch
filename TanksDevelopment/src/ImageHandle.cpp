@@ -61,7 +61,7 @@ void TextureManager::TerrainTextureInit()
 void TextureManager::ObjectTextureInit()
 {
     texObjectBush.loadFromFile("image/Object_Bush.png", tanksTexSize);
-    texObjectRock.loadFromFile("image/Object_Rock.png",tanksTexSize);
+    texObjectRock.loadFromFile("image/Object_Rock.png", tanksTexSize);
 }
 void TextureManager::UITextureInit()
 {

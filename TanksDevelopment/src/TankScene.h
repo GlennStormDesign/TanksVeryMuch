@@ -122,20 +122,23 @@ public:
         AddTank( tempTank, sf::Color(16.f,32.f,200.f,255.f) );
         // terrain
         m_terrain = SubstanceSoil();
-        terrainMgr.SetViewOffset( -GetLocalPlayerTank().GetBaseSprite().getPosition() );
+        terrainMgr.SetViewOffset( -(GetLocalPlayerTank().GetBaseSprite().getPosition()) );
         // scene objects
-        SceneDecoration tempDeco = SceneDecoration();
+        SceneDecoration tempDeco;
         tempDeco.SetBaseImage( texMgr.texObjectBush.copyToImage() );
         tempDeco.SetObjPos( sf::Vector2f(512.f, 640.f) );
-        debugText += "object added to pool?\n";
-        AddObject( tempDeco );
-        SceneObstacle tempObstacle = SceneObstacle();
+        tempDeco.SetObjectID( m_objIndex++ );
+        m_objectPool.push_back( tempDeco.clone() );
+        //AddObject( tempDeco );
+        SceneObstacle tempObstacle;
         sf::Sprite tmpSprite;
         tmpSprite.setTexture( texMgr.texObjectRock );
         tempObstacle.SetSprite( tmpSprite );
         tempObstacle.SetHitBox( GetHitBox( tmpSprite, 0.618f ) );
         tempObstacle.SetObjPos( sf::Vector2f(512.f, 420.f) );
-        AddObject( tempObstacle );
+        tempObstacle.SetObjectID( m_objIndex++ );
+        m_objectPool.push_back( tempObstacle.clone() );
+        //AddObject( tempObstacle );
         // scene setup
         stats.maxPlayers = 1;
     }

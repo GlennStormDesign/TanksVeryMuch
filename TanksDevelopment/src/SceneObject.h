@@ -73,7 +73,7 @@ private:
     sf::Texture m_texture;
     sf::Sprite m_sprite;
 public:
-    SceneDecoration() { }
+    SceneDecoration() { ObjectInit(); }
     ~SceneDecoration() { }
     SceneObject* clone() const override { return new SceneDecoration( *this ); }
 
@@ -90,8 +90,8 @@ public:
     {
         m_defaultImage = img;
         // TEST: separate into other function?
-        m_texture.loadFromImage(m_defaultImage);
-        m_sprite.setTexture(m_texture);
+        m_texture.loadFromImage( m_defaultImage );
+        m_sprite.setTexture( m_texture );
         m_sprite.setScale( globalScale, globalScale );
         m_sprite.setOrigin( sf::Vector2f(16.f, 16.f) );
     }
@@ -104,7 +104,6 @@ public:
         m_sprite = sprite;
     }
 
-    // REVIEW : Why not called?
     void DrawSceneObject( sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
     {
         m_sprite.setPosition( GetObjPos() );
@@ -123,7 +122,7 @@ private:
     float m_animTime = 0.f;
     unsigned int m_animFrame = 0;
 public:
-    AnimatedDecoration() { }
+    AnimatedDecoration() { ObjectInit(); }
     ~AnimatedDecoration() { }
     SceneObject* clone() const override { return new AnimatedDecoration( *this ); }
 
@@ -150,7 +149,7 @@ private:
     sf::FloatRect m_hitbox = sf::FloatRect(0.f,0.f,0.f,0.f);
 	float m_mass = 1.f; // REVIEW: evaluate mass value against tank and shot behavior
 public:
-    CollidableObject() { }
+    CollidableObject() { ObjectInit(); }
     ~CollidableObject() { }
 
     sf::FloatRect GetHitBox()
@@ -171,7 +170,7 @@ public:
 private:
     // TODO: target to signal upon trigger
 public:
-    SceneTrigger() { }
+    SceneTrigger() { ObjectInit(); }
     ~SceneTrigger() { }
     SceneObject* clone() const override { return new SceneTrigger( *this ); }
 
@@ -192,7 +191,7 @@ public:
 private:
     sf::Sprite m_sprite;
 public:
-    SceneObstacle() { }
+    SceneObstacle() { ObjectInit(); }
     ~SceneObstacle() { }
     SceneObject* clone() const override { return new SceneObstacle( *this ); }
 
@@ -208,6 +207,8 @@ public:
     void SetSprite( sf::Sprite sprite )
     {
         m_sprite = sprite;
+        m_sprite.setScale( globalScale, globalScale );
+        m_sprite.setOrigin( sf::Vector2f(16.f, 16.f) );
     }
 
     void CollisionTrigger( const sf::Vector2f& hitVector, const float& hitForce ) override
@@ -232,7 +233,7 @@ private:
     float m_durability = 100.f;
     std::vector<ParticleEmitter> m_destroyVFX;
 public:
-    SceneDestructable() { }
+    SceneDestructable() { ObjectInit(); }
     ~SceneDestructable() { }
     SceneObject* clone() const override { return new SceneDestructable( *this ); }
 

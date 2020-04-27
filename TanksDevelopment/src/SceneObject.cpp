@@ -36,7 +36,7 @@ void SceneObject::SetObjRot( const float& rot )
     m_objRot = rot;
 }
 
-// SceneDecoration implementation
+// SceneDecoration implementation (subclass of SceneObject)
 
 sf::Image& SceneDecoration::GetBaseImage()
 {
@@ -60,7 +60,7 @@ void SceneDecoration::SetSprite( sf::Sprite sprite )
     m_sprite = sprite;
 }
 
-// AnimatedDecoration implementation
+// AnimatedDecoration implementation (subclass of SceneDecoration)
 
 void AnimatedDecoration::SetAnimSequence( const std::vector<sf::Image>& seq, const bool& loop, const float& rate )
 {
@@ -69,7 +69,7 @@ void AnimatedDecoration::SetAnimSequence( const std::vector<sf::Image>& seq, con
     m_animRate = rate;
 }
 
-// CollidableObject implementation
+// CollidableObject implementation (subclass of SceneObject)
 
 sf::FloatRect CollidableObject::GetHitBox()
 {
@@ -80,7 +80,9 @@ void CollidableObject::SetHitBox( sf::FloatRect box )
     m_hitbox = box;
 }
 
-// SceneObstacle implementation
+// SceneTrigger implementation (subclass of CollidableObject)
+
+// SceneObstacle implementation (subclass of CollidableObject)
 
 sf::Sprite& SceneObstacle::GetSprite()
 {
@@ -93,7 +95,7 @@ void SceneObstacle::SetSprite( sf::Sprite sprite )
     m_sprite.setOrigin( sf::Vector2f(16.f, 16.f) );
 }
 
-// SceneDestructable implementation
+// SceneDestructable implementation (subclass of CollidableObject)
 
 void SceneDestructable::SetDamageImages( const std::vector<sf::Image>& images )
 {

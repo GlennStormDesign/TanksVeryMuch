@@ -124,20 +124,21 @@ public:
         m_terrain = SubstanceSoil();
         terrainMgr.SetViewOffset( -(GetLocalPlayerTank().GetBaseSprite().getPosition()) );
 
-        // scene objects
+        // scene
+        m_objectPool.reserve(2);
         SceneDecoration tempDeco;
         tempDeco.SetBaseImage( texMgr.texObjectBush.copyToImage() );
         tempDeco.SetObjPos( sf::Vector2f(512.f, 640.f) );
         tempDeco.SetObjectID( m_objIndex++ );
         m_objectPool.push_back( tempDeco.clone() );
-        //AddObject( tempDeco );
+        AddObject( tempDeco );
 
         SceneObstacle tempObstacle;
         sf::Sprite tmpSprite;
         tmpSprite.setTexture( texMgr.texObjectRock );
         tempObstacle.SetSprite( tmpSprite );
         tempObstacle.SetHitBox( GetHitBox( tmpSprite, 0.618f ) );
-        tempObstacle.SetObjPos( sf::Vector2f(512.f, 420.f) );
+        tempObstacle.SetObjPos( sf::Vector2f(512.f, 400.f) );
         tempObstacle.SetObjectID( m_objIndex++ );
         m_objectPool.push_back( tempObstacle.clone() );
         //AddObject( tempObstacle );

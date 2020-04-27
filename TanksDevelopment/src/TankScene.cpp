@@ -280,9 +280,10 @@ void TankScene::UpdateScene( const float& timeDelta )
         {
             for ( unsigned int o=0; o<m_objectPool.size(); o++ )
             {
+                // REVIEW: Object slicing happening here?
                 if ( m_objectPool[o]->active && m_objectPool[o]->type == Obstacle ) // TODO: trigger and destructable
                 {
-                    // if ( hitBox.contains( static_cast<SceneObstacle>m_objectPool[o].GetHitBox() ) )
+                    // if ( hitBox.contains( static_cast<SceneObstacle>m_objectPool[o]->GetHitBox() ) )
                 }
             }
         }
@@ -303,6 +304,7 @@ void TankScene::DrawScene( sf::RenderWindow& window )
     // REVIEW: scene object layering
     for ( unsigned int o=0; o<m_objectPool.size(); o++ )
     {
+        // REVIEW: Object slicing happening here?
         if ( m_objectPool[o]->visible )
             m_objectPool[o]->DrawSceneObject( window, v.getCenter() );
     }

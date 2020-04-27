@@ -127,14 +127,18 @@ public:
         // scene
         m_objectPool.reserve(2);
         SceneDecoration tempDeco;
-        tempDeco.SetBaseImage( texMgr.texObjectBush.copyToImage() );
+        sf::Sprite tmpSprite;
+        tmpSprite.setTexture( texMgr.texObjectBush );
+        tmpSprite.setScale( globalScale, globalScale );
+        tmpSprite.setOrigin( 16.f, 16.f );
+        tempDeco.SetSprite( tmpSprite );
+        // tempDeco.SetTexture( texMgr.texObjectBush ); // REVIEW: this calls up VFXSparks texture
         tempDeco.SetObjPos( sf::Vector2f(512.f, 640.f) );
         tempDeco.SetObjectID( m_objIndex++ );
         m_objectPool.push_back( tempDeco.clone() );
-        AddObject( tempDeco );
+        //AddObject( tempDeco );
 
         SceneObstacle tempObstacle;
-        sf::Sprite tmpSprite;
         tmpSprite.setTexture( texMgr.texObjectRock );
         tempObstacle.SetSprite( tmpSprite );
         tempObstacle.SetHitBox( GetHitBox( tmpSprite, 0.618f ) );
@@ -142,6 +146,7 @@ public:
         tempObstacle.SetObjectID( m_objIndex++ );
         m_objectPool.push_back( tempObstacle.clone() );
         //AddObject( tempObstacle );
+
         // scene setup
         stats.maxPlayers = 1;
     }

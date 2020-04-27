@@ -283,7 +283,15 @@ void TankScene::UpdateScene( const float& timeDelta )
                 // REVIEW: Object slicing happening here?
                 if ( m_objectPool[o]->active && m_objectPool[o]->type == Obstacle ) // TODO: trigger and destructable
                 {
-                    // if ( hitBox.contains( static_cast<SceneObstacle>m_objectPool[o]->GetHitBox() ) )
+                    /*
+                    if ( hitBox.intersects( ((SceneObstacle)m_objectPool[o])->GetHitBox() ) )
+                    {
+                        sf::Vector2f pos, other;
+                        pos = m_tankPool[t].GetBaseSprite().getPosition();
+                        other = m_objectPool[o].GetObjPos();
+                        m_tankPool[t].SetPosition( pos.x + ((pos.x-other.x)*timeDelta), pos.y + ((pos.y-other.y)*timeDelta) );
+                    }
+                    */
                 }
             }
         }

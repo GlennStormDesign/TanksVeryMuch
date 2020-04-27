@@ -42,11 +42,20 @@ sf::Image& SceneDecoration::GetBaseImage()
 {
     return m_defaultImage;
 }
+/*
 void SceneDecoration::SetBaseImage( const sf::Image& img )
 {
     m_defaultImage = img;
     // TEST: separate into other function?
     m_texture.loadFromImage( m_defaultImage );
+    m_sprite.setTexture( m_texture );
+    m_sprite.setScale( globalScale, globalScale );
+    m_sprite.setOrigin( sf::Vector2f(16.f, 16.f) );
+}
+*/
+void SceneDecoration::SetTexture( const sf::Texture& texture )
+{
+    m_texture = texture;
     m_sprite.setTexture( m_texture );
     m_sprite.setScale( globalScale, globalScale );
     m_sprite.setOrigin( sf::Vector2f(16.f, 16.f) );

@@ -65,7 +65,8 @@ public:
     }
 
     sf::Image& GetBaseImage();
-    void SetBaseImage( const sf::Image& img );
+    //void SetBaseImage( const sf::Image& img );
+    void SetTexture( const sf::Texture& texture );
     sf::Sprite& GetSprite();
     void SetSprite( sf::Sprite sprite );
 

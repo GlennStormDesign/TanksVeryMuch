@@ -2,6 +2,51 @@
 
 // SceneObject Definitions
 
+// DisplayObject implementation
+
+void DisplayObject::SetTexture( const sf::Texture& texture )
+{
+    m_texture = texture;
+    m_sprite.setTexture(m_texture);
+    m_sprite.setScale( globalScale, globalScale );
+    m_sprite.setOrigin( sf::Vector2f(16.f, 16.f) );
+}
+sf::Sprite& DisplayObject::GetSprite()
+{
+    return m_sprite;
+}
+void DisplayObject::SetSprite( sf::Sprite sprite )
+{
+    m_sprite = sprite;
+}
+
+void DisplayObject::DrawSceneObject( sf::RenderWindow& window, const sf::Vector2f& viewPos )
+{
+    window.draw( m_sprite );
+}
+
+// AnimatedObject implementation
+
+void AnimatedObject::SetAnimSequence( const std::vector<sf::Image>& seq, const bool& loop, const float& rate )
+{
+    m_imageSequence = seq;
+    m_animLoop = loop;
+    m_animRate = rate;
+}
+
+// ColliderObject implementation
+
+sf::FloatRect ColliderObject::GetHitBox()
+{
+    return m_hitbox;
+}
+void ColliderObject::SetHitBox( sf::FloatRect box )
+{
+    m_hitbox = box;
+}
+
+void ColliderObject::CollisionTrigger( const sf::Vector2f& hitVector, const float& hitForce ) { }
+
 // SceneObject implementation
 
 void SceneObject::ObjectInit()
@@ -38,48 +83,11 @@ void SceneObject::SetObjRot( const float& rot )
 
 // SceneDecoration implementation (subclass of SceneObject)
 
-sf::Image& SceneDecoration::GetBaseImage()
-{
-    return m_defaultImage;
-}
-/*
-void SceneDecoration::SetBaseImage( const sf::Image& img )
-{
-    m_defaultImage = img;
-    // TEST: separate into other function?
-    m_texture.loadFromImage( m_defaultImage );
-    m_sprite.setTexture( m_texture );
-    m_sprite.setScale( globalScale, globalScale );
-    m_sprite.setOrigin( sf::Vector2f(16.f, 16.f) );
-}
-*/
-void SceneDecoration::SetTexture( const sf::Texture& texture )
-{
-    m_texture = texture;
-    m_sprite.setTexture( m_texture );
-    m_sprite.setScale( globalScale, globalScale );
-    m_sprite.setOrigin( sf::Vector2f(16.f, 16.f) );
-}
-sf::Sprite& SceneDecoration::GetSprite()
-{
-    return m_sprite;
-}
-void SceneDecoration::SetSprite( sf::Sprite sprite )
-{
-    m_sprite = sprite;
-}
-
 // AnimatedDecoration implementation (subclass of SceneDecoration)
-
-void AnimatedDecoration::SetAnimSequence( const std::vector<sf::Image>& seq, const bool& loop, const float& rate )
-{
-    m_imageSequence = seq;
-    m_animLoop = loop;
-    m_animRate = rate;
-}
 
 // CollidableObject implementation (subclass of SceneObject)
 
+/*
 sf::FloatRect CollidableObject::GetHitBox()
 {
     return m_hitbox;
@@ -88,21 +96,11 @@ void CollidableObject::SetHitBox( sf::FloatRect box )
 {
     m_hitbox = box;
 }
+*/
 
 // SceneTrigger implementation (subclass of CollidableObject)
 
 // SceneObstacle implementation (subclass of CollidableObject)
-
-sf::Sprite& SceneObstacle::GetSprite()
-{
-    return m_sprite;
-}
-void SceneObstacle::SetSprite( sf::Sprite sprite )
-{
-    m_sprite = sprite;
-    m_sprite.setScale( globalScale, globalScale );
-    m_sprite.setOrigin( sf::Vector2f(16.f, 16.f) );
-}
 
 // SceneDestructable implementation (subclass of CollidableObject)
 

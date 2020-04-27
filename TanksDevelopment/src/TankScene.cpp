@@ -283,6 +283,7 @@ void TankScene::UpdateScene( const float& timeDelta )
                 // REVIEW: Object slicing happening here?
                 if ( m_objectPool[o]->active && m_objectPool[o]->type == Obstacle ) // TODO: trigger and destructable
                 {
+                    // REFACTOR IN PROGRESS
                     // NOTE: So, I should be avoiding object slicing by abandoning this approach altogether (!)
                     // NOTE: The issue becomes, as more SceneObject subclasses are introduced, code duplicates to accommodate
                     // NOTE: At the same time, no benefits to storing all as if a stripped down base class, then dynamic cast

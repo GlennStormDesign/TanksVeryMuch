@@ -125,6 +125,9 @@ public:
         terrainMgr.SetViewOffset( -(GetLocalPlayerTank().GetBaseSprite().getPosition()) );
 
         // scene
+        // TODO: reform object pool to conform to revision
+
+        /*
         m_objectPool.reserve(2);
         SceneDecoration tempDeco;
         sf::Sprite tmpSprite;
@@ -146,6 +149,7 @@ public:
         tempObstacle.SetObjectID( m_objIndex++ );
         m_objectPool.push_back( tempObstacle.clone() );
         //AddObject( tempObstacle );
+        */
 
         // scene setup
         stats.maxPlayers = 1;

@@ -7,6 +7,9 @@
 
 // SceneObject Declarations
 
+// * SEE NOTES * in TankScene cpp regarding object slicing !
+// TODO: RE FACTOR ME per notes
+
 enum ObjectType {
     Default,
     Decoration,

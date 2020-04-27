@@ -3,8 +3,8 @@
 // C++, SFML, OpenGL, GLSL
 
 Tank Prototype
-(latest addition: tank pool)
-4.23.2020
+(latest addition: tank scene)
+4.27.2020
 
 Controls:
 Move with arrow keys

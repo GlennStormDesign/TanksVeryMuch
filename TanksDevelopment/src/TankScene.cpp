@@ -283,12 +283,19 @@ void TankScene::UpdateScene( const float& timeDelta )
                 // REVIEW: Object slicing happening here?
                 if ( m_objectPool[o]->active && m_objectPool[o]->type == Obstacle ) // TODO: trigger and destructable
                 {
+                    // NOTE: So, I should be avoiding object slicing by abandoning this approach altogether (!)
+                    // NOTE: The issue becomes, as more SceneObject subclasses are introduced, code duplicates to accommodate
+                    // NOTE: At the same time, no benefits to storing all as if a stripped down base class, then dynamic cast
+                    // NOTE: If instead, the object pool was a collection of fully-functional objects (virtually) ...
+                    // NOTE: ... and each member, as a subclass, took advantage of those overrides, this would work.
+                    // NOTE: 'modularity' can come from individual classes for display, collision, etc, which compose the base
                     /*
-                    if ( hitBox.intersects( ((SceneObstacle)m_objectPool[o])->GetHitBox() ) )
+                    SceneObject s = *m_objectPool[o];
+                    if ( hitBox.intersects( dynamic_cast<CollidableObject>(s).GetHitBox() ) ) // no worky
                     {
                         sf::Vector2f pos, other;
                         pos = m_tankPool[t].GetBaseSprite().getPosition();
-                        other = m_objectPool[o].GetObjPos();
+                        other = m_objectPool[o]->GetObjPos();
                         m_tankPool[t].SetPosition( pos.x + ((pos.x-other.x)*timeDelta), pos.y + ((pos.y-other.y)*timeDelta) );
                     }
                     */

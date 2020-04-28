@@ -34,6 +34,10 @@ void AnimatedObject::SetAnimSequence( const std::vector<sf::Image>& seq, const b
     m_animRate = rate;
 }
 
+// TriggerTarget implementation
+
+void TriggerTarget::DoTrigger() { }
+
 // TriggerableObject implementation
 
 // CollidableObject implementation
@@ -82,11 +86,11 @@ void SceneObject::SceneObjectUpdate( const float& timeDelta )
 
 void SceneObject::CollisionTrigger( const Tank& colliderTank )
 {
-    debugText += "collision trigger";
+    // trigger collided by tank
 }
 void SceneObject::ShotTrigger( const TankShot& colliderShot )
 {
-    debugText += "shot trigger";
+    // trigger collided by shot
 }
 
 sf::FloatRect SceneObject::GetHitBox()
@@ -100,7 +104,7 @@ void SceneObject::SetHitBox( sf::FloatRect box )
 
 void SceneObject::CollisionEvent( const sf::Vector2f& hitVector, const float& hitForce )
 {
-    debugText += "collision event";
+    // obstacle collided
 }
 
 void SceneObject::SetDamageImages( const std::vector<sf::Image>& images )
@@ -131,7 +135,6 @@ bool SceneObject::TakeDamage( float damageAmount )
 void SceneObject::DestroyObject()
 {
     // switch image tex, launch vfx
-    debugText += "object destruction";
 }
 
 // SceneDecoration implementation (subclass of SceneObject)

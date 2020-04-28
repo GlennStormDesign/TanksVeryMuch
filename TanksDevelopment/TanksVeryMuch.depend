@@ -577,7 +577,7 @@
 
 1587127274 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\src\uihandle.h
 
-1587958253 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\entrypoint.cpp
+1588102205 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\entrypoint.cpp
 	<math.h>
 	<cmath>
 	<string>
@@ -598,85 +598,85 @@
 	"TankScene.h"
 	"TankGame.h"
 
-1588095339 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tankcore.h
+1588109467 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tankcore.h
 
-1587958253 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\fonthandle.h
+1588102205 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\fonthandle.h
 
-1587958253 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\entrypoint.h
+1588102205 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\entrypoint.h
 	<SFML/Graphics.hpp>
 	<SFML/Window/VideoMode.hpp>
 	<SFML/Audio.hpp>
 	"TankCore.h"
 	"FontHandle.h"
 
-1587958253 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\audiohandle.h
+1588102205 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\audiohandle.h
 	<SFML/Audio.hpp>
 
-1587958253 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\imagehandle.h
+1588102205 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\imagehandle.h
 
-1587958253 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\uihandle.h
+1588102205 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\uihandle.h
 
-1587958253 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\vfxhandle.h
+1588102205 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\vfxhandle.h
 	"ImageHandle.h"
 
-1588100020 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tank.h
+1588102205 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tank.h
 	<bitset>
 	<SFML/Graphics.hpp>
 	"VFXHandle.h"
 
-1587958253 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\terrain.h
+1588102205 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\terrain.h
 	"TankCore.h"
 	"ImageHandle.h"
 
-1588099109 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\sceneobject.h
+1588111507 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\sceneobject.h
 	<SFML/Graphics.hpp>
 	"TankCore.h"
 	"Tank.h"
 	"VFXHandle.h"
 
-1588099031 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tankscene.h
+1588111085 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tankscene.h
 	<string>
 	"AudioHandle.h"
 	"Tank.h"
 	"Terrain.h"
 	"SceneObject.h"
 
-1587958253 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tankgame.h
+1588102205 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tankgame.h
 
 1587587184 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\fonthandle.cpp
 	"FontHandle.h"
 
-1587958253 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\audiohandle.cpp
+1588102205 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\audiohandle.cpp
 	<SFML/Graphics.hpp>
 	<SFML/Audio.hpp>
 	"AudioHandle.h"
 
-1588084306 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\imagehandle.cpp
+1588102205 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\imagehandle.cpp
 	<SFML/Graphics.hpp>
 	"ImageHandle.h"
 
-1587958253 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\vfxhandle.cpp
+1588102205 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\vfxhandle.cpp
 	<cmath>
 	<SFML/Graphics.hpp>
 	"TankCore.h"
 	"ImageHandle.h"
 	"VFXHandle.h"
 
-1588100079 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tank.cpp
+1588102205 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tank.cpp
 	<cmath>
 	<bitset>
 	"TankCore.h"
 	"AudioHandle.h"
 	"Tank.h"
 
-1587958253 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\terrain.cpp
+1588102205 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\terrain.cpp
 	<cmath>
 	<SFML/Graphics.hpp>
 	"Terrain.h"
 
-1588098764 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tankscene.cpp
+1588111210 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tankscene.cpp
 	"TankScene.h"
 
-1588099281 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\sceneobject.cpp
+1588110251 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\sceneobject.cpp
 	"SceneObject.h"
 

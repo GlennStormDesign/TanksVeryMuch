@@ -35,7 +35,7 @@ protected:
 class AnimatedObject {
 public:
 protected:
-    std::vector<sf::Image> m_imageSequence; // TEST: texture instead?
+    std::vector<sf::Image> m_imageSequence; // REVIEW: image or texture sequence
     bool m_animLoop = true;
     float m_animRate = 0.083f;
     float m_animTime = 0.f;
@@ -45,10 +45,18 @@ public:
 protected:
 };
 
+class TriggerTarget {
+public:
+private:
+public:
+    virtual void DoTrigger();
+private:
+};
+
 class TriggerableObject {
 public:
 protected:
-    // TODO: target to signal upon trigger (specialized target scene objects?)
+    TriggerTarget m_target; // TODO: connect to trigger events via CollisionTrigger and ShotTrigger
 public:
 protected:
 };

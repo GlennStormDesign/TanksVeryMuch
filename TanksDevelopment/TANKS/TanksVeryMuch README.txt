@@ -3,7 +3,7 @@
 // C++, SFML, OpenGL, GLSL
 
 Tank Prototype
-(latest addition: obstacles)
+(latest addition: triggers)
 4.28.2020
 
 Controls:

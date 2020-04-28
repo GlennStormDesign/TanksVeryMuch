@@ -125,7 +125,6 @@ unsigned int TankScene::GetActiveTankCount()
 
 void TankScene::AddObject( SceneObject o )
 {
-    // SceneObject subclasses of different sizes, stored as pointers
     o.SetObjectID( m_objIndex++ );
     m_objectPool.push_back( o.clone() );
 }
@@ -301,7 +300,8 @@ void TankScene::UpdateScene( const float& timeDelta )
 
                         // FIXME: the amount of 'force' should not be correlated to distance between centers (corners force more than sides)
                         // (that's where this *2.f cheat comes from)
-                        // the direction of force should be either in x or in y (only both if on corner exactly)
+                        // instead, the force should come directly from the tank movement this frame (!)
+                        // TODO: the direction of force should be either in x or in y (only both if on corner exactly)
                         float collisionForce = 0.f;
                         if ( abs( pos.x-other.x ) < abs( pos.y-other.y ) )
                         {
@@ -313,6 +313,8 @@ void TankScene::UpdateScene( const float& timeDelta )
                             m_tankPool[t].SetPosition( pos.x + ((pos.x-other.x)*timeDelta*2.f), pos.y );
                             collisionForce = (abs(pos.x-other.x)*timeDelta*2.f);
                         }
+                        so.CollisionEvent( sf::Vector2f( ((other.x-pos.x)*timeDelta*2.f), ((other.y-pos.y)*timeDelta*2.f) ), collisionForce );
+
                         if ( so.type == Destructable )
                         {
                             // do damage based on collision force
@@ -326,14 +328,14 @@ void TankScene::UpdateScene( const float& timeDelta )
                 }
             }
         }
-        // (regardless of tank active state, check shot collision with obstacles and destructables)
+        // regardless of tank active state, check shot collision with obstacles and destructables
         for ( int s=0; s<4; s++ )
         {
             if ( m_tankPool[t].shots[s].active )
             {
                 for ( int o=0; o<m_objectPool.size(); o++ )
                 {
-                    if ( m_objectPool[o]->type == Obstacle || m_objectPool[o]->type == Destructable )
+                    if ( m_objectPool[o]->type == Trigger || m_objectPool[o]->type == Obstacle || m_objectPool[o]->type == Destructable )
                     {
                         SceneObject so = *m_objectPool[o];
                         // REVIEW: should this be different than tank collision hitbox size?
@@ -348,8 +350,16 @@ void TankScene::UpdateScene( const float& timeDelta )
                                     so.DestroyObject();
                                 }
                             }
-                            sfxMgr.LaunchSFXImpact();
-                            m_tankPool[t].shots[s].Detonate();
+                            if ( so.type == Trigger )
+                            {
+                                // allow trigger to bypass detonation (or explicitly invoke it)
+                                so.ShotTrigger( m_tankPool[t].shots[s] );
+                            }
+                            else
+                            {
+                                sfxMgr.LaunchSFXImpact();
+                                m_tankPool[t].shots[s].Detonate();
+                            }
                         }
                     }
 
@@ -377,7 +387,7 @@ void TankScene::DrawScene( sf::RenderWindow& window )
             m_objectPool[o]->DrawSceneObject( window, v.getCenter() );
     }
 
-    // REVIEW: [sanity check below] draw layers appropriately ( all under vfx, then all tank dust, etc)
+    // REVIEW: [sanity check below] draw layers appropriately ( all under vfx, then all tank dust, etc )
     for ( unsigned int t=0; t<m_tankPool.size(); t++ )
         m_tankPool[t].DrawKillUnderVFX( window );
     for ( unsigned int t=0; t<m_tankPool.size(); t++ )

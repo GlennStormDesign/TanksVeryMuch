@@ -12,7 +12,6 @@
 // Tank Scenes
 
 // handle scene stats, handle player stats
-// [WORKING]
 
 // primary job of scene is to take over updating and rendering of scene elements
 //  x terrain
@@ -23,17 +22,14 @@
 //  x obstacles
 //  ~ destructables
 // which should allow coordination of layers, batching, etc
-// [WORKING]
 
 // secondary job of scene is to manage collisions between tanks and tanks, and shots and tanks
 // to do this, the scene needs a pool of tanks to work with
 // as tanks are added to the scene, they are added to the pool
 // if removed, they need to be removed from the pool
 // then, the scene can be updated each tick for potential collisions to manage
-// [DONE]
 
 // can also manage tank collision with obstacles, destructables and triggers (scene objects in an object pool)
-// [DONE]
 
 struct SceneStats {
     bool isSceneActive = false;
@@ -73,10 +69,10 @@ protected:
     std::vector<PlayerStats> m_playerPool;
     unsigned int m_playerIndex = 0;
 public:
-    TankScene() { /*SceneInit();*/ } // REVIEW: unlike ParticleEmitter class, this constructor does not call SceneInit()?
-    ~TankScene() { /* remove all in tank pool and shot pool */ }
+    TankScene() { }
+    ~TankScene() { } // remove all in tank pool and shot pool
 
-    virtual void LevelInit() { /* level configuration in subclasses */ }
+    virtual void LevelInit() { } // level configuration in subclasses
 
     void SceneInit();
 
@@ -129,7 +125,7 @@ public:
         terrainMgr.SetViewOffset( -(GetLocalPlayerTank().GetBaseSprite().getPosition()) );
 
         // scene
-        m_objectPool.reserve(2);
+        m_objectPool.reserve(3);
 
         SceneDecoration tempDeco;
         sf::Sprite tmpSprite;
@@ -140,6 +136,7 @@ public:
         tempDeco.SetObjPos( sf::Vector2f( 512.f, 600.f ) );
         tempDeco.SetObjectID( m_objIndex++ );
         m_objectPool.push_back( tempDeco.clone() );
+        //AddObject( tempDeco );
 
         SceneObstacle tempObstacle;
         tmpSprite.setTexture( texMgr.texObjectRock );
@@ -148,6 +145,14 @@ public:
         tempObstacle.SetObjPos( sf::Vector2f( 512.f, 400.f ) );
         tempObstacle.SetObjectID( m_objIndex++ );
         m_objectPool.push_back( tempObstacle.clone() );
+        //AddObject( tempObstacle );
+
+        SceneTrigger tempTrigger;
+        tempTrigger.SetObjPos( sf::Vector2f( 0.f, 0.f ) );
+        tmpSprite.setTexture( texMgr.texMaskRadial );
+        tempTrigger.SetSprite( tmpSprite );
+        tempTrigger.SetObjectID( m_objIndex++ );
+        m_objectPool.push_back( tempTrigger.clone() );
 
         // scene setup
         stats.maxPlayers = 1;

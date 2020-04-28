@@ -2,7 +2,7 @@
 
 // Core Declarations
 
-static const std::string TANKSVERYMUCH_VERSION = "v.0.14.04.28.20";
+static const std::string TANKSVERYMUCH_VERSION = "v.0.15.04.28.20";
 static const float DEG2RAD = 0.0174532f;
 
 static std::string debugText = "";

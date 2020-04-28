@@ -293,14 +293,39 @@ void TankScene::UpdateScene( const float& timeDelta )
                     // NOTE: If instead, the object pool was a collection of fully-functional objects (virtually) ...
                     // NOTE: ... and each member, as a subclass, took advantage of those overrides, this would work.
                     // NOTE: 'modularity' can come from individual classes for display, collision, etc, which compose the base
-                    SceneObject s = *m_objectPool[o];
-                    if ( hitBox.intersects( s.GetHitBox() ) ) // no worky
+                    // (may no longer need to store pointers in object pool vector)
+                    SceneObject so = *m_objectPool[o];
+                    if ( hitBox.intersects( GetHitBox( so.GetSprite(), 1.f ) ) ) // TODO: make use of obstacle hit box
                     {
                         sf::Vector2f pos, other;
                         pos = m_tankPool[t].GetBaseSprite().getPosition();
-                        other = m_objectPool[o]->GetObjPos(); // TODO: take into account sprite origin
-                        m_tankPool[t].SetPosition( pos.x + ((pos.x-other.x)*timeDelta), pos.y + ((pos.y-other.y)*timeDelta) );
+                        other = m_objectPool[o]->GetObjPos();
+                        // FIXME: the amount of 'force' should not be correlated to distance between centers (corners force more than sides)
+                        // (that's where this *2.f cheat comes from)
+                        m_tankPool[t].SetPosition( pos.x + ((pos.x-other.x)*timeDelta*2.f), pos.y + ((pos.y-other.y)*timeDelta*2.f) );
                     }
+                }
+            }
+        }
+        // (regardless of tank active state, check shot collision with obstacles and destructables)
+        for ( int s=0; s<4; s++ )
+        {
+            if ( m_tankPool[t].shots[s].active )
+            {
+                for ( int o=0; o<m_objectPool.size(); o++ )
+                {
+                    if ( m_objectPool[o]->type == Obstacle || m_objectPool[o]->type == Destructable )
+                    {
+                        SceneObject so = *m_objectPool[o];
+                        if ( m_tankPool[t].shots[s].shot.getGlobalBounds().intersects( GetHitBox( so.GetSprite(), 0.618f ) ) ) // REVIEW: should this be different than tank collision hitbox size?
+                        {
+                            // hanlde collision
+                            // handle damage
+                            sfxMgr.LaunchSFXImpact();
+                            m_tankPool[t].shots[s].Detonate();
+                        }
+                    }
+
                 }
             }
         }

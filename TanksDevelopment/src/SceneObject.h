@@ -27,6 +27,7 @@ public:
     void SetTexture( const sf::Texture& texture );
     sf::Sprite& GetSprite();
     void SetSprite( sf::Sprite sprite );
+
     void DrawSceneObject( sf::RenderWindow& window, const sf::Vector2f& viewPos );
 protected:
 };

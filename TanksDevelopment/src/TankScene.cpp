@@ -342,6 +342,11 @@ void TankScene::UpdateScene( const float& timeDelta )
                             if ( so.type == Destructable )
                             {
                                 // handle damage
+                                if ( so.TakeDamage( m_tankPool[t].shots[s].GetPower() ) )
+                                {
+                                    // object destruction
+                                    so.DestroyObject();
+                                }
                             }
                             sfxMgr.LaunchSFXImpact();
                             m_tankPool[t].shots[s].Detonate();

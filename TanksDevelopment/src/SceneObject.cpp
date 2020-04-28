@@ -131,6 +131,7 @@ bool SceneObject::TakeDamage( float damageAmount )
 void SceneObject::DestroyObject()
 {
     // switch image tex, launch vfx
+    debugText += "object destruction";
 }
 
 // SceneDecoration implementation (subclass of SceneObject)

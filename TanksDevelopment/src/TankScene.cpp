@@ -201,7 +201,7 @@ void TankScene::UpdateScene( const float& timeDelta )
     }
     // handle player jump in/out (net battle)
     // update tanks
-    for ( unsigned int i=0; i<m_tankPool.size(); i++ ) // REVIEW [why this fails?] for ( Tank& t : m_tankPool )
+    for ( unsigned int i=0; i<m_tankPool.size(); i++ )
     {
         m_tankPool[i].UpdateTank(timeDelta);
     }
@@ -271,7 +271,11 @@ void TankScene::UpdateScene( const float& timeDelta )
             }
         }
     }
-    // perform scene object updates (animated deco)
+    // perform scene object updates
+    for ( unsigned int o=0; o<m_objectPool.size(); o++ )
+    {
+        m_objectPool[o]->SceneObjectUpdate( timeDelta );
+    }
     // perform scene object collision checks tanks or shots (collidable, destructable, trigger)
     for ( unsigned int t=0; t<m_tankPool.size(); t++ )
     {
@@ -280,25 +284,70 @@ void TankScene::UpdateScene( const float& timeDelta )
         {
             for ( unsigned int o=0; o<m_objectPool.size(); o++ )
             {
-                // REVIEW: Object slicing happening here?
-                if ( m_objectPool[o]->active && m_objectPool[o]->type == Obstacle ) // TODO: trigger and destructable
+                if ( m_objectPool[o]->active && ( m_objectPool[o]->type == Trigger || m_objectPool[o]->type == Obstacle || m_objectPool[o]->type == Destructable ) ) // TODO: trigger and destructable
                 {
-                    // NOTE: So, I should be avoiding object slicing by abandoning this approach altogether (!)
-                    // NOTE: The issue becomes, as more SceneObject subclasses are introduced, code duplicates to accommodate
-                    // NOTE: At the same time, no benefits to storing all as if a stripped down base class, then dynamic cast
-                    // NOTE: If instead, the object pool was a collection of fully-functional objects (virtually) ...
-                    // NOTE: ... and each member, as a subclass, took advantage of those overrides, this would work.
-                    // NOTE: 'modularity' can come from individual classes for display, collision, etc, which compose the base
-                    /*
-                    SceneObject s = *m_objectPool[o];
-                    if ( hitBox.intersects( dynamic_cast<CollidableObject>(s).GetHitBox() ) ) // no worky
+                    SceneObject so = *m_objectPool[o];
+                    if ( hitBox.intersects( GetHitBox( so.GetSprite(), 1.f ) ) )
                     {
+                        if ( so.type == Trigger )
+                        {
+                            // triggered by tank collision
+                            so.CollisionTrigger( m_tankPool[t] );
+                            continue;
+                        }
                         sf::Vector2f pos, other;
                         pos = m_tankPool[t].GetBaseSprite().getPosition();
                         other = m_objectPool[o]->GetObjPos();
-                        m_tankPool[t].SetPosition( pos.x + ((pos.x-other.x)*timeDelta), pos.y + ((pos.y-other.y)*timeDelta) );
+
+                        // FIXME: the amount of 'force' should not be correlated to distance between centers (corners force more than sides)
+                        // (that's where this *2.f cheat comes from)
+                        // the direction of force should be either in x or in y (only both if on corner exactly)
+                        float collisionForce = 0.f;
+                        if ( abs( pos.x-other.x ) < abs( pos.y-other.y ) )
+                        {
+                            m_tankPool[t].SetPosition( pos.x, pos.y + ((pos.y-other.y)*timeDelta*2.f) );
+                            collisionForce = (abs(pos.y-other.y)*timeDelta*2.f);
+                        }
+                        else
+                        {
+                            m_tankPool[t].SetPosition( pos.x + ((pos.x-other.x)*timeDelta*2.f), pos.y );
+                            collisionForce = (abs(pos.x-other.x)*timeDelta*2.f);
+                        }
+                        if ( so.type == Destructable )
+                        {
+                            // do damage based on collision force
+                            if ( so.TakeDamage( collisionForce ) ) // TEST: amount of force based on timeDelta (and *2.f)
+                            {
+                                // object destruction
+                                so.DestroyObject();
+                            }
+                        }
                     }
-                    */
+                }
+            }
+        }
+        // (regardless of tank active state, check shot collision with obstacles and destructables)
+        for ( int s=0; s<4; s++ )
+        {
+            if ( m_tankPool[t].shots[s].active )
+            {
+                for ( int o=0; o<m_objectPool.size(); o++ )
+                {
+                    if ( m_objectPool[o]->type == Obstacle || m_objectPool[o]->type == Destructable )
+                    {
+                        SceneObject so = *m_objectPool[o];
+                        // REVIEW: should this be different than tank collision hitbox size?
+                        if ( m_tankPool[t].shots[s].shot.getGlobalBounds().intersects( GetHitBox( so.GetSprite(), 0.618f ) ) )
+                        {
+                            if ( so.type == Destructable )
+                            {
+                                // handle damage
+                            }
+                            sfxMgr.LaunchSFXImpact();
+                            m_tankPool[t].shots[s].Detonate();
+                        }
+                    }
+
                 }
             }
         }
@@ -319,7 +368,6 @@ void TankScene::DrawScene( sf::RenderWindow& window )
     // REVIEW: scene object layering
     for ( unsigned int o=0; o<m_objectPool.size(); o++ )
     {
-        // REVIEW: Object slicing happening here?
         if ( m_objectPool[o]->visible )
             m_objectPool[o]->DrawSceneObject( window, v.getCenter() );
     }

@@ -12,24 +12,28 @@
 // Tank Scenes
 
 // handle scene stats, handle player stats
+// [WORKING]
 
 // primary job of scene is to take over updating and rendering of scene elements
 //  x terrain
 //  x tanks
 //  x shots
 //  x vfx
-//  decoration / animated deco
-//  obstacles
-//  destructables
+//  ~ decoration / animated deco
+//  x obstacles
+//  ~ destructables
 // which should allow coordination of layers, batching, etc
+// [WORKING]
 
 // secondary job of scene is to manage collisions between tanks and tanks, and shots and tanks
 // to do this, the scene needs a pool of tanks to work with
 // as tanks are added to the scene, they are added to the pool
 // if removed, they need to be removed from the pool
 // then, the scene can be updated each tick for potential collisions to manage
+// [DONE]
 
 // can also manage tank collision with obstacles, destructables and triggers (scene objects in an object pool)
+// [DONE]
 
 struct SceneStats {
     bool isSceneActive = false;
@@ -126,26 +130,24 @@ public:
 
         // scene
         m_objectPool.reserve(2);
+
         SceneDecoration tempDeco;
         sf::Sprite tmpSprite;
         tmpSprite.setTexture( texMgr.texObjectBush );
         tmpSprite.setScale( globalScale, globalScale );
         tmpSprite.setOrigin( 16.f, 16.f );
         tempDeco.SetSprite( tmpSprite );
-        // tempDeco.SetTexture( texMgr.texObjectBush ); // REVIEW: this calls up VFXSparks texture
-        tempDeco.SetObjPos( sf::Vector2f(512.f, 640.f) );
+        tempDeco.SetObjPos( sf::Vector2f( 512.f, 600.f ) );
         tempDeco.SetObjectID( m_objIndex++ );
         m_objectPool.push_back( tempDeco.clone() );
-        //AddObject( tempDeco );
 
         SceneObstacle tempObstacle;
         tmpSprite.setTexture( texMgr.texObjectRock );
         tempObstacle.SetSprite( tmpSprite );
         tempObstacle.SetHitBox( GetHitBox( tmpSprite, 0.618f ) );
-        tempObstacle.SetObjPos( sf::Vector2f(512.f, 400.f) );
+        tempObstacle.SetObjPos( sf::Vector2f( 512.f, 400.f ) );
         tempObstacle.SetObjectID( m_objIndex++ );
         m_objectPool.push_back( tempObstacle.clone() );
-        //AddObject( tempObstacle );
 
         // scene setup
         stats.maxPlayers = 1;

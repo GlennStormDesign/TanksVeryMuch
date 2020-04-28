@@ -3,12 +3,10 @@
 #include <SFML/Graphics.hpp>
 
 #include "TankCore.h"
+#include "Tank.h"
 #include "VFXHandle.h"
 
 // SceneObject Declarations
-
-// * SEE NOTES * in TankScene cpp regarding object slicing !
-// TODO: RE FACTOR ME per notes
 
 enum ObjectType {
     Default,
@@ -19,7 +17,61 @@ enum ObjectType {
     Destructable
 };
 
-class SceneObject {
+// modules of functionality can be used to compose SceneObject
+class DisplayObject {
+public:
+protected:
+    sf::Texture m_texture;
+    sf::Sprite m_sprite;
+public:
+    void SetTexture( const sf::Texture& texture );
+    sf::Sprite& GetSprite();
+    void SetSprite( sf::Sprite sprite );
+    void DrawSceneObject( sf::RenderWindow& window, const sf::Vector2f& viewPos );
+protected:
+};
+
+class AnimatedObject {
+public:
+protected:
+    std::vector<sf::Image> m_imageSequence; // TEST: texture instead?
+    bool m_animLoop = true;
+    float m_animRate = 0.083f;
+    float m_animTime = 0.f;
+    unsigned int m_animFrame = 0;
+public:
+    virtual void SetAnimSequence( const std::vector<sf::Image>& seq, const bool& loop, const float& rate );
+protected:
+};
+
+class TriggerableObject {
+public:
+protected:
+    // TODO: target to signal upon trigger (specialized target scene objects?)
+public:
+protected:
+};
+
+class CollidableObject {
+public:
+protected:
+    sf::FloatRect m_hitbox = sf::FloatRect(0.f,0.f,0.f,0.f);
+	float m_mass = 1.f; // REVIEW: evaluate mass value against tank and shot behavior
+public:
+protected:
+};
+
+class DestructableObject {
+public:
+protected:
+    std::vector<sf::Image> m_damagedImage; // a progression of damage
+    float m_durability = 100.f;
+    std::vector<ParticleEmitter> m_destroyVFX;
+public:
+protected:
+};
+
+class SceneObject : public DisplayObject, AnimatedObject, TriggerableObject, CollidableObject, DestructableObject {
 public:
     unsigned int objectID = 0;
     bool active = true; // use to skip update
@@ -39,6 +91,7 @@ public:
 
     void ObjectInit();
 
+    // general scene object
     unsigned int& GetObjectID();
     void SetObjectID( const unsigned int& id );
     sf::Vector2f& GetObjPos();
@@ -46,17 +99,30 @@ public:
     float& GetObjRot();
     void SetObjRot( const float& rot );
 
-    virtual void SceneObjectUpdate( const float& timeDelta ) { } // define in subclasses
-    virtual void DrawSceneObject( sf::RenderWindow& window, const sf::Vector2f& viewPos )  { } // define in subclasses
+    void CollisionTrigger( const Tank& colliderTank );
+    void ShotTrigger( const TankShot& colliderShot );
+
+    sf::FloatRect GetHitBox();
+    void SetHitBox( sf::FloatRect box );
+
+    void CollisionEvent( const sf::Vector2f& hitVector, const float& hitForce );
+
+    void SetDamageImages( const std::vector<sf::Image>& images );
+    float& GetDurability();
+    void SetDurability( const float& durability );
+    void SetDestroyVFX( const std::vector<ParticleEmitter>& destroyVFX );
+
+    bool TakeDamage( float damageAmount );
+    void DestroyObject();
+
+    void SceneObjectUpdate( const float& timeDelta );
+protected:
 private:
 };
 
 class SceneDecoration : public SceneObject {
 public:
 private:
-    sf::Image m_defaultImage; // TEST: texture instead?
-    sf::Texture m_texture;
-    sf::Sprite m_sprite;
 public:
     SceneDecoration() { ObjectInit(); }
     ~SceneDecoration() { }
@@ -66,30 +132,12 @@ public:
     {
         type = Decoration;
     }
-
-    sf::Image& GetBaseImage();
-    //void SetBaseImage( const sf::Image& img );
-    void SetTexture( const sf::Texture& texture );
-    sf::Sprite& GetSprite();
-    void SetSprite( sf::Sprite sprite );
-
-    void DrawSceneObject( sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
-    {
-        m_sprite.setPosition( GetObjPos() );
-        m_sprite.setRotation( GetObjRot() );
-        window.draw( m_sprite );
-    }
 private:
 };
 
-class AnimatedDecoration : public SceneDecoration {
+class AnimatedDecoration : public SceneObject {
 public:
 private:
-    std::vector<sf::Image> m_imageSequence; // TEST: texture instead?
-    bool m_animLoop = true;
-    float m_animRate = 0.083f;
-    float m_animTime = 0.f;
-    unsigned int m_animFrame = 0;
 public:
     AnimatedDecoration() { ObjectInit(); }
     ~AnimatedDecoration() { }
@@ -99,34 +147,12 @@ public:
     {
         type = Animated;
     }
-
-    void SceneObjectUpdate( const float& timeDelta ) override { /* increment frame */ }
-
-    void SetAnimSequence( const std::vector<sf::Image>& seq, const bool& loop, const float& rate );
 private:
 };
 
-class CollidableObject : public SceneObject {
+class SceneTrigger : public SceneObject {
 public:
 private:
-    // TEST: migrate GetHitBox() from Tank.h? use this? alongside?
-    sf::FloatRect m_hitbox = sf::FloatRect(0.f,0.f,0.f,0.f);
-	float m_mass = 1.f; // REVIEW: evaluate mass value against tank and shot behavior
-public:
-    CollidableObject() { ObjectInit(); }
-    ~CollidableObject() { }
-
-    sf::FloatRect GetHitBox();
-    void SetHitBox( sf::FloatRect box );
-
-    virtual void CollisionTrigger( const sf::Vector2f& hitVector, const float& hitForce ) { /* subclass define */ } // REVIEW: define collider object as type enum
-private:
-};
-
-class SceneTrigger : public CollidableObject {
-public:
-private:
-    // TODO: target to signal upon trigger
 public:
     SceneTrigger() { ObjectInit(); }
     ~SceneTrigger() { }
@@ -136,18 +162,12 @@ public:
     {
         type = Trigger;
     }
-
-    void CollisionTrigger( const sf::Vector2f& hitVector, const float& hitForce ) override
-    {
-        // TEST: trigger receiver class?
-    }
 private:
 };
 
-class SceneObstacle : public CollidableObject {
+class SceneObstacle : public SceneObject {
 public:
 private:
-    sf::Sprite m_sprite;
 public:
     SceneObstacle() { ObjectInit(); }
     ~SceneObstacle() { }
@@ -157,31 +177,12 @@ public:
     {
         type = Obstacle;
     }
-
-    sf::Sprite& GetSprite();
-    void SetSprite( sf::Sprite sprite );
-
-    void CollisionTrigger( const sf::Vector2f& hitVector, const float& hitForce ) override
-    {
-        // TODO: physics push
-        // TODO: physics push back as resistance
-    }
-
-    void DrawSceneObject( sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
-    {
-        m_sprite.setPosition( GetObjPos() );
-        m_sprite.setRotation( GetObjRot() );
-        window.draw( m_sprite );
-    }
 private:
 };
 
-class SceneDestructable : public CollidableObject {
+class SceneDestructable : public SceneObject {
 public:
 private:
-    std::vector<sf::Image> m_damagedImage; // a progression of damage
-    float m_durability = 100.f;
-    std::vector<ParticleEmitter> m_destroyVFX;
 public:
     SceneDestructable() { ObjectInit(); }
     ~SceneDestructable() { }
@@ -191,13 +192,5 @@ public:
     {
         type = Destructable;
     }
-
-    void SetDamageImages( const std::vector<sf::Image>& images );
-    float& GetDurability();
-    void SetDurability( const float& durability );
-    void SetDestroyVFX( const std::vector<ParticleEmitter>& destroyVFX );
-
-    bool TakeDamage( float damageAmount );
 private:
-    void Destroy();
 };

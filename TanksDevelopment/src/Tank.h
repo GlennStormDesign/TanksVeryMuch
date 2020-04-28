@@ -98,6 +98,7 @@ public:
     void SetPower( const float& power );
     float& GetLife();
     void SetLife( const float& lifetime );
+    bool isShotVFXActive();
 
     void UpdateShot( float timeDelta );
     void Detonate();

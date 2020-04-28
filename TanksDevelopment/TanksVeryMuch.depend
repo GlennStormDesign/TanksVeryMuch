@@ -598,7 +598,7 @@
 	"TankScene.h"
 	"TankGame.h"
 
-1587958651 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tankcore.h
+1588095339 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tankcore.h
 
 1587958253 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\fonthandle.h
 
@@ -619,7 +619,7 @@
 1587958253 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\vfxhandle.h
 	"ImageHandle.h"
 
-1587958253 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tank.h
+1588100020 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tank.h
 	<bitset>
 	<SFML/Graphics.hpp>
 	"VFXHandle.h"
@@ -628,12 +628,13 @@
 	"TankCore.h"
 	"ImageHandle.h"
 
-1588003837 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\sceneobject.h
+1588099109 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\sceneobject.h
 	<SFML/Graphics.hpp>
 	"TankCore.h"
+	"Tank.h"
 	"VFXHandle.h"
 
-1587967281 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tankscene.h
+1588099031 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tankscene.h
 	<string>
 	"AudioHandle.h"
 	"Tank.h"
@@ -650,7 +651,7 @@
 	<SFML/Audio.hpp>
 	"AudioHandle.h"
 
-1587958253 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\imagehandle.cpp
+1588084306 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\imagehandle.cpp
 	<SFML/Graphics.hpp>
 	"ImageHandle.h"
 
@@ -661,7 +662,7 @@
 	"ImageHandle.h"
 	"VFXHandle.h"
 
-1587958253 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tank.cpp
+1588100079 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tank.cpp
 	<cmath>
 	<bitset>
 	"TankCore.h"
@@ -673,9 +674,9 @@
 	<SFML/Graphics.hpp>
 	"Terrain.h"
 
-1588003744 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tankscene.cpp
+1588098764 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\tankscene.cpp
 	"TankScene.h"
 
-1587966950 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\sceneobject.cpp
+1588099281 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\sceneobject.cpp
 	"SceneObject.h"
 

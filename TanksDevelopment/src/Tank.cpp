@@ -229,6 +229,10 @@ void TankShot::SetLife( const float& lifetime )
 {
     m_life = lifetime;
 }
+bool TankShot::isShotVFXActive()
+{
+    return m_impactVFX.active;
+}
 
 void TankShot::UpdateShot( float timeDelta )
 {
@@ -464,7 +468,7 @@ void Tank::UpdateTank( const float& timeDelta )
     {
         bool shotAvailable = false;
         for ( int i=0; i<4; i++ ) {
-            if ( !shots[i].active )
+            if ( !shots[i].active && !shots[i].isShotVFXActive() )
             {
                 shots[i].Shoot( m_posX, m_posY, (m_baseR + m_turretR) );
                 shotAvailable = true;

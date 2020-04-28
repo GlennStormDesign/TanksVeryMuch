@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "TankCore.h"
+#include "Tank.h"
 #include "VFXHandle.h"
 
 // SceneObject Declarations
@@ -16,7 +17,7 @@ enum ObjectType {
     Destructable
 };
 
-// TEST REFACTOR : see if modules of functionality can be used to compose SceneObject (display, collision)
+// modules of functionality can be used to compose SceneObject
 class DisplayObject {
 public:
 protected:
@@ -46,7 +47,7 @@ protected:
 class TriggerableObject {
 public:
 protected:
-    // TODO: target to signal upon trigger
+    // TODO: target to signal upon trigger (specialized target scene objects?)
 public:
 protected:
 };
@@ -58,7 +59,6 @@ protected:
 	float m_mass = 1.f; // REVIEW: evaluate mass value against tank and shot behavior
 public:
 protected:
-    virtual void CollisionTrigger( const sf::Vector2f& hitVector, const float& hitForce );
 };
 
 class DestructableObject {
@@ -69,8 +69,6 @@ protected:
     std::vector<ParticleEmitter> m_destroyVFX;
 public:
 protected:
-    virtual bool TakeDamage( float damageAmount );
-    virtual void DestroyObject();
 };
 
 class SceneObject : public DisplayObject, AnimatedObject, TriggerableObject, CollidableObject, DestructableObject {
@@ -101,13 +99,21 @@ public:
     float& GetObjRot();
     void SetObjRot( const float& rot );
 
+    void CollisionTrigger( const Tank& colliderTank );
+    void ShotTrigger( const TankShot& colliderShot );
+
     sf::FloatRect GetHitBox();
     void SetHitBox( sf::FloatRect box );
+
+    void CollisionEvent( const sf::Vector2f& hitVector, const float& hitForce );
 
     void SetDamageImages( const std::vector<sf::Image>& images );
     float& GetDurability();
     void SetDurability( const float& durability );
     void SetDestroyVFX( const std::vector<ParticleEmitter>& destroyVFX );
+
+    bool TakeDamage( float damageAmount );
+    void DestroyObject();
 
     void SceneObjectUpdate( const float& timeDelta );
 protected:

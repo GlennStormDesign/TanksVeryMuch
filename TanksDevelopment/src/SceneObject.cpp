@@ -34,14 +34,11 @@ void AnimatedObject::SetAnimSequence( const std::vector<sf::Image>& seq, const b
     m_animRate = rate;
 }
 
+// TriggerableObject implementation
+
 // CollidableObject implementation
 
-void CollidableObject::CollisionTrigger( const sf::Vector2f& hitVector, const float& hitForce ) { }
-
 // DestructableObject implementation
-
-bool DestructableObject::TakeDamage( float damageAmount ) { return false; } // change image, if durability less than zero, destroy
-void DestructableObject::DestroyObject() { } // switch image tex, launch vfx
 
 // SceneObject implementation
 
@@ -81,11 +78,15 @@ void SceneObject::SceneObjectUpdate( const float& timeDelta )
 {
     m_sprite.setPosition( GetObjPos() );
     m_sprite.setRotation( GetObjRot() );
-    // REVIEW: to manage origin of sprite in relation to hitbox
-    sf::FloatRect retBox = m_hitbox;
-    retBox.left = m_objPos.x - (m_sprite.getOrigin().x / 2);
-    retBox.top = m_objPos.y - (m_sprite.getOrigin().y / 2);
-    m_hitbox = retBox;
+}
+
+void SceneObject::CollisionTrigger( const Tank& colliderTank )
+{
+    debugText += "collision trigger";
+}
+void SceneObject::ShotTrigger( const TankShot& colliderShot )
+{
+    debugText += "shot trigger";
 }
 
 sf::FloatRect SceneObject::GetHitBox()
@@ -95,6 +96,11 @@ sf::FloatRect SceneObject::GetHitBox()
 void SceneObject::SetHitBox( sf::FloatRect box )
 {
     m_hitbox = box;
+}
+
+void SceneObject::CollisionEvent( const sf::Vector2f& hitVector, const float& hitForce )
+{
+    debugText += "collision event";
 }
 
 void SceneObject::SetDamageImages( const std::vector<sf::Image>& images )
@@ -112,6 +118,19 @@ void SceneObject::SetDurability( const float& durability )
 void SceneObject::SetDestroyVFX( const std::vector<ParticleEmitter>& destroyVFX )
 {
     m_destroyVFX = destroyVFX;
+}
+
+bool SceneObject::TakeDamage( float damageAmount )
+{
+    // change image, if durability less than zero, destroy
+    m_durability -= damageAmount;
+    if ( m_durability <= 0.f )
+        m_durability = 0.f;
+    return ( m_durability == 0.f );
+}
+void SceneObject::DestroyObject()
+{
+    // switch image tex, launch vfx
 }
 
 // SceneDecoration implementation (subclass of SceneObject)

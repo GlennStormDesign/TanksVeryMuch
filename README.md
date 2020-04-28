@@ -19,9 +19,9 @@ Work on this project began late February 2020, and repository started here April
 * [DONE] Particle System
 * [DONE] Music / SFX
 * [DONE] Endless terrain
-* [WORKING] Arbitrary scene (level) definitions
-* [WORKING] Scene objects (from deco to triggers to destructables)
-* Nice UI
+* [DONE] Arbitrary scene (level) definitions
+* [DONE] Scene objects (from deco to triggers to destructables)
+* [WORKING] Nice UI
 * Scriptable enemies (as in, they run off a timed script)
 * Reasonable enemy AI (more than opportunistic)
 * Campaign levels

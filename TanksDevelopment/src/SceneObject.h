@@ -26,7 +26,6 @@ public:
     void SetTexture( const sf::Texture& texture );
     sf::Sprite& GetSprite();
     void SetSprite( sf::Sprite sprite );
-
     void DrawSceneObject( sf::RenderWindow& window, const sf::Vector2f& viewPos );
 protected:
 };
@@ -40,25 +39,41 @@ protected:
     float m_animTime = 0.f;
     unsigned int m_animFrame = 0;
 public:
-    void SetAnimSequence( const std::vector<sf::Image>& seq, const bool& loop, const float& rate );
+    virtual void SetAnimSequence( const std::vector<sf::Image>& seq, const bool& loop, const float& rate );
 protected:
 };
 
-// 'ColliableObject' is a better name, when available
-class ColliderObject {
+class TriggerableObject {
+public:
+protected:
+    // TODO: target to signal upon trigger
+public:
+protected:
+};
+
+class CollidableObject {
 public:
 protected:
     sf::FloatRect m_hitbox = sf::FloatRect(0.f,0.f,0.f,0.f);
 	float m_mass = 1.f; // REVIEW: evaluate mass value against tank and shot behavior
 public:
-    sf::FloatRect GetHitBox();
-    void SetHitBox( sf::FloatRect box );
-
-    void CollisionTrigger( const sf::Vector2f& hitVector, const float& hitForce );
 protected:
+    virtual void CollisionTrigger( const sf::Vector2f& hitVector, const float& hitForce );
 };
 
-class SceneObject : public DisplayObject, AnimatedObject, ColliderObject {
+class DestructableObject {
+public:
+protected:
+    std::vector<sf::Image> m_damagedImage; // a progression of damage
+    float m_durability = 100.f;
+    std::vector<ParticleEmitter> m_destroyVFX;
+public:
+protected:
+    virtual bool TakeDamage( float damageAmount );
+    virtual void DestroyObject();
+};
+
+class SceneObject : public DisplayObject, AnimatedObject, TriggerableObject, CollidableObject, DestructableObject {
 public:
     unsigned int objectID = 0;
     bool active = true; // use to skip update
@@ -86,20 +101,22 @@ public:
     float& GetObjRot();
     void SetObjRot( const float& rot );
 
-    virtual void SceneObjectUpdate( const float& timeDelta ) { } // define in subclasses
-    // TODO: in update
-    // m_sprite.setPosition( GetObjPos() );
-    // m_sprite.setRotation( GetObjRot() );
-    virtual void DrawSceneObject( sf::RenderWindow& window, const sf::Vector2f& viewPos )  { } // define in subclasses
+    sf::FloatRect GetHitBox();
+    void SetHitBox( sf::FloatRect box );
+
+    void SetDamageImages( const std::vector<sf::Image>& images );
+    float& GetDurability();
+    void SetDurability( const float& durability );
+    void SetDestroyVFX( const std::vector<ParticleEmitter>& destroyVFX );
+
+    void SceneObjectUpdate( const float& timeDelta );
+protected:
 private:
 };
 
 class SceneDecoration : public SceneObject {
 public:
 private:
-    sf::Image m_defaultImage; // TEST: texture instead?
-    sf::Texture m_texture;
-    sf::Sprite m_sprite;
 public:
     SceneDecoration() { ObjectInit(); }
     ~SceneDecoration() { }
@@ -127,29 +144,9 @@ public:
 private:
 };
 
-/*
-class CollidableObject : public SceneObject {
-public:
-private:
-    // TEST: migrate GetHitBox() from Tank.h? use this? alongside?
-    sf::FloatRect m_hitbox = sf::FloatRect(0.f,0.f,0.f,0.f);
-	float m_mass = 1.f; // REVIEW: evaluate mass value against tank and shot behavior
-public:
-    CollidableObject() { }  // ObjectInit(); }
-    ~CollidableObject() { }
-
-    sf::FloatRect GetHitBox();
-    void SetHitBox( sf::FloatRect box );
-
-    virtual void CollisionTrigger( const sf::Vector2f& hitVector, const float& hitForce ); // { } // REVIEW: define collider object as type enum
-private:
-};
-*/
-
 class SceneTrigger : public SceneObject {
 public:
 private:
-    // TODO: target to signal upon trigger
 public:
     SceneTrigger() { ObjectInit(); }
     ~SceneTrigger() { }
@@ -158,11 +155,6 @@ public:
     void SceneObjectInit() override
     {
         type = Trigger;
-    }
-
-    void CollisionTrigger( const sf::Vector2f& hitVector, const float& hitForce )
-    {
-        // TEST: trigger receiver class?
     }
 private:
 };
@@ -185,9 +177,6 @@ private:
 class SceneDestructable : public SceneObject {
 public:
 private:
-    std::vector<sf::Image> m_damagedImage; // a progression of damage
-    float m_durability = 100.f;
-    std::vector<ParticleEmitter> m_destroyVFX;
 public:
     SceneDestructable() { ObjectInit(); }
     ~SceneDestructable() { }
@@ -197,13 +186,5 @@ public:
     {
         type = Destructable;
     }
-
-    void SetDamageImages( const std::vector<sf::Image>& images );
-    float& GetDurability();
-    void SetDurability( const float& durability );
-    void SetDestroyVFX( const std::vector<ParticleEmitter>& destroyVFX );
-
-    bool TakeDamage( float damageAmount );
 private:
-    void Destroy();
 };

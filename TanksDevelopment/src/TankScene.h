@@ -125,21 +125,17 @@ public:
         terrainMgr.SetViewOffset( -(GetLocalPlayerTank().GetBaseSprite().getPosition()) );
 
         // scene
-        // TODO: reform object pool to conform to revision
-
-        /*
         m_objectPool.reserve(2);
+
         SceneDecoration tempDeco;
         sf::Sprite tmpSprite;
         tmpSprite.setTexture( texMgr.texObjectBush );
         tmpSprite.setScale( globalScale, globalScale );
         tmpSprite.setOrigin( 16.f, 16.f );
         tempDeco.SetSprite( tmpSprite );
-        // tempDeco.SetTexture( texMgr.texObjectBush ); // REVIEW: this calls up VFXSparks texture
-        tempDeco.SetObjPos( sf::Vector2f(512.f, 640.f) );
+        tempDeco.SetObjPos( sf::Vector2f( 512.f, 600.f ) );
         tempDeco.SetObjectID( m_objIndex++ );
         m_objectPool.push_back( tempDeco.clone() );
-        //AddObject( tempDeco );
 
         SceneObstacle tempObstacle;
         tmpSprite.setTexture( texMgr.texObjectRock );
@@ -148,8 +144,6 @@ public:
         tempObstacle.SetObjPos( sf::Vector2f(512.f, 400.f) );
         tempObstacle.SetObjectID( m_objIndex++ );
         m_objectPool.push_back( tempObstacle.clone() );
-        //AddObject( tempObstacle );
-        */
 
         // scene setup
         stats.maxPlayers = 1;

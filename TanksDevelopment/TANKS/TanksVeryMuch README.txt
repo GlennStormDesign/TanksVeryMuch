@@ -3,7 +3,7 @@
 // C++, SFML, OpenGL, GLSL
 
 Tank Prototype
-(latest addition: tank scene)
+(latest addition: scene objects)
 4.27.2020
 
 Controls:

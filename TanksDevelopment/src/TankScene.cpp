@@ -271,7 +271,11 @@ void TankScene::UpdateScene( const float& timeDelta )
             }
         }
     }
-    // perform scene object updates (animated deco)
+    // perform scene object updates
+    for ( unsigned int o=0; o<m_objectPool.size(); o++ )
+    {
+        m_objectPool[o]->SceneObjectUpdate( timeDelta );
+    }
     // perform scene object collision checks tanks or shots (collidable, destructable, trigger)
     for ( unsigned int t=0; t<m_tankPool.size(); t++ )
     {
@@ -280,7 +284,6 @@ void TankScene::UpdateScene( const float& timeDelta )
         {
             for ( unsigned int o=0; o<m_objectPool.size(); o++ )
             {
-                // REVIEW: Object slicing happening here?
                 if ( m_objectPool[o]->active && m_objectPool[o]->type == Obstacle ) // TODO: trigger and destructable
                 {
                     // REFACTOR IN PROGRESS
@@ -290,16 +293,14 @@ void TankScene::UpdateScene( const float& timeDelta )
                     // NOTE: If instead, the object pool was a collection of fully-functional objects (virtually) ...
                     // NOTE: ... and each member, as a subclass, took advantage of those overrides, this would work.
                     // NOTE: 'modularity' can come from individual classes for display, collision, etc, which compose the base
-                    /*
                     SceneObject s = *m_objectPool[o];
-                    if ( hitBox.intersects( dynamic_cast<CollidableObject>(s).GetHitBox() ) ) // no worky
+                    if ( hitBox.intersects( s.GetHitBox() ) ) // no worky
                     {
                         sf::Vector2f pos, other;
                         pos = m_tankPool[t].GetBaseSprite().getPosition();
-                        other = m_objectPool[o]->GetObjPos();
+                        other = m_objectPool[o]->GetObjPos(); // TODO: take into account sprite origin
                         m_tankPool[t].SetPosition( pos.x + ((pos.x-other.x)*timeDelta), pos.y + ((pos.y-other.y)*timeDelta) );
                     }
-                    */
                 }
             }
         }
@@ -320,7 +321,6 @@ void TankScene::DrawScene( sf::RenderWindow& window )
     // REVIEW: scene object layering
     for ( unsigned int o=0; o<m_objectPool.size(); o++ )
     {
-        // REVIEW: Object slicing happening here?
         if ( m_objectPool[o]->visible )
             m_objectPool[o]->DrawSceneObject( window, v.getCenter() );
     }

@@ -261,7 +261,7 @@ void TankScene::UpdateScene( const float& timeDelta )
                                 Tanks::musicMgr.LaunchMusicSting(Lose, false);
                                 Tanks::musicMgr.LaunchMusicLoop(Silent, true);
                             }
-                            // [HACK] apparently musicMgr will lose all these settings once this scene update scope is done
+                            // FIXME: apparently musicMgr will lose all these settings once this scene update scope is done
                             //Tanks::musicMgr.MusicStingUpdate(timeDelta);
                         }
                         else

@@ -28,7 +28,7 @@ void TankScene::SceneInit()
 
     // specific configuration
     // REVIEW: set terrainMgr view offset
-    terrainMgr.SetTerrain( m_terrain );
+    Tanks::terrainMgr.SetTerrain( m_terrain );
 
     // launch scene
     // REVIEW: remove once LoadScene() is implemented
@@ -68,7 +68,7 @@ void TankScene::SetSceneType( const SceneType& type )
 void TankScene::AddTank( Tank t )
 {
     // REVIEW: check if max players will be exceeded, handle reject new player
-    t.SetSprites( texMgr.texTankBase, texMgr.texTankTurret, texMgr.texVFXShot1 );
+    t.SetSprites( Tanks::texMgr.texTankBase, Tanks::texMgr.texTankTurret, Tanks::texMgr.texVFXShot1 );
     t.SetSpriteScale( globalScale );
     t.SetTankDustColor( m_terrain.GetDustColor() );
     t.SetTankID( m_tankIndex++ );
@@ -246,24 +246,26 @@ void TankScene::UpdateScene( const float& timeDelta )
                         {
                             // REVIEW: other tank sfx loop kill
                             if ( !GetLocalPlayerTank().GetActiveState() )
-                                sfxMgr.SFXLoopKill();
-                            sfxMgr.LaunchSFXKill();
+                                Tanks::sfxMgr.SFXLoopKill();
+                            Tanks::sfxMgr.LaunchSFXKill();
                             if ( GetActiveTankCount() == 1 )
                             {
                                 if ( GetLocalPlayerTank().GetActiveState() )
-                                    musicMgr.LaunchMusicSting(Win, false);
+                                    Tanks::musicMgr.LaunchMusicSting(Win, false);
                                 else
-                                    musicMgr.LaunchMusicSting(Lose, false);
-                                musicMgr.LaunchMusicLoop(Silent, true);
+                                    Tanks::musicMgr.LaunchMusicSting(Lose, false);
+                                Tanks::musicMgr.LaunchMusicLoop(Silent, true);
                             }
                             else if ( !GetLocalPlayerTank().GetActiveState() )
                             {
-                                musicMgr.LaunchMusicSting(Lose, false);
-                                musicMgr.LaunchMusicLoop(Silent, true);
+                                Tanks::musicMgr.LaunchMusicSting(Lose, false);
+                                Tanks::musicMgr.LaunchMusicLoop(Silent, true);
                             }
+                            // [HACK] apparently musicMgr will lose all these settings once this scene update scope is done
+                            //Tanks::musicMgr.MusicStingUpdate(timeDelta);
                         }
                         else
-                            sfxMgr.LaunchSFXImpact();
+                            Tanks::sfxMgr.LaunchSFXImpact();
                         m_tankPool[i].shots[s].Detonate();
                     }
                 }
@@ -357,7 +359,7 @@ void TankScene::UpdateScene( const float& timeDelta )
                             }
                             else
                             {
-                                sfxMgr.LaunchSFXImpact();
+                                Tanks::sfxMgr.LaunchSFXImpact();
                                 m_tankPool[t].shots[s].Detonate();
                             }
                         }
@@ -377,7 +379,7 @@ void TankScene::DrawScene( sf::RenderWindow& window )
         v.setCenter( GetLocalPlayerTank().GetBaseSprite().getPosition() );
     window.setView(v);
     // do draw calls for terrain, tanks, shots and vfx
-    terrainMgr.DrawTerrain( window, v.getCenter() );
+    Tanks::terrainMgr.DrawTerrain( window, v.getCenter() );
 
     // draw scene objects
     // REVIEW: scene object layering

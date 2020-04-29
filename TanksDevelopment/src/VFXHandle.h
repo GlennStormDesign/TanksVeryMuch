@@ -117,11 +117,11 @@ private:
 
 class VFXShotImpact : public ParticleEmitter {
 public:
-    VFXShotImpact( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, texMgr.texParticleDust ); EmitInit(); }
+    VFXShotImpact( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, Tanks::texMgr.texParticleDust ); EmitInit(); }
     void VFXInit() override
     {
         active = false;
-        m_particleTexture = texMgr.texParticleDust;
+        m_particleTexture = Tanks::texMgr.texParticleDust;
         m_maxParticles = 12;
         m_emitTime = .381f;
         m_emitRate = 240.f;
@@ -154,11 +154,11 @@ public:
 
 class VFXShotSparks : public ParticleEmitter {
 public:
-    VFXShotSparks( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, texMgr.texParticleSparks ); EmitInit(); }
+    VFXShotSparks( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, Tanks::texMgr.texParticleSparks ); EmitInit(); }
     void VFXInit() override
     {
         active = false;
-        m_particleTexture = texMgr.texParticleSparks;
+        m_particleTexture = Tanks::texMgr.texParticleSparks;
         m_maxParticles = 8;
         m_emitTime = .381f;
         m_emitRate = 100.f;
@@ -191,11 +191,11 @@ public:
 
 class VFXKillStain : public ParticleEmitter {
 public:
-    VFXKillStain( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, texMgr.texMaskRadial ); EmitInit(); }
+    VFXKillStain( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, Tanks::texMgr.texMaskRadial ); EmitInit(); }
     void VFXInit() override
     {
         active = false;
-        m_particleTexture = texMgr.texMaskRadial;
+        m_particleTexture = Tanks::texMgr.texMaskRadial;
         m_maxParticles = 1;
         m_emitTime = .381f;
         m_emitRate = 100.f;
@@ -228,11 +228,11 @@ public:
 
 class VFXKillRing : public ParticleEmitter {
 public:
-    VFXKillRing( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, texMgr.texMaskRing ); EmitInit(); }
+    VFXKillRing( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, Tanks::texMgr.texMaskRing ); EmitInit(); }
     void VFXInit() override
     {
         active = false;
-        m_particleTexture = texMgr.texMaskRing;
+        m_particleTexture = Tanks::texMgr.texMaskRing;
         m_maxParticles = 1;
         m_emitTime = .381f;
         m_emitRate = 100.f;
@@ -265,11 +265,11 @@ public:
 
 class VFXKillFlash : public ParticleEmitter {
 public:
-    VFXKillFlash( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, texMgr.texMaskRadial ); EmitInit(); }
+    VFXKillFlash( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, Tanks::texMgr.texMaskRadial ); EmitInit(); }
     void VFXInit() override
     {
         active = false;
-        m_particleTexture = texMgr.texMaskRadial;
+        m_particleTexture = Tanks::texMgr.texMaskRadial;
         m_maxParticles = 1;
         m_emitTime = .381f;
         m_emitRate = 100.f;
@@ -302,11 +302,11 @@ public:
 
 class VFXKillSparks : public ParticleEmitter {
 public:
-    VFXKillSparks( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, texMgr.texParticleSparks ); EmitInit(); }
+    VFXKillSparks( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, Tanks::texMgr.texParticleSparks ); EmitInit(); }
     void VFXInit() override
     {
         active = false;
-        m_particleTexture = texMgr.texParticleSparks;
+        m_particleTexture = Tanks::texMgr.texParticleSparks;
         m_maxParticles = 16;
         m_emitTime = .381f;
         m_emitRate = 320.f;
@@ -339,11 +339,11 @@ public:
 
 class VFXKillFire : public ParticleEmitter {
 public:
-    VFXKillFire( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, texMgr.texParticleDust ); EmitInit(); }
+    VFXKillFire( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, Tanks::texMgr.texParticleDust ); EmitInit(); }
     void VFXInit() override
     {
         active = false;
-        m_particleTexture = texMgr.texParticleDust;
+        m_particleTexture = Tanks::texMgr.texParticleDust;
         m_maxParticles = 20;
         m_emitTime = 2.f;
         m_emitRate = 8.f;
@@ -377,7 +377,7 @@ public:
 class VFXKillDebris : public ParticleEmitter {
     sf::Color m_tankColor;
 public:
-    VFXKillDebris( const float& x, const float& y, const float& r, const sf::Color& tankColor ) { m_tankColor = tankColor; ParticleEmitter( x, y, r, texMgr.texParticleDebris ); EmitInit(); }
+    VFXKillDebris( const float& x, const float& y, const float& r, const sf::Color& tankColor ) { m_tankColor = tankColor; ParticleEmitter( x, y, r, Tanks::texMgr.texParticleDebris ); EmitInit(); }
     void SetDebrisColor( const sf::Color& tankColor )
     {
         m_tankColor = tankColor;
@@ -387,7 +387,7 @@ public:
     void VFXInit() override
     {
         active = false;
-        m_particleTexture = texMgr.texParticleDebris;
+        m_particleTexture = Tanks::texMgr.texParticleDebris;
         m_maxParticles = 8;
         m_emitTime = .381f;
         m_emitRate = 100.f;
@@ -420,7 +420,7 @@ public:
 
 class VFXTankDust : public ParticleEmitter {
 public:
-    VFXTankDust( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, texMgr.texParticleDust ); EmitInit(); }
+    VFXTankDust( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, Tanks::texMgr.texParticleDust ); EmitInit(); }
     void SetVFXDustColor( const sf::Color& color ) { m_particleLifeGradient.baseValue = color; m_particleLifeGradient.maxValue *= color; }
     void VFXTankDustEmit( const bool& emit )
     {
@@ -430,7 +430,7 @@ public:
     void VFXInit() override
     {
         active = false;
-        m_particleTexture = texMgr.texParticleDust;
+        m_particleTexture = Tanks::texMgr.texParticleDust;
         m_maxParticles = 16;
         m_emitTime = -1.f;
         m_emitRate = 4.f;
@@ -471,7 +471,7 @@ class VFXTankExhaust : public ParticleEmitter {
     sf::Color m_startExhaustColor = sf::Color(80,80,100,128);
     sf::Color m_damagedExhaustColor = sf::Color(0,0,0,255);
 public:
-    VFXTankExhaust( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, texMgr.texParticleDust ); EmitInit(); }
+    VFXTankExhaust( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, Tanks::texMgr.texParticleDust ); EmitInit(); }
     void VFXTankExhaustEmit( const bool& emit )
     {
         emitting = emit;
@@ -487,7 +487,7 @@ public:
     void VFXInit() override
     {
         active = false;
-        m_particleTexture = texMgr.texParticleDust;
+        m_particleTexture = Tanks::texMgr.texParticleDust;
         m_maxParticles = 16;
         m_emitTime = -1.f;
         m_emitRate = 4.f;

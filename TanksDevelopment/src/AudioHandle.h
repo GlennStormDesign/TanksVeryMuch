@@ -97,5 +97,7 @@ public:
 private:
 };
 
-static AudioMusicManager musicMgr;
-static AudioSFXManager sfxMgr;
+namespace Tanks {
+    static AudioMusicManager musicMgr;
+    static AudioSFXManager sfxMgr;
+}

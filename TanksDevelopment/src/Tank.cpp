@@ -460,9 +460,9 @@ void Tank::UpdateTank( const float& timeDelta )
     TransformTank();
     if ( controller.GetControllerType() == LocalPlayer ) {
         // REVIEW: handle spacial sound and non-player tank sound (SoundSource)
-        sfxMgr.pIdleEngaged = m_tankMoving;
-        sfxMgr.pTurretEngaged = m_turretMoving;
-        sfxMgr.SFXLoopUpdate(timeDelta);
+        Tanks::sfxMgr.pIdleEngaged = m_tankMoving;
+        Tanks::sfxMgr.pTurretEngaged = m_turretMoving;
+        Tanks::sfxMgr.SFXLoopUpdate(timeDelta);
     }
     if ( m_shotFrame == 0 && controller.GetControl( BIT_FIRE ) )
     {
@@ -479,7 +479,7 @@ void Tank::UpdateTank( const float& timeDelta )
         {
             SetShotTimer( 1.f );
             TransformShotVFX();
-            sfxMgr.LaunchSFXShot();
+            Tanks::sfxMgr.LaunchSFXShot();
         }
     }
     if ( m_shotTimer > 0.f )
@@ -488,22 +488,22 @@ void Tank::UpdateTank( const float& timeDelta )
         m_shotFrame = (int)( m_shotTimer * (float)MAX_SHOTVFX_FRAMES );
         switch (m_shotFrame) {
             case 6:
-                SetSprites(texMgr.texTankBase, texMgr.texTankTurret, texMgr.texVFXShot1);
+                SetSprites(Tanks::texMgr.texTankBase, Tanks::texMgr.texTankTurret, Tanks::texMgr.texVFXShot1);
                 break;
             case 5:
-                SetSprites(texMgr.texTankBase, texMgr.texTurretShot1, texMgr.texVFXShot2);
+                SetSprites(Tanks::texMgr.texTankBase, Tanks::texMgr.texTurretShot1, Tanks::texMgr.texVFXShot2);
                 break;
             case 4:
-                SetSprites(texMgr.texTankBase, texMgr.texTurretShot2, texMgr.texVFXShot3);
+                SetSprites(Tanks::texMgr.texTankBase, Tanks::texMgr.texTurretShot2, Tanks::texMgr.texVFXShot3);
                 break;
             case 3:
-                SetSprites(texMgr.texTankBase, texMgr.texTurretShot3, texMgr.texVFXShot4);
+                SetSprites(Tanks::texMgr.texTankBase, Tanks::texMgr.texTurretShot3, Tanks::texMgr.texVFXShot4);
                 break;
             case 2:
-                SetSprites(texMgr.texTankBase, texMgr.texTurretShot4, texMgr.texVFXShot5);
+                SetSprites(Tanks::texMgr.texTankBase, Tanks::texMgr.texTurretShot4, Tanks::texMgr.texVFXShot5);
                 break;
             default:
-                SetSprites(texMgr.texTankBase, texMgr.texTankTurret, texMgr.texVFXShot6);
+                SetSprites(Tanks::texMgr.texTankBase, Tanks::texMgr.texTankTurret, Tanks::texMgr.texVFXShot6);
                 break;
         }
     }
@@ -532,7 +532,7 @@ void Tank::DestroyTank()
     // REVIEW: signal to player class they have died
     controller.SetActiveState(false);
     SetActiveState(false);
-    SetSprites( texMgr.texTankBase, texMgr.texTankTurret, texMgr.texVFXShot1 );
+    SetSprites( Tanks::texMgr.texTankBase, Tanks::texMgr.texTankTurret, Tanks::texMgr.texVFXShot1 );
     m_dust.VFXTankDustEmit(false);
     m_exhaust.VFXTankExhaustEmit(false);
     // boom

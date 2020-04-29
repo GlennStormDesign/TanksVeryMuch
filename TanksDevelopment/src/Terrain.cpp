@@ -32,7 +32,7 @@ void TerrainManager::Init()
     {
         for ( int x=0; x<32; x++ )
         {
-            m_noiseMap[(index++)] = texMgr.texMaskNoise.copyToImage().getPixel(x,y).a;
+            m_noiseMap[(index++)] = Tanks::texMgr.texMaskNoise.copyToImage().getPixel(x,y).a;
         }
     }
     m_shaderLoaded = m_tileBlendShader.loadFromFile( "src/TerrainTileBlend.glsl", sf::Shader::Fragment );

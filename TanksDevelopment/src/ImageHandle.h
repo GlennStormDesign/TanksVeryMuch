@@ -43,4 +43,6 @@ private:
     void UITextureInit();
 };
 
-static TextureManager texMgr;
+namespace Tanks {
+    static TextureManager texMgr;
+}

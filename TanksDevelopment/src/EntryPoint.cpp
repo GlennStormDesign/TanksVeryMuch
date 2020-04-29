@@ -61,7 +61,7 @@ int main()
     // ui
 
     // scene
-    currentScene = TestTankScene();
+    Tanks::currentScene = TestTankScene();
     // TEST: if no local player tank, does terrainMgr set correct viewOffset ?
 
     // debug feedback display
@@ -73,8 +73,8 @@ int main()
     sf::Vector2f debugLineOffset = sf::Vector2f( -500.f, -288.f );
 
     // delay music start
-    musicMgr.LaunchMusicLoop( Game, true );
-    musicMgr.musicChanged = true;
+    Tanks::musicMgr.LaunchMusicLoop( Game, true );
+    Tanks::musicMgr.musicChanged = true;
 
     // main loop
     rWin.setActive();
@@ -96,22 +96,22 @@ int main()
             }
         }
 
-        // audio handling
-        musicMgr.MusicLoopUpdate( timeDelta );
-        musicMgr.MusicStingUpdate( timeDelta );
+        // audio update
+        Tanks::musicMgr.MusicStingUpdate( timeDelta );
+        Tanks::musicMgr.MusicLoopUpdate( timeDelta );
 
         // TEMP: audio testing [note: overrides normal audio handling]
-        musicMgr.Testing( true );
-        sfxMgr.Testing( false, timeDelta );
+        Tanks::musicMgr.Testing( true );
+        Tanks::sfxMgr.Testing( false, timeDelta );
 
         // scene update
-        currentScene.UpdateScene( timeDelta );
+        Tanks::currentScene.UpdateScene( timeDelta );
 
         // draw calls
         rWin.clear();
 
         // draw scene (includes repositioning and setting view)
-        currentScene.DrawScene( rWin );
+        Tanks::currentScene.DrawScene( rWin );
 
         // ui draw
 

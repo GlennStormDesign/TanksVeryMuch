@@ -23,7 +23,15 @@ enum MStingMode { None, Iron, Snare, Win, Lose }; // win and lose change MLoopMo
 const float MUSIC_LOOP_MAX_VOLUME = 61.8f;
 const float MUSIC_FADE_DURATION = .381f;
 
-static bool soundOkay = true;
+extern void LaunchMusicEnd( const bool& win );
+
+extern void SFXLoopUpdate( const float& timeDelta );
+extern void LocalTankEngage( const bool& idle, const bool& turret );
+extern void SFXLoopKill();
+extern void LaunchSFXShot();
+extern void LaunchSFXImpact();
+extern void LaunchSFXKill();
+extern void SFXTesting( const bool& debug, const float& timeDelta );
 
 int LaunchSFXLoop( const sf::SoundBuffer& sb );
 int LaunchSFXLoop( const sf::SoundBuffer& sb, const float& volume, const float& pitch );
@@ -98,6 +106,12 @@ private:
 };
 
 namespace Tanks {
+    // FIXME: (related to audio bugs) extern? singleton?
+    // NOTE: dependency was controlled prior to interface/implementation split
+    // TEST: maybe I can provide static functions for any use of these static vars, to avoid needed to make these until main()
+    //  those static functions can live declared here, defined in AudioHandle.cpp
+    //  these managers can live ... in main? AudioHandle.cpp? (either way, just once)
+    // [YES, that approach looks promising, all static functions, one manager made static within AudioManager.cpp]
     static AudioMusicManager musicMgr;
-    static AudioSFXManager sfxMgr;
+    //static AudioSFXManager sfxMgr;
 }

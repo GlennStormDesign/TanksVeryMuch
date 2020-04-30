@@ -96,16 +96,17 @@ int main()
             }
         }
 
+        // scene update
+        Tanks::currentScene.UpdateScene( timeDelta );
+
         // audio update
         Tanks::musicMgr.MusicStingUpdate( timeDelta );
         Tanks::musicMgr.MusicLoopUpdate( timeDelta );
+        SFXLoopUpdate(timeDelta);
 
         // TEMP: audio testing [note: overrides normal audio handling]
         Tanks::musicMgr.Testing( true );
-        Tanks::sfxMgr.Testing( false, timeDelta );
-
-        // scene update
-        Tanks::currentScene.UpdateScene( timeDelta );
+        SFXTesting(false,timeDelta);
 
         // draw calls
         rWin.clear();

@@ -6,6 +6,53 @@
 // Audio Definitions
 
 sf::Clock fxsStep; // temp?
+bool soundOkay = true;
+
+namespace Tanks {
+    //static AudioMusicManager musicMgr;
+
+}
+
+static AudioSFXManager sfxMgr;
+
+extern void LaunchMusicEnd( const bool& win )
+{
+    if ( win )
+        Tanks::musicMgr.LaunchMusicSting(Win, false);
+    else
+        Tanks::musicMgr.LaunchMusicSting(Lose, false);
+    Tanks::musicMgr.LaunchMusicLoop(Silent, true);
+}
+
+extern void SFXLoopUpdate( const float& timeDelta )
+{
+    sfxMgr.SFXLoopUpdate(timeDelta);
+}
+extern void LocalTankEngage( const bool& idle, const bool& turret )
+{
+    sfxMgr.pIdleEngaged = idle;
+    sfxMgr.pTurretEngaged = turret;
+}
+extern void SFXLoopKill()
+{
+    sfxMgr.SFXLoopKill();
+}
+extern void LaunchSFXShot()
+{
+    sfxMgr.LaunchSFXShot();
+}
+extern void LaunchSFXImpact()
+{
+    sfxMgr.LaunchSFXImpact();
+}
+extern void LaunchSFXKill()
+{
+    sfxMgr.LaunchSFXKill();
+}
+extern void SFXTesting( const bool& debug, const float& timeDelta )
+{
+    sfxMgr.Testing(debug,timeDelta);
+}
 
 int LaunchSFXLoop( const sf::SoundBuffer& sb )
 {

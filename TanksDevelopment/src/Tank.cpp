@@ -460,9 +460,10 @@ void Tank::UpdateTank( const float& timeDelta )
     TransformTank();
     if ( controller.GetControllerType() == LocalPlayer ) {
         // REVIEW: handle spacial sound and non-player tank sound (SoundSource)
-        Tanks::sfxMgr.pIdleEngaged = m_tankMoving;
-        Tanks::sfxMgr.pTurretEngaged = m_turretMoving;
-        Tanks::sfxMgr.SFXLoopUpdate(timeDelta);
+        LocalTankEngage( m_tankMoving, m_turretMoving );
+        //Tanks::sfxMagr.pIdleEngaged = m_tankMoving;
+        //Tanks::sfxMagr.pTurretEngaged = m_turretMoving;
+        //Tanks::sfxMagr.SFXLoopUpdate(timeDelta); // (!) this looks rather wrong (should be in main)
     }
     if ( m_shotFrame == 0 && controller.GetControl( BIT_FIRE ) )
     {
@@ -479,7 +480,8 @@ void Tank::UpdateTank( const float& timeDelta )
         {
             SetShotTimer( 1.f );
             TransformShotVFX();
-            Tanks::sfxMgr.LaunchSFXShot();
+            //Tanks::sfxMagr.LaunchSFXShot();
+            LaunchSFXShot();
         }
     }
     if ( m_shotTimer > 0.f )

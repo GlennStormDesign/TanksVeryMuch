@@ -246,26 +246,27 @@ void TankScene::UpdateScene( const float& timeDelta )
                         {
                             // REVIEW: other tank sfx loop kill
                             if ( !GetLocalPlayerTank().GetActiveState() )
-                                Tanks::sfxMgr.SFXLoopKill();
-                            Tanks::sfxMgr.LaunchSFXKill();
+                            {
+                                //Tanks::sfxMagr.SFXLoopKill();
+                                SFXLoopKill();
+                            }
+                            //Tanks::sfxMagr.LaunchSFXKill();
+                            LaunchSFXKill();
                             if ( GetActiveTankCount() == 1 )
                             {
                                 if ( GetLocalPlayerTank().GetActiveState() )
-                                    Tanks::musicMgr.LaunchMusicSting(Win, false);
+                                    LaunchMusicEnd(true);
                                 else
-                                    Tanks::musicMgr.LaunchMusicSting(Lose, false);
-                                Tanks::musicMgr.LaunchMusicLoop(Silent, true);
+                                    LaunchMusicEnd(false);
                             }
                             else if ( !GetLocalPlayerTank().GetActiveState() )
-                            {
-                                Tanks::musicMgr.LaunchMusicSting(Lose, false);
-                                Tanks::musicMgr.LaunchMusicLoop(Silent, true);
-                            }
-                            // FIXME: apparently musicMgr will lose all these settings once this scene update scope is done
-                            //Tanks::musicMgr.MusicStingUpdate(timeDelta);
+                                LaunchMusicEnd(false);
                         }
                         else
-                            Tanks::sfxMgr.LaunchSFXImpact();
+                        {
+                            //Tanks::sfxMagr.LaunchSFXImpact();
+                            LaunchSFXImpact();
+                        }
                         m_tankPool[i].shots[s].Detonate();
                     }
                 }
@@ -359,7 +360,8 @@ void TankScene::UpdateScene( const float& timeDelta )
                             }
                             else
                             {
-                                Tanks::sfxMgr.LaunchSFXImpact();
+                                //Tanks::sfxMagr.LaunchSFXImpact();
+                                LaunchSFXImpact();
                                 m_tankPool[t].shots[s].Detonate();
                             }
                         }

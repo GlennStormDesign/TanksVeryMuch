@@ -6,6 +6,7 @@
 #include "Tank.h"
 #include "Terrain.h"
 #include "SceneObject.h"
+#include "TankGame.h"
 
 // TankScene Declarations
 

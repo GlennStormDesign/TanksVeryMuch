@@ -68,7 +68,7 @@ void TankScene::SetSceneType( const SceneType& type )
 void TankScene::AddTank( Tank t )
 {
     // REVIEW: check if max players will be exceeded, handle reject new player
-    t.SetSprites( Tanks::texMgr.texTankBase, Tanks::texMgr.texTankTurret, Tanks::texMgr.texVFXShot1 );
+    t.SetSprites( TexTankBase(), TexTankTurret(), TexVFXShot1() );
     t.SetSpriteScale( globalScale );
     t.SetTankDustColor( m_terrain.GetDustColor() );
     t.SetTankID( m_tankIndex++ );

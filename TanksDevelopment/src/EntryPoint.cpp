@@ -66,14 +66,14 @@ int main()
 
     // debug feedback display
     sf::Text debugLine;
-    debugLine.setFont(detailFont);
+    debugLine.setFont(g_DetailFont);
     debugLine.setCharacterSize(32);
     debugLine.setScale(.381f,.381f);
     debugLine.setFillColor(sf::Color::Yellow);
     sf::Vector2f debugLineOffset = sf::Vector2f( -500.f, -288.f );
 
-    // delay music start
-    LaunchMusicLoop( Game, true );
+    // music start
+    LaunchMusicLoop( Pause, true );
 
     // main loop
     rWin.setActive();

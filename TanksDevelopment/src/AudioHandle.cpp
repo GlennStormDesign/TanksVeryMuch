@@ -5,11 +5,10 @@
 
 // Audio Definitions
 
-sf::Clock fxsStep; // temp? (keeps from launching multiple sfx, as a minimum interval timer)
-bool soundOkay = true;
-
 static AudioMusicManager musicMgr;
 static AudioSFXManager sfxMgr;
+
+// AudioMusicManager interface
 
 extern void MusicStingUpdate( const float& timeDelta )
 {
@@ -40,6 +39,8 @@ extern void MusicTesting( const bool& debug )
 {
     musicMgr.Testing(debug);
 }
+
+// AudioSFXManager interface
 
 extern void SFXLoopUpdate( const float& timeDelta )
 {
@@ -73,7 +74,7 @@ extern void SFXTesting( const bool& debug, const float& timeDelta )
 
 int LaunchSFXLoop( const sf::SoundBuffer& sb )
 {
-    if ( fxsStep.restart().asSeconds() < MIN_SFX_INTERVAL )
+    if ( !sfxMgr.SafeSFXInterval() )
         return -1;
     int slotIndex = -1;
     for ( int i=0; i<MAX_SFX_LOOPS; i++ ) {
@@ -91,7 +92,7 @@ int LaunchSFXLoop( const sf::SoundBuffer& sb )
 
 int LaunchSFXLoop( const sf::SoundBuffer& sb, const float& volume, const float& pitch )
 {
-    if ( fxsStep.restart().asSeconds() < MIN_SFX_INTERVAL )
+    if ( !sfxMgr.SafeSFXInterval() )
         return -1;
     int slotIndex = -1;
     for ( int i=0; i<MAX_SFX_LOOPS; i++ ) {
@@ -123,7 +124,7 @@ void TouchSFXLoop( const int& index, const float& volume, const float& pitch, co
 
 void LaunchSFXSting( const sf::SoundBuffer& sb )
 {
-    if ( fxsStep.restart().asSeconds() < MIN_SFX_INTERVAL )
+    if ( !sfxMgr.SafeSFXInterval() )
         return;
     for ( int i=0; i<MAX_SFX_STINGS; i++ ) {
         if ( fxs[i].getStatus() == sf::Sound::Stopped )
@@ -227,7 +228,7 @@ void AudioMusicManager::MusicLoopUpdate( const float& timeDelta )
             musicMode = Pause;
         }
     }
-    if ( soundOkay && mloop.getStatus() != sf::Sound::Playing ) {
+    if ( m_musicOkay && mloop.getStatus() != sf::Sound::Playing ) {
         if ( musicMode == Menu )
             mloop.setBuffer(msbMenu);
         else if ( musicMode == Game )
@@ -256,7 +257,7 @@ void AudioMusicManager::LaunchMusicSting( const MStingMode& sting, const bool& i
 
 void AudioMusicManager::Testing( const bool& debug )
 {
-    if ( !debug )
+    if ( !debug || !m_musicOkay )
         return;
 
     if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Space) )
@@ -318,7 +319,7 @@ void AudioMusicManager::MusicLoopInit()
     if ( !msbMenu.loadFromFile("audio/Music_Loop_Menu.wav") ||
             !msbGame.loadFromFile("audio/Music_Loop_Game.wav") ||
             !msbPause.loadFromFile("audio/Music_Loop_Snare.wav") )
-        soundOkay = false;
+        m_musicOkay = false;
     mloop.setBuffer(msbMenu);
     mloop.setVolume(MUSIC_LOOP_MAX_VOLUME);
 }
@@ -328,7 +329,7 @@ void AudioMusicManager::MusicStingInit()
             !msbSnare.loadFromFile("audio/Music_Sting_Snare.wav") ||
             !msbWin.loadFromFile("audio/Music_Sting_Win.wav") ||
             !msbLose.loadFromFile("audio/Music_Sting_Lose.wav") )
-        soundOkay = false;
+        m_musicOkay = false;
     msting.setVolume(100.f); // stings always full volume
 }
 
@@ -338,7 +339,7 @@ void AudioSFXManager::SFXLoopInit()
 {
     if ( !fxbIdle.loadFromFile("audio/SFX_Idle_Loop.wav") ||
             !fxbTurret.loadFromFile("audio/SFX_Turret_Loop.wav") )
-        soundOkay = false;
+        m_sfxOkay = false;
 }
 void AudioSFXManager::SFXStingInit()
 {
@@ -347,7 +348,7 @@ void AudioSFXManager::SFXStingInit()
             !fxbShot.loadFromFile("audio/SFX_Shot.wav") ||
             !fxbImpact.loadFromFile("audio/SFX_Explosion_Impact.wav") ||
             !fxbKill.loadFromFile("audio/SFX_Explosion_Kill.wav") )
-        soundOkay = false;
+        m_sfxOkay = false;
 }
 void AudioSFXManager::SFXLoopUpdate( const float& timeDelta )
 {
@@ -388,6 +389,10 @@ void AudioSFXManager::SFXLoopUpdate( const float& timeDelta )
     }
 }
 
+bool AudioSFXManager::SafeSFXInterval()
+{
+    return ( m_sfxStep.restart().asSeconds() > MIN_SFX_INTERVAL );
+}
 void AudioSFXManager::LaunchSFXShot()
 {
     LaunchSFXSting(fxbShot);
@@ -403,7 +408,7 @@ void AudioSFXManager::LaunchSFXKill()
 
 void AudioSFXManager::Testing( const bool& debug, const float& timeDelta )
 {
-    if ( !debug )
+    if ( !debug || !m_sfxOkay )
         return;
 
     if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Num1) )

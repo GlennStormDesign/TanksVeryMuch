@@ -129,7 +129,7 @@ public:
 
         SceneDecoration tempDeco;
         sf::Sprite tmpSprite;
-        tmpSprite.setTexture( Tanks::texMgr.texObjectBush );
+        tmpSprite.setTexture( TexObjectBush() );
         tmpSprite.setScale( globalScale, globalScale );
         tmpSprite.setOrigin( 16.f, 16.f );
         tempDeco.SetSprite( tmpSprite );
@@ -139,7 +139,7 @@ public:
         //AddObject( tempDeco );
 
         SceneObstacle tempObstacle;
-        tmpSprite.setTexture( Tanks::texMgr.texObjectRock );
+        tmpSprite.setTexture( TexObjectRock() );
         tempObstacle.SetSprite( tmpSprite );
         tempObstacle.SetHitBox( GetHitBox( tmpSprite, 0.618f ) );
         tempObstacle.SetObjPos( sf::Vector2f( 512.f, 400.f ) );
@@ -149,7 +149,7 @@ public:
 
         SceneTrigger tempTrigger;
         tempTrigger.SetObjPos( sf::Vector2f( 0.f, 0.f ) );
-        tmpSprite.setTexture( Tanks::texMgr.texMaskRadial );
+        tmpSprite.setTexture( TexMaskRadial() );
         tempTrigger.SetSprite( tmpSprite );
         tempTrigger.SetObjectID( m_objIndex++ );
         m_objectPool.push_back( tempTrigger.clone() );

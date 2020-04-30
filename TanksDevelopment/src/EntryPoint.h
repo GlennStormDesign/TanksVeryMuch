@@ -27,7 +27,7 @@ namespace Tanks {
         sf::Text t;
         sf::Text subT;
         sf::Text versionT;
-        t.setFont(titleFont);
+        t.setFont(g_TitleFont);
         sf::Vector2f v = sf::Vector2f();
         v.x = 110;
         v.y = 16;
@@ -42,7 +42,7 @@ namespace Tanks {
         subT.setCharacterSize(16);
         subT.setFillColor(sf::Color::White);
         subT.setString("GHS_Game_Spring_2020");
-        versionT.setFont(textFont);
+        versionT.setFont(g_TextFont);
         v.x = 245;
         v.y = 160;
         versionT.setPosition(v);

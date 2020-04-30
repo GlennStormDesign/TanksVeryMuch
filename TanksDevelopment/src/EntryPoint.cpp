@@ -73,8 +73,7 @@ int main()
     sf::Vector2f debugLineOffset = sf::Vector2f( -500.f, -288.f );
 
     // delay music start
-    Tanks::musicMgr.LaunchMusicLoop( Game, true );
-    Tanks::musicMgr.musicChanged = true;
+    LaunchMusicLoop( Game, true );
 
     // main loop
     rWin.setActive();
@@ -96,17 +95,17 @@ int main()
             }
         }
 
-        // scene update
-        Tanks::currentScene.UpdateScene( timeDelta );
-
         // audio update
-        Tanks::musicMgr.MusicStingUpdate( timeDelta );
-        Tanks::musicMgr.MusicLoopUpdate( timeDelta );
-        SFXLoopUpdate(timeDelta);
+        MusicStingUpdate( timeDelta );
+        MusicLoopUpdate( timeDelta );
+        SFXLoopUpdate( timeDelta );
 
         // TEMP: audio testing [note: overrides normal audio handling]
-        Tanks::musicMgr.Testing( true );
-        SFXTesting(false,timeDelta);
+        MusicTesting( true );
+        SFXTesting( false, timeDelta );
+
+        // scene update
+        Tanks::currentScene.UpdateScene( timeDelta );
 
         // draw calls
         rWin.clear();

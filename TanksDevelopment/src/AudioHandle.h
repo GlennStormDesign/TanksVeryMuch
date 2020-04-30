@@ -23,7 +23,12 @@ enum MStingMode { None, Iron, Snare, Win, Lose }; // win and lose change MLoopMo
 const float MUSIC_LOOP_MAX_VOLUME = 61.8f;
 const float MUSIC_FADE_DURATION = .381f;
 
+extern void MusicStingUpdate( const float& timeDelta );
+extern void MusicLoopUpdate( const float& timeDelta );
+extern void LaunchMusicLoop( const MLoopMode& loop, const bool& interrupt );
+extern void LaunchMusicSting( const MStingMode& sting, const bool& interrupt );
 extern void LaunchMusicEnd( const bool& win );
+extern void MusicTesting( const bool& debug );
 
 extern void SFXLoopUpdate( const float& timeDelta );
 extern void LocalTankEngage( const bool& idle, const bool& turret );

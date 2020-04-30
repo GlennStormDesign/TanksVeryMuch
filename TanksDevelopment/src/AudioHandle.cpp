@@ -5,23 +5,40 @@
 
 // Audio Definitions
 
-sf::Clock fxsStep; // temp?
+sf::Clock fxsStep; // temp? (keeps from launching multiple sfx, as a minimum interval timer)
 bool soundOkay = true;
 
-namespace Tanks {
-    //static AudioMusicManager musicMgr;
-
-}
-
+static AudioMusicManager musicMgr;
 static AudioSFXManager sfxMgr;
+
+extern void MusicStingUpdate( const float& timeDelta )
+{
+    musicMgr.MusicStingUpdate(timeDelta);
+}
+extern void MusicLoopUpdate( const float& timeDelta )
+{
+    musicMgr.MusicLoopUpdate(timeDelta);
+}
+extern void LaunchMusicLoop( const MLoopMode& loop, const bool& interrupt )
+{
+    musicMgr.LaunchMusicLoop(loop,interrupt);
+}
+extern void LaunchMusicSting( const MStingMode& sting, const bool& interrupt )
+{
+    musicMgr.LaunchMusicSting(sting,interrupt);
+}
 
 extern void LaunchMusicEnd( const bool& win )
 {
     if ( win )
-        Tanks::musicMgr.LaunchMusicSting(Win, false);
+        musicMgr.LaunchMusicSting(Win, false);
     else
-        Tanks::musicMgr.LaunchMusicSting(Lose, false);
-    Tanks::musicMgr.LaunchMusicLoop(Silent, true);
+        musicMgr.LaunchMusicSting(Lose, false);
+    musicMgr.LaunchMusicLoop(Silent, true);
+}
+extern void MusicTesting( const bool& debug )
+{
+    musicMgr.Testing(debug);
 }
 
 extern void SFXLoopUpdate( const float& timeDelta )

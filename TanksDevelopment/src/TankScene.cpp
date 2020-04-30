@@ -246,27 +246,20 @@ void TankScene::UpdateScene( const float& timeDelta )
                         {
                             // REVIEW: other tank sfx loop kill
                             if ( !GetLocalPlayerTank().GetActiveState() )
-                            {
-                                //Tanks::sfxMagr.SFXLoopKill();
                                 SFXLoopKill();
-                            }
-                            //Tanks::sfxMagr.LaunchSFXKill();
                             LaunchSFXKill();
                             if ( GetActiveTankCount() == 1 )
                             {
                                 if ( GetLocalPlayerTank().GetActiveState() )
-                                    LaunchMusicEnd(true);
+                                    LaunchMusicEnd(true); // win
                                 else
-                                    LaunchMusicEnd(false);
+                                    LaunchMusicEnd(false); // lose
                             }
-                            else if ( !GetLocalPlayerTank().GetActiveState() )
-                                LaunchMusicEnd(false);
+                            else if ( GetLocalPlayerTank() == m_tankPool[n] )
+                                LaunchMusicEnd(false); // lose
                         }
                         else
-                        {
-                            //Tanks::sfxMagr.LaunchSFXImpact();
                             LaunchSFXImpact();
-                        }
                         m_tankPool[i].shots[s].Detonate();
                     }
                 }
@@ -360,7 +353,6 @@ void TankScene::UpdateScene( const float& timeDelta )
                             }
                             else
                             {
-                                //Tanks::sfxMagr.LaunchSFXImpact();
                                 LaunchSFXImpact();
                                 m_tankPool[t].shots[s].Detonate();
                             }

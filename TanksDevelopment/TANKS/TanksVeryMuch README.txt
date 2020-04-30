@@ -3,7 +3,7 @@
 // C++, SFML, OpenGL, GLSL
 
 Tank Prototype
-(latest addition: triggers)
+(latest addition: debugging)
 4.30.2020
 
 Controls:

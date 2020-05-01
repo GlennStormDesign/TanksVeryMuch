@@ -129,6 +129,7 @@ public:
     }
 };
 
-namespace Tanks {
-    static TerrainManager terrainMgr;
-}
+extern void SetTerrainViewOffset( const sf::Vector2f& vwOffset );
+extern void DrawTerrain( sf::RenderWindow& window, const sf::Vector2f& viewPos );
+extern TerrainSubstance GetTerrain();
+extern void SetTerrain( const TerrainSubstance& terrain );

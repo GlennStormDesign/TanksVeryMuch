@@ -1,7 +1,6 @@
 #include <cmath>
 #include <bitset>
 
-#include "TankCore.h"
 #include "AudioHandle.h"
 #include "Tank.h"
 
@@ -153,27 +152,6 @@ void TankController::UpdateLocalPlayerInput()
             SetControl( BIT_TUR_L,  (sf::Joystick::isButtonPressed(m_localJoy,0)) );
             SetControl( BIT_TUR_R,  (sf::Joystick::isButtonPressed(m_localJoy,2)) );
             SetControl( BIT_FIRE,   (sf::Joystick::isButtonPressed(m_localJoy,1)) );
-
-            debugText = "DEBUG -";
-            debugText += " JOYID ";
-            debugText += m_localJoy;
-            debugText += " NAME ";
-            debugText += sf::Joystick::getIdentification(m_localJoy).name;
-            debugText += " PRODID ";
-            debugText += sf::Joystick::getIdentification(m_localJoy).productId;
-            debugText += " JOYX ";
-            debugText += sf::Joystick::getAxisPosition(m_localJoy,sf::Joystick::X);
-            debugText += " JOYY ";
-            debugText += sf::Joystick::getAxisPosition(m_localJoy,sf::Joystick::Y);
-            debugText += " JOYZ ";
-            debugText += sf::Joystick::getAxisPosition(m_localJoy,sf::Joystick::Z);
-            debugText += " JOYR ";
-            debugText += sf::Joystick::getAxisPosition(m_localJoy,sf::Joystick::R);
-            debugText += " JOYU ";
-            debugText += sf::Joystick::getAxisPosition(m_localJoy,sf::Joystick::U);
-            debugText += " JOYV ";
-            debugText += sf::Joystick::getAxisPosition(m_localJoy,sf::Joystick::V);
-
             break;
         case TouchScreen:
             break;

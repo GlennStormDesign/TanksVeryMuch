@@ -6,6 +6,27 @@
 
 // Terrain Definitions
 
+static TerrainManager terrainMgr;
+
+// TerrainManager interface
+
+extern void SetTerrainViewOffset( const sf::Vector2f& vwOffset )
+{
+    terrainMgr.SetViewOffset( vwOffset );
+}
+extern void DrawTerrain( sf::RenderWindow& window, const sf::Vector2f& viewPos )
+{
+    terrainMgr.DrawTerrain( window, viewPos );
+}
+extern TerrainSubstance GetTerrain()
+{
+    return terrainMgr.GetTerrain();
+}
+extern void SetTerrain( const TerrainSubstance& terrain )
+{
+    terrainMgr.SetTerrain( terrain );
+}
+
 // TerrainSubstance implementation
 
 void TerrainSubstance::SubstanceInit()

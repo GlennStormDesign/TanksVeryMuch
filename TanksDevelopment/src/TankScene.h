@@ -122,7 +122,7 @@ public:
         AddTank( tempTank, sf::Color(16.f,32.f,200.f,255.f) );
         // terrain
         m_terrain = SubstanceSoil();
-        Tanks::terrainMgr.SetViewOffset( -(GetLocalPlayerTank().GetBaseSprite().getPosition()) );
+        SetTerrainViewOffset( -(GetLocalPlayerTank().GetBaseSprite().getPosition()) );
 
         // scene
         m_objectPool.reserve(3);
@@ -159,6 +159,24 @@ public:
     }
 };
 
-namespace Tanks {
-    static TankScene currentScene;
-}
+extern void NewScene( const TankScene& level );
+extern void UnloadScene();
+extern void LoadScene( const TankScene& level );
+extern SceneType& GetSceneType();
+extern void SetSceneType( const SceneType& type );
+extern void AddTank( Tank t );
+extern void AddTank( Tank t, sf::Color c );
+extern void RemoveTank( Tank& t );
+extern Tank& GetTank( const unsigned int& index );
+extern Tank& GetLocalPlayerTank();
+extern unsigned int GetActiveTankCount();
+extern void AddObject( SceneObject o );
+extern void RemoveObject( const SceneObject& o );
+extern void SetObject( const unsigned int& index, const SceneObject& o );
+extern const SceneObject& GetObject( const unsigned int& index );
+extern void AddPlayer( PlayerStats p );
+extern void RemovePlayer( const PlayerStats p );
+extern PlayerStats& GetPlayer( const unsigned int& index );
+extern PlayerStats& GetLocalPlayer();
+extern void UpdateScene( const float& timeDelta );
+extern void DrawScene( sf::RenderWindow& window );

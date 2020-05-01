@@ -44,11 +44,11 @@ extern Tank& GetTank( const unsigned int& index )
 }
 extern Tank& GetLocalPlayerTank()
 {
-    return GetLocalPlayerTank();
+    return currentScene.GetLocalPlayerTank();
 }
 extern unsigned int GetActiveTankCount()
 {
-    return GetActiveTankCount();
+    return currentScene.GetActiveTankCount();
 }
 extern void AddObject( SceneObject o )
 {
@@ -82,7 +82,7 @@ extern PlayerStats& GetPlayer( const unsigned int& index )
 }
 extern PlayerStats& GetLocalPlayer()
 {
-    return GetLocalPlayer();
+    return currentScene.GetLocalPlayer();
 }
 extern void UpdateScene( const float& timeDelta )
 {

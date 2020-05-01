@@ -27,9 +27,7 @@
 int main()
 {
 	#ifdef _DEBUG
-        SetDebugText( "[DEBUG]" );
-        AddDebugText( TANKSVERYMUCH_VERSION );
-        AddDebugText( "\n\n" );
+        SetDebugText( FormatDebugHeader() );
     #endif
 
     // rand seed
@@ -114,6 +112,30 @@ int main()
         DrawScene( rWin );
 
         // ui draw
+
+        #ifndef _DEBUG
+        // temp debug in release mode
+        if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Tilde ) )
+        {
+            SetDebugText( FormatDebugHeader() );
+            AddDebugText("Frame rate: ");
+            AddDebugText( FormatFloat( 1.f / timeDelta ) );
+            AddDebugText(" fps\n");
+            AddDebugText("Active tank count: ");
+            AddDebugText( FormatInt( GetActiveTankCount() ) );
+            AddDebugText("\n");
+            AddDebugText("Local Player Tank Position: ");
+            AddDebugText( FormatVector2f( GetLocalPlayerTank().GetBaseSprite().getPosition() ) );
+            AddDebugText("\n");
+            AddDebugText("Local Player Tank Rotation: ");
+            AddDebugText( FormatFloat( GetLocalPlayerTank().GetBaseSprite().getRotation() ) );
+            AddDebugText("\n");
+            AddDebugText("Mouse Position: ");
+            AddDebugText( FormatVector2i( sf::Mouse::getPosition() ) );
+        }
+        else
+            SetDebugText("");
+        #endif // _DEBUG
 
         // debug draw
         debugLine.setString( GetDebugText() );

@@ -5,13 +5,26 @@
 // NICETOHAVE: UIElement manager class animates position, adds vfx, animated image
 // NICETOHAVE: drop shadow option for labels
 
+// NOTE: all UI Elements are meant to be drawn in an order (layers), and all have component layers within them
+// NOTE: movement of UI Elements is an integral factor (position, scale, color / fading) to accent change
+// NOTE: buttons have sfx associated (button fwd or button back)
+
+// NICETOHAVE: ideally, minimal formatting information would be required, and UI rules would dictate size, position, etc
+//  potential rules:
+//    labels are as big as the label text needs, therefore button is as big as label needs to be, etc
+//    aside from movement of UI Elements, their positions will be grouped and centered
+//    timing of movement staggered by layer order (back to front) with standard delay, speed, etc
+
+// NOTE: follow pattern for polymorphism used with SceneObject ( functionality modules -> base class -> subclasses )
+// NOTE: follow pattern for manager used with others ( static instance defined in cpp, extern functions interface project )
+
 class UIElement {
 public:
     bool active = false; // use to skip update
     bool visible = true; // use to skip draw
 private:
 	sf::Vector2f m_uiPos = sf::Vector2f(0.f,0.f); // relative to view pos
-	int m_uiLayer = 0; // ui elements drawn last; ui depth layer sorts draw; - = behind, + = in front
+	unsigned int m_uiLayer = 0; // ui elements drawn last; ui depth layer sorts draw; - = behind, + = in front
 public:
     UIElement() { }
     ~UIElement() { }
@@ -24,11 +37,11 @@ public:
     {
         m_uiPos = pos;
     }
-    int& GetLayerOrder()
+    unsigned int& GetLayerOrder()
     {
         return m_uiLayer;
     }
-    void SetLayerOrder( const int& layerOrder )
+    void SetLayerOrder( const unsigned int& layerOrder )
     {
         m_uiLayer = layerOrder;
     }

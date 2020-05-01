@@ -113,7 +113,7 @@ int main()
 
         // ui draw
 
-        #ifndef _DEBUG
+#ifndef _DEBUG
         // temp debug in release mode
         if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Tilde ) )
         {
@@ -135,7 +135,7 @@ int main()
         }
         else
             SetDebugText("");
-        #endif // _DEBUG
+#endif // _DEBUG
 
         // debug draw
         debugLine.setString( GetDebugText() );

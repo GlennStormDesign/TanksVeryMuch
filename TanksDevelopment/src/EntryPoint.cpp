@@ -63,12 +63,7 @@ int main()
     // TEST: if no local player tank, does terrainMgr set correct viewOffset ?
 
     // debug feedback display
-    sf::Text debugLine;
-    debugLine.setFont(g_DetailFont);
-    debugLine.setCharacterSize(32);
-    debugLine.setScale(.381f,.381f);
-    debugLine.setFillColor(sf::Color::Yellow);
-    sf::Vector2f debugLineOffset = sf::Vector2f( -500.f, -288.f );
+    DebugInit( g_DetailFont );
 
     // music start
     LaunchMusicLoop( Pause, true );
@@ -113,6 +108,7 @@ int main()
 
         // ui draw
 
+
 #ifndef _DEBUG
         // temp debug in release mode
         if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Tilde ) )
@@ -138,10 +134,9 @@ int main()
 #endif // _DEBUG
 
         // debug draw
-        debugLine.setString( GetDebugText() );
-        debugLine.setPosition( rWin.getView().getCenter() + debugLineOffset );
-        if ( debugLine.getString() != "" )
-            rWin.draw( debugLine );
+        DrawDebug( rWin );
+
+        // display window
         rWin.display();
     }
 }

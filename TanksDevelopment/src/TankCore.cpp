@@ -8,13 +8,16 @@ static DebugLogger debugMgr;
 
 // DebugLogger interface
 
+extern void DebugInit( const sf::Font& font )
+{
+    debugMgr.DebugInit(font);
+}
 extern std::string GetDebugText()
 {
     return debugMgr.GetDebugText();
 }
 extern void SetDebugText( const std::string& text )
 {
-
     debugMgr.SetDebugText( text );
 }
 extern void AddDebugText( const std::string& text )
@@ -41,9 +44,20 @@ extern std::string FormatVector2f( const sf::Vector2f& v )
 {
     return debugMgr.FormatVector2f(v);
 }
+extern void DrawDebug( sf::RenderWindow& window )
+{
+    debugMgr.DrawDebug(window);
+}
 
 // DebugLogger implementation
 
+void DebugLogger::DebugInit( const sf::Font& font )
+{
+    m_debugLine.setFont(font);
+    m_debugLine.setCharacterSize(32);
+    m_debugLine.setScale(.381f,.381f);
+    m_debugLine.setFillColor(sf::Color::Yellow);
+}
 std::string DebugLogger::GetDebugText()
 {
     return debugMgr.m_text;
@@ -94,4 +108,11 @@ std::string DebugLogger::FormatVector2f( const sf::Vector2f& v )
     retString += DebugLogger::FormatFloat( v.y );
     retString += " )";
     return retString;
+}
+void DebugLogger::DrawDebug( sf::RenderWindow& window )
+{
+    m_debugLine.setString( GetDebugText() );
+    m_debugLine.setPosition( window.getView().getCenter() + m_debugLineOffset );
+    if ( m_debugLine.getString() != "" )
+        window.draw( m_debugLine );
 }

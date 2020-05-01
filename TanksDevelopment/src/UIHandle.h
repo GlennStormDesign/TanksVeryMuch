@@ -18,6 +18,8 @@
 // NOTE: follow pattern for polymorphism used with SceneObject ( functionality modules -> base class -> subclasses )
 // NOTE: follow pattern for manager used with others ( static instance defined in cpp, extern functions interface project )
 
+sf::Sprite PanelRect( const sf::IntRect& rect );
+
 class UIElement {
 public:
     bool active = false; // use to skip update
@@ -104,5 +106,15 @@ class UIMenu : public UIPanel {
 public:
 private:
 public:
+private:
+};
+
+class UIManager {
+public:
+private:
+public:
+    UIManager() { }
+    ~UIManager() { }
+
 private:
 };

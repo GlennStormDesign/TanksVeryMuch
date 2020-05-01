@@ -2,6 +2,99 @@
 
 // TankScene Definitions
 
+static TankScene currentScene;
+
+// TankScene interface
+
+extern void NewScene( const TankScene& level )
+{
+    currentScene = level;
+}
+extern void UnloadScene()
+{
+    currentScene.UnloadScene();
+}
+extern void LoadScene( const TankScene& level )
+{
+    currentScene.LoadScene( level );
+}
+extern SceneType& GetSceneType()
+{
+    return currentScene.GetSceneType();
+}
+extern void SetSceneType( const SceneType& type )
+{
+    currentScene.SetSceneType( type );
+}
+extern void AddTank( Tank t )
+{
+    currentScene.AddTank( t );
+}
+extern void AddTank( Tank t, sf::Color c )
+{
+    currentScene.AddTank( t, c );
+}
+extern void RemoveTank( Tank& t )
+{
+    currentScene.RemoveTank( t );
+}
+extern Tank& GetTank( const unsigned int& index )
+{
+    return currentScene.GetTank( index );
+}
+extern Tank& GetLocalPlayerTank()
+{
+    return GetLocalPlayerTank();
+}
+extern unsigned int GetActiveTankCount()
+{
+    return GetActiveTankCount();
+}
+extern void AddObject( SceneObject o )
+{
+    currentScene.AddObject( o );
+}
+/*
+extern void RemoveObject( const SceneObject& o )
+{
+    currentScene.RemoveObject( o );
+}
+*/
+extern void SetObject( const unsigned int& index, const SceneObject& o )
+{
+    currentScene.SetObject( index, o );
+}
+extern const SceneObject& GetObject( const unsigned int& index )
+{
+    return currentScene.GetObject( index );
+}
+extern void AddPlayer( PlayerStats p )
+{
+    currentScene.AddPlayer( p );
+}
+extern void RemovePlayer( const PlayerStats p )
+{
+    currentScene.RemovePlayer( p );
+}
+extern PlayerStats& GetPlayer( const unsigned int& index )
+{
+    return currentScene.GetPlayer( index );
+}
+extern PlayerStats& GetLocalPlayer()
+{
+    return GetLocalPlayer();
+}
+extern void UpdateScene( const float& timeDelta )
+{
+    currentScene.UpdateScene( timeDelta );
+}
+extern void DrawScene( sf::RenderWindow& window )
+{
+    currentScene.DrawScene( window );
+}
+
+// pool element comparison operator overloads
+
 bool operator== ( const Tank& l, const Tank& r )
 {
     return (l.tankID == r.tankID);
@@ -28,7 +121,7 @@ void TankScene::SceneInit()
 
     // specific configuration
     // REVIEW: set terrainMgr view offset
-    Tanks::terrainMgr.SetTerrain( m_terrain );
+    SetTerrain( m_terrain );
 
     // launch scene
     // REVIEW: remove once LoadScene() is implemented
@@ -68,7 +161,7 @@ void TankScene::SetSceneType( const SceneType& type )
 void TankScene::AddTank( Tank t )
 {
     // REVIEW: check if max players will be exceeded, handle reject new player
-    t.SetSprites( Tanks::texMgr.texTankBase, Tanks::texMgr.texTankTurret, Tanks::texMgr.texVFXShot1 );
+    t.SetSprites( TexTankBase(), TexTankTurret(), TexVFXShot1() );
     t.SetSpriteScale( globalScale );
     t.SetTankDustColor( m_terrain.GetDustColor() );
     t.SetTankID( m_tankIndex++ );
@@ -373,7 +466,7 @@ void TankScene::DrawScene( sf::RenderWindow& window )
         v.setCenter( GetLocalPlayerTank().GetBaseSprite().getPosition() );
     window.setView(v);
     // do draw calls for terrain, tanks, shots and vfx
-    Tanks::terrainMgr.DrawTerrain( window, v.getCenter() );
+    DrawTerrain( window, v.getCenter() );
 
     // draw scene objects
     // REVIEW: scene object layering

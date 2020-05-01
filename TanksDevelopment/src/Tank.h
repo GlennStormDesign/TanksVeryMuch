@@ -4,6 +4,7 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "TankCore.h"
 #include "VFXHandle.h"
 
 // Tank Declarations

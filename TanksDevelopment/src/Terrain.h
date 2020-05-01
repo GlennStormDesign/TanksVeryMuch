@@ -74,12 +74,12 @@ public:
     {
         SetMaxLayers( 6 );
         // base (soil), rocks, roots, pebble, grass, flowers
-        AddLayer( Tanks::texMgr.texSoilBase );
-        AddLayer( Tanks::texMgr.texSoilRock );
-        AddLayer( Tanks::texMgr.texSoilRoot );
-        AddLayer( Tanks::texMgr.texSoilPebble );
-        AddLayer( Tanks::texMgr.texSoilGrass );
-        AddLayer( Tanks::texMgr.texSoilFlower );
+        AddLayer( TexSoilBase() );
+        AddLayer( TexSoilRock() );
+        AddLayer( TexSoilRoot() );
+        AddLayer( TexSoilPebble() );
+        AddLayer( TexSoilGrass() );
+        AddLayer( TexSoilFlower() );
         SetDustColor( DEFAULT_DUST_COLOR );
     }
 };
@@ -91,10 +91,10 @@ public:
     {
         SetMaxLayers( 4 );
         // base (snow), cracks, grass, ice
-        AddLayer( Tanks::texMgr.texSnowBase );
-        AddLayer( Tanks::texMgr.texSnowCracks );
-        AddLayer( Tanks::texMgr.texSnowGrass );
-        AddLayer( Tanks::texMgr.texSnowIce );
+        AddLayer( TexSnowBase() );
+        AddLayer( TexSnowCracks() );
+        AddLayer( TexSnowGrass() );
+        AddLayer( TexSnowIce() );
         SetDustColor( sf::Color( 220, 240, 255, 200 ) );
     }
 };
@@ -106,10 +106,10 @@ public:
     {
         SetMaxLayers( 4 );
         // base (sand), waves, rocks, grass
-        AddLayer( Tanks::texMgr.texSandBase );
-        AddLayer( Tanks::texMgr.texSandWaves );
-        AddLayer( Tanks::texMgr.texSandRocks );
-        AddLayer( Tanks::texMgr.texSandGrass );
+        AddLayer( TexSandBase() );
+        AddLayer( TexSandWaves() );
+        AddLayer( TexSandRocks() );
+        AddLayer( TexSandGrass() );
         SetDustColor( sf::Color( 220, 210, 140, 200 ) );
     }
 };
@@ -121,14 +121,15 @@ public:
     {
         SetMaxLayers( 4 );
         // base (sod), roots, grass, flowers
-        AddLayer( Tanks::texMgr.texMeadowBase );
-        AddLayer( Tanks::texMgr.texMeadowRoots );
-        AddLayer( Tanks::texMgr.texMeadowGrass );
-        AddLayer( Tanks::texMgr.texMeadowFlowers );
+        AddLayer( TexMeadowBase() );
+        AddLayer( TexMeadowRoots() );
+        AddLayer( TexMeadowGrass() );
+        AddLayer( TexMeadowFlowers() );
         SetDustColor( sf::Color( DEFAULT_DUST_COLOR ) );
     }
 };
 
-namespace Tanks {
-    static TerrainManager terrainMgr;
-}
+extern void SetTerrainViewOffset( const sf::Vector2f& vwOffset );
+extern void DrawTerrain( sf::RenderWindow& window, const sf::Vector2f& viewPos );
+extern TerrainSubstance GetTerrain();
+extern void SetTerrain( const TerrainSubstance& terrain );

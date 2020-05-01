@@ -3,8 +3,8 @@
 // C++, SFML, OpenGL, GLSL
 
 Tank Prototype
-(latest addition: triggers)
-4.29.2020
+(latest addition: bug fix)
+4.30.2020
 
 Controls:
 Move with arrow keys

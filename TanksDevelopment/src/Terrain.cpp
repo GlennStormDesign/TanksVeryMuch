@@ -6,6 +6,27 @@
 
 // Terrain Definitions
 
+static TerrainManager terrainMgr;
+
+// TerrainManager interface
+
+extern void SetTerrainViewOffset( const sf::Vector2f& vwOffset )
+{
+    terrainMgr.SetViewOffset( vwOffset );
+}
+extern void DrawTerrain( sf::RenderWindow& window, const sf::Vector2f& viewPos )
+{
+    terrainMgr.DrawTerrain( window, viewPos );
+}
+extern TerrainSubstance GetTerrain()
+{
+    return terrainMgr.GetTerrain();
+}
+extern void SetTerrain( const TerrainSubstance& terrain )
+{
+    terrainMgr.SetTerrain( terrain );
+}
+
 // TerrainSubstance implementation
 
 void TerrainSubstance::SubstanceInit()
@@ -32,7 +53,11 @@ void TerrainManager::Init()
     {
         for ( int x=0; x<32; x++ )
         {
-            m_noiseMap[(index++)] = Tanks::texMgr.texMaskNoise.copyToImage().getPixel(x,y).a;
+            // REVIEW: cannot copyToImage() from reference (or copy of Texture) returned by TexMaskNoise()
+            // m_noiseMap[(index++)] = TexMaskNoise().copyToImage().getPixel(x,y).a;
+            sf::Texture noiseTemp;
+            noiseTemp.loadFromFile("image/Mask_Noise.png", TANKS_TEX_SIZE);
+            m_noiseMap[(index++)] = noiseTemp.copyToImage().getPixel(x,y).a;
         }
     }
     m_shaderLoaded = m_tileBlendShader.loadFromFile( "src/TerrainTileBlend.glsl", sf::Shader::Fragment );

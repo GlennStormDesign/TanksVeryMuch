@@ -48,6 +48,8 @@ public:
     MLoopMode nextMusicMode = Menu;
     bool musicChanged = false;
 private:
+    // validation
+    bool m_musicOkay = true;
     // music loop
     MLoopMode musicMode = Menu;
     sf::SoundBuffer msbMenu, msbGame, msbPause;
@@ -84,12 +86,16 @@ public:
     bool pIdleEngaged = false;
     bool pTurretEngaged = false;
 private:
+    // validation
+    bool m_sfxOkay = true;
     // sfx loop
     sf::SoundBuffer fxbIdle, fxbTurret;
     float pIdleVol = IDLE_MIN_VOLUME;
     float pIdlePitch = IDLE_MIN_PITCH;
     // sfx sting
     sf::SoundBuffer fxbUIFwd, fxbUIBack, fxbShot, fxbImpact, fxbKill;
+    // safety
+    sf::Clock m_sfxStep; // keeps from launching multiple sfx, as a minimum interval timer (REVIEW: replace?)
 public:
     AudioSFXManager()
     {
@@ -101,6 +107,7 @@ public:
     void SFXLoopInit();
     void SFXStingInit();
     void SFXLoopUpdate( const float& timeDelta );
+    bool SafeSFXInterval();
     void LaunchSFXShot();
     void LaunchSFXImpact();
     void LaunchSFXKill();
@@ -117,6 +124,6 @@ namespace Tanks {
     //  those static functions can live declared here, defined in AudioHandle.cpp
     //  these managers can live ... in main? AudioHandle.cpp? (either way, just once)
     // [YES, that approach looks promising, all static functions, one manager made static within AudioManager.cpp]
-    static AudioMusicManager musicMgr;
+    //static AudioMusicManager musicMgr;
     //static AudioSFXManager sfxMgr;
 }

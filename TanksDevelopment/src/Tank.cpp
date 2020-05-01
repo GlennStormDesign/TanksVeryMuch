@@ -1,7 +1,6 @@
 #include <cmath>
 #include <bitset>
 
-#include "TankCore.h"
 #include "AudioHandle.h"
 #include "Tank.h"
 
@@ -153,27 +152,6 @@ void TankController::UpdateLocalPlayerInput()
             SetControl( BIT_TUR_L,  (sf::Joystick::isButtonPressed(m_localJoy,0)) );
             SetControl( BIT_TUR_R,  (sf::Joystick::isButtonPressed(m_localJoy,2)) );
             SetControl( BIT_FIRE,   (sf::Joystick::isButtonPressed(m_localJoy,1)) );
-
-            debugText = "DEBUG -";
-            debugText += " JOYID ";
-            debugText += m_localJoy;
-            debugText += " NAME ";
-            debugText += sf::Joystick::getIdentification(m_localJoy).name;
-            debugText += " PRODID ";
-            debugText += sf::Joystick::getIdentification(m_localJoy).productId;
-            debugText += " JOYX ";
-            debugText += sf::Joystick::getAxisPosition(m_localJoy,sf::Joystick::X);
-            debugText += " JOYY ";
-            debugText += sf::Joystick::getAxisPosition(m_localJoy,sf::Joystick::Y);
-            debugText += " JOYZ ";
-            debugText += sf::Joystick::getAxisPosition(m_localJoy,sf::Joystick::Z);
-            debugText += " JOYR ";
-            debugText += sf::Joystick::getAxisPosition(m_localJoy,sf::Joystick::R);
-            debugText += " JOYU ";
-            debugText += sf::Joystick::getAxisPosition(m_localJoy,sf::Joystick::U);
-            debugText += " JOYV ";
-            debugText += sf::Joystick::getAxisPosition(m_localJoy,sf::Joystick::V);
-
             break;
         case TouchScreen:
             break;
@@ -486,22 +464,22 @@ void Tank::UpdateTank( const float& timeDelta )
         m_shotFrame = (int)( m_shotTimer * (float)MAX_SHOTVFX_FRAMES );
         switch (m_shotFrame) {
             case 6:
-                SetSprites(Tanks::texMgr.texTankBase, Tanks::texMgr.texTankTurret, Tanks::texMgr.texVFXShot1);
+                SetSprites(TexTankBase(), TexTankTurret(), TexVFXShot1());
                 break;
             case 5:
-                SetSprites(Tanks::texMgr.texTankBase, Tanks::texMgr.texTurretShot1, Tanks::texMgr.texVFXShot2);
+                SetSprites(TexTankBase(), TexTurretShot1(), TexVFXShot2());
                 break;
             case 4:
-                SetSprites(Tanks::texMgr.texTankBase, Tanks::texMgr.texTurretShot2, Tanks::texMgr.texVFXShot3);
+                SetSprites(TexTankBase(), TexTurretShot2(), TexVFXShot3());
                 break;
             case 3:
-                SetSprites(Tanks::texMgr.texTankBase, Tanks::texMgr.texTurretShot3, Tanks::texMgr.texVFXShot4);
+                SetSprites(TexTankBase(), TexTurretShot3(), TexVFXShot4());
                 break;
             case 2:
-                SetSprites(Tanks::texMgr.texTankBase, Tanks::texMgr.texTurretShot4, Tanks::texMgr.texVFXShot5);
+                SetSprites(TexTankBase(), TexTurretShot4(), TexVFXShot5());
                 break;
             default:
-                SetSprites(Tanks::texMgr.texTankBase, Tanks::texMgr.texTankTurret, Tanks::texMgr.texVFXShot6);
+                SetSprites(TexTankBase(), TexTankTurret(), TexVFXShot6());
                 break;
         }
     }
@@ -530,7 +508,7 @@ void Tank::DestroyTank()
     // REVIEW: signal to player class they have died
     controller.SetActiveState(false);
     SetActiveState(false);
-    SetSprites( Tanks::texMgr.texTankBase, Tanks::texMgr.texTankTurret, Tanks::texMgr.texVFXShot1 );
+    SetSprites( TexTankBase(), TexTankTurret(), TexVFXShot1() );
     m_dust.VFXTankDustEmit(false);
     m_exhaust.VFXTankExhaustEmit(false);
     // boom

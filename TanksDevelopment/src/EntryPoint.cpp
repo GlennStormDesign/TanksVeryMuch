@@ -27,9 +27,9 @@
 int main()
 {
 	#ifdef _DEBUG
-        debugText = "[DEBUG] ";
-        debugText += TANKSVERYMUCH_VERSION;
-        debugText += "\n\n";
+        SetDebugText( "[DEBUG]" );
+        AddDebugText( TANKSVERYMUCH_VERSION );
+        AddDebugText( "\n\n" );
     #endif
 
     // rand seed
@@ -61,19 +61,19 @@ int main()
     // ui
 
     // scene
-    Tanks::currentScene = TestTankScene();
+    NewScene( TestTankScene() );
     // TEST: if no local player tank, does terrainMgr set correct viewOffset ?
 
     // debug feedback display
     sf::Text debugLine;
-    debugLine.setFont(detailFont);
+    debugLine.setFont(g_DetailFont);
     debugLine.setCharacterSize(32);
     debugLine.setScale(.381f,.381f);
     debugLine.setFillColor(sf::Color::Yellow);
     sf::Vector2f debugLineOffset = sf::Vector2f( -500.f, -288.f );
 
-    // delay music start
-    LaunchMusicLoop( Game, true );
+    // music start
+    LaunchMusicLoop( Pause, true );
 
     // main loop
     rWin.setActive();
@@ -105,18 +105,18 @@ int main()
         SFXTesting( false, timeDelta );
 
         // scene update
-        Tanks::currentScene.UpdateScene( timeDelta );
+        UpdateScene( timeDelta );
 
         // draw calls
         rWin.clear();
 
         // draw scene (includes repositioning and setting view)
-        Tanks::currentScene.DrawScene( rWin );
+        DrawScene( rWin );
 
         // ui draw
 
         // debug draw
-        debugLine.setString( debugText );
+        debugLine.setString( GetDebugText() );
         debugLine.setPosition( rWin.getView().getCenter() + debugLineOffset );
         if ( debugLine.getString() != "" )
             rWin.draw( debugLine );

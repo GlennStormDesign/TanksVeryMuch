@@ -67,6 +67,7 @@
 		<Unit filename="src/AudioHandle.h" />
 		<Unit filename="src/EntryPoint.cpp" />
 		<Unit filename="src/EntryPoint.h" />
+		<Unit filename="src/FontHandle.cpp" />
 		<Unit filename="src/FontHandle.h" />
 		<Unit filename="src/ImageHandle.cpp" />
 		<Unit filename="src/ImageHandle.h" />

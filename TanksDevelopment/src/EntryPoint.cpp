@@ -63,7 +63,7 @@ int main()
     // TEST: if no local player tank, does terrainMgr set correct viewOffset ?
 
     // debug feedback display
-    DebugInit( g_DetailFont );
+    DebugInit( DetailFont() );
 
     // music start
     LaunchMusicLoop( Pause, true );

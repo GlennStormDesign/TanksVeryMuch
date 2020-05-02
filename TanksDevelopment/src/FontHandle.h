@@ -1,18 +1,30 @@
 #pragma once
 
-// Font Handling
+#include "SFML/Graphics.hpp"
 
-sf::Font g_TitleFont, g_HeadingFont, g_TextFont, g_DetailFont;
+// Font Declarations
 
-bool FontInit() {
-    bool loadFontOkay = true;
-    if ( !g_TitleFont.loadFromFile("image/fontTitle.ttf") ||
-            !g_HeadingFont.loadFromFile("image/fontHeading.ttf") ||
-            !g_TextFont.loadFromFile("image/fontText.ttf") ||
-            !g_DetailFont.loadFromFile("image/fontDetail.ttf") )
-    {
-        // error
-        loadFontOkay = false;
-    }
-    return loadFontOkay;
-}
+extern void FontInit();
+extern bool FontsAvailable();
+extern sf::Font& TitleFont();
+extern sf::Font& HeadingFont();
+extern sf::Font& TextFont();
+extern sf::Font& DetailFont();
+
+class FontManager {
+public:
+private:
+    sf::Font m_titleFont, m_headingFont, m_textFont, m_detailFont;
+    bool m_fontsAvailable = false;
+public:
+    FontManager() { FontInit(); }
+    ~FontManager() { }
+
+    void FontInit();
+    bool FontsAvailable();
+    sf::Font& GetTitleFont();
+    sf::Font& GetHeadingFont();
+    sf::Font& GetTextFont();
+    sf::Font& GetDetailFont();
+private:
+};

@@ -21,13 +21,13 @@ namespace Tanks {
         sf::Clock safetyClock;
         safetyClock.restart();
 
-        // init fonts
-        bool loadOkay = FontInit();
+        // init font check
+        bool loadOkay = FontsAvailable();
 
         sf::Text t;
         sf::Text subT;
         sf::Text versionT;
-        t.setFont(g_TitleFont);
+        t.setFont(TitleFont());
         sf::Vector2f v = sf::Vector2f();
         v.x = 110;
         v.y = 16;
@@ -42,7 +42,7 @@ namespace Tanks {
         subT.setCharacterSize(16);
         subT.setFillColor(sf::Color::White);
         subT.setString("GHS_Game_Spring_2020");
-        versionT.setFont(g_TextFont);
+        versionT.setFont(TextFont());
         v.x = 245;
         v.y = 160;
         versionT.setPosition(v);

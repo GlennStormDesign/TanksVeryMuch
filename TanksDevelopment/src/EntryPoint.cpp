@@ -107,7 +107,7 @@ int main()
         DrawScene( rWin );
 
         // ui draw
-
+        rWin.draw( PanelRect( sf::IntRect( 256, 640, 256, 64 ) ) );
 
 #ifndef _DEBUG
         // temp debug in release mode

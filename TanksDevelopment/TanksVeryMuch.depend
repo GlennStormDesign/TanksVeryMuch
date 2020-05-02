@@ -577,7 +577,7 @@
 
 1587127274 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\src\uihandle.h
 
-1588374270 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\entrypoint.cpp
+1588394158 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\entrypoint.cpp
 	<math.h>
 	<cmath>
 	<string>
@@ -616,7 +616,7 @@
 
 1588354366 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\imagehandle.h
 
-1588369460 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\uihandle.h
+1588392167 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\uihandle.h
 
 1588354366 c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\vfxhandle.h
 	"ImageHandle.h"
@@ -686,8 +686,9 @@
 	<sstream>
 	"TankCore.h"
 
-1588369460 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\uihandle.cpp
+1588394119 source:c:\users\makeplayadmin\documents\cpp development\tanksverymuch\tanksdevelopment\src\uihandle.cpp
 	<SFML/Graphics.hpp>
+	"TankCore.h"
 	"ImageHandle.h"
 	"UIHandle.h"
 

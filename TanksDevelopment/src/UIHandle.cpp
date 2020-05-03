@@ -114,7 +114,7 @@ sf::Sprite PanelRect( sf::RenderTexture& composite, const sf::IntRect& rect )
 
     panelSprite.setTextureRect( sf::IntRect(0,0,rect.width-1,rect.height-1) );
     panelSprite.setPosition( rect.left, rect.top );
-    panelSprite.setScale(globalScale, globalScale);
+    //panelSprite.setScale(globalScale, globalScale); // REVIEW: find a way to provide 'look' of panel x2 scale
 
     return panelSprite;
 }

@@ -3,8 +3,8 @@
 // C++, SFML, OpenGL, GLSL
 
 Tank Prototype
-(latest addition: ui panel)
-5.2.2020
+(latest addition: ui label)
+5.3.2020
 
 Controls:
 Move with arrow keys

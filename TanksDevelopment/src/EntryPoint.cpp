@@ -107,20 +107,58 @@ int main()
         DrawScene( rWin );
 
         // ui draw
+        sf::Vector2f uiOffset = GetLocalPlayerTank().GetBaseSprite().getPosition();
+        uiOffset.x -= 512;
+        uiOffset.y -= 512;
+
         sf::RenderTexture rt;
-        sf::Sprite panel = PanelRect( rt, sf::IntRect( 0, 0, 256, 64 ) );
-        panel.setPosition( (GetLocalPlayerTank().GetBaseSprite().getPosition().x - 512 + 256), (GetLocalPlayerTank().GetBaseSprite().getPosition().y - 512 + 640) );
+        sf::Sprite panel = PanelRect( rt, sf::IntRect( 0, 0, 512, 128 ) );
+        panel.setPosition( (uiOffset.x + 256), (uiOffset.y + 640) );
         panel.setColor( sf::Color(255,255,255,128) );
-        rWin.draw( panel );
+        if ( GetActiveTankCount() == 1 || !GetLocalPlayerTank().GetActiveState() )
+            rWin.draw( panel );
         sf::Text testUI;
         testUI.setFont( HeadingFont() );
         testUI.setColor( sf::Color(0,0,0,128) );
-        testUI.setString("This user interface is\nbeginning to look\nlike something."); // TODO: auto-calc new lines using local bound checks
+        std::string endString = "Last tank standing\n";
+        if ( GetActiveTankCount() > 1 && !GetLocalPlayerTank().GetActiveState() )
+            endString = "Your tank destroyed\n";
+        if ( GetLocalPlayerTank().GetActiveState() )
+            endString += "  You win!\n";
+        else
+            endString += "  You lose\n";
+        endString += "Tanks for playing";
+        testUI.setString(endString); // TODO: auto-calc new lines using local bound checks
         sf::Vector2f textPos = panel.getPosition();
         textPos.x += ((512 - testUI.getLocalBounds().width-8 ) / 2);
         textPos.y += ((128 - testUI.getLocalBounds().height-8 ) / 2);
         testUI.setPosition( textPos );
-        rWin.draw(testUI);
+        if ( GetActiveTankCount() == 1 || !GetLocalPlayerTank().GetActiveState()  )
+            rWin.draw(testUI);
+
+        sf::IntRect labelBounds;
+        labelBounds.left = rWin.getSize().x - 256 - 8;
+        labelBounds.left += 512 - ( rWin.getSize().x /2 );
+        labelBounds.top = 8;
+        labelBounds.top += 512 - ( rWin.getSize().y /2 );
+        labelBounds.width = 256;
+        labelBounds.height = 64;
+        panel = PanelRect( rt, labelBounds );
+        panel.setPosition( labelBounds.left + uiOffset.x, labelBounds.top + uiOffset.y );
+        //rWin.draw(panel);
+        sf::Text labelText;
+        labelText.setFont( TextFont() );
+        labelText.setCharacterSize( 26 );
+        //labelText.setColor( sf::Color::Black );
+        labelText.setColor( sf::Color::White );
+        labelText.setString("Tanks Very Much");
+        sf::Vector2f labelPos;
+        labelPos.x = labelBounds.left + uiOffset.x;
+        labelPos.y = labelBounds.top + uiOffset.y;
+        labelPos.x += ( labelBounds.width /2 ) - ( labelText.getLocalBounds().width/2 );
+        labelPos.y += ( labelBounds.height /2 ) - (labelText.getCharacterSize()/8) - ( labelText.getLocalBounds().height/2 );
+        labelText.setPosition( labelPos );
+        rWin.draw(labelText);
 
 #ifndef _DEBUG
         // temp debug in release mode

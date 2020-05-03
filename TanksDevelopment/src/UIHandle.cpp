@@ -10,7 +10,7 @@ static UIManager uiMgr;
 
 // UI interface
 
-sf::Sprite PanelRect( const sf::IntRect& rect )
+sf::Sprite PanelRect( sf::RenderTexture& composite, const sf::IntRect& rect )
 {
     // REVIEW: need to multiply rect by 1/globalScale before composing?
 
@@ -21,16 +21,11 @@ sf::Sprite PanelRect( const sf::IntRect& rect )
     //  4) place stretched center based on border dimensions used
     //  5) make sprite (use sprite from input?) apply composed texture, size sprite to rect, return
     sf::Sprite piece;
+    piece.setTexture( TexUIElement() );
     sf::IntRect segment;
     sf::Vector2f pPos;
 
-    sf::RenderTexture composite;
-    sf::ContextSettings settings;
-    settings.depthBits = 8;
-    composite.create(rect.width, rect.height, settings);
-
-    composite.clear();
-    piece.setTexture( TexUIElement() );
+    composite.create(rect.width, rect.height);
 
     // corners
     segment.height = 8;
@@ -61,7 +56,7 @@ sf::Sprite PanelRect( const sf::IntRect& rect )
     segment.left = 8;
     segment.width = 16; // todo: handle remainder
     segment.height = 8;
-    for ( int x=8; x<(rect.width-24); x+=16 )
+    for ( int x=8; x<(rect.width-8); x+=16 )
     {
         segment.top = 0;
         piece.setTextureRect( segment );
@@ -80,7 +75,7 @@ sf::Sprite PanelRect( const sf::IntRect& rect )
     segment.top = 8;
     segment.width = 8;
     segment.height = 16; // todo: handle remainder
-    for ( int y=8; y<(rect.height-24); y+=16 )
+    for ( int y=8; y<(rect.height-8); y+=16 )
     {
         segment.left = 0;
         piece.setTextureRect( segment );
@@ -102,9 +97,9 @@ sf::Sprite PanelRect( const sf::IntRect& rect )
     segment.width = 16;
     segment.height = 16;
     piece.setTextureRect( segment );
-    for ( int x=8; x<(rect.width-24); x+=16 )
+    for ( int x=8; x<(rect.width-8); x+=16 )
     {
-        for ( int y=8; y<(rect.height-24); y+=16 )
+        for ( int y=8; y<(rect.height-8); y+=16 )
         {
             // set piece position
             pPos.x = x;
@@ -114,13 +109,10 @@ sf::Sprite PanelRect( const sf::IntRect& rect )
         }
     }
 
-    sf::Sprite panelSprite;
-    panelSprite.setTextureRect( sf::IntRect(0,0,rect.width,rect.height) );
-
     composite.display();
-    panelSprite.setTexture( composite.getTexture() ); // FIXME: no texture from render texture (piece?)
-    //panelSprite.setTexture( TexUIElement() ); // testing
+    sf::Sprite panelSprite( composite.getTexture() );
 
+    panelSprite.setTextureRect( sf::IntRect(0,0,rect.width-1,rect.height-1) );
     panelSprite.setPosition( rect.left, rect.top );
     panelSprite.setScale(globalScale, globalScale);
 

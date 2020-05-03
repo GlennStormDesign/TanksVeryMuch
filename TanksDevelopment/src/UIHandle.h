@@ -18,7 +18,7 @@
 // NOTE: follow pattern for polymorphism used with SceneObject ( functionality modules -> base class -> subclasses )
 // NOTE: follow pattern for manager used with others ( static instance defined in cpp, extern functions interface project )
 
-sf::Sprite PanelRect( const sf::IntRect& rect );
+sf::Sprite PanelRect( sf::RenderTexture& rt, const sf::IntRect& rect );
 
 class UIElement {
 public:

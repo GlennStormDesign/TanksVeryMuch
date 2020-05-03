@@ -107,7 +107,20 @@ int main()
         DrawScene( rWin );
 
         // ui draw
-        rWin.draw( PanelRect( sf::IntRect( 256, 640, 256, 64 ) ) );
+        sf::RenderTexture rt;
+        sf::Sprite panel = PanelRect( rt, sf::IntRect( 0, 0, 256, 64 ) );
+        panel.setPosition( (GetLocalPlayerTank().GetBaseSprite().getPosition().x - 512 + 256), (GetLocalPlayerTank().GetBaseSprite().getPosition().y - 512 + 640) );
+        panel.setColor( sf::Color(255,255,255,128) );
+        rWin.draw( panel );
+        sf::Text testUI;
+        testUI.setFont( HeadingFont() );
+        testUI.setColor( sf::Color(0,0,0,128) );
+        testUI.setString("This user interface is\nbeginning to look\nlike something."); // TODO: auto-calc new lines using local bound checks
+        sf::Vector2f textPos = panel.getPosition();
+        textPos.x += ((512 - testUI.getLocalBounds().width-8 ) / 2);
+        textPos.y += ((128 - testUI.getLocalBounds().height-8 ) / 2);
+        testUI.setPosition( textPos );
+        rWin.draw(testUI);
 
 #ifndef _DEBUG
         // temp debug in release mode

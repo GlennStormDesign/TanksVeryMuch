@@ -124,9 +124,9 @@ int main()
         if ( GetActiveTankCount() > 1 && !GetLocalPlayerTank().GetActiveState() )
             endString = "Your tank destroyed\n";
         if ( GetLocalPlayerTank().GetActiveState() )
-            endString += "  You win!\n";
+            endString += "You win!\n";
         else
-            endString += "  You lose\n";
+            endString += "You lose ...\n";
         endString += "Tanks for playing";
         testUI.setString(endString); // TODO: auto-calc new lines using local bound checks
         sf::Vector2f textPos = panel.getPosition();
@@ -156,9 +156,43 @@ int main()
         labelPos.x = labelBounds.left + uiOffset.x;
         labelPos.y = labelBounds.top + uiOffset.y;
         labelPos.x += ( labelBounds.width /2 ) - ( labelText.getLocalBounds().width/2 );
+        // NOTE: centering vertically involves reducing one line space, which is proportional to size and differs among fonts
         labelPos.y += ( labelBounds.height /2 ) - (labelText.getCharacterSize()/8) - ( labelText.getLocalBounds().height/2 );
         labelText.setPosition( labelPos );
         rWin.draw(labelText);
+
+        // Heading Notes:
+        // Headings can group associated values together for ease of use
+        // Font, line size proportion, size, color, alignment can all be a part of a heading
+        // This could/should be implemented in FontHandle
+
+        // Field Notes:
+        // A field is a solid color rectangle, suitable for tooltip, or simply colorizing a background
+        // It will need a rect and a color
+
+        // Label Notes:
+        // A label will need to know the string to display, the rect to use, and the heading
+
+        // Button Notes:
+        // A button can use a button heading, and will then need to know the string to display and the rect to use
+        // It will also need to know what to do when button is pressed ( an arbitrary action ) (function callback?)
+
+        // Box Notes:
+        // A box is a panel with a label heading and at least one button
+        // It can use box headings, but it will need to know label string, button strings (+callbacks), and a rect to use
+
+        // Panel Notes:
+        // A panel is a vertical series of labels (left) and buttons (right), a label heading and at least one button bottom
+
+        // HUD Notes:
+        //
+
+        // Menu Notes:
+        //
+
+        // UI Manager Notes:
+        // UI Manager should handle creation, update and drawing of ui elements in concert
+        // Based on tests above, it can/should handle RenderTexture, layer sorting, button callbacks, ui animation
 
 #ifndef _DEBUG
         // temp debug in release mode

@@ -145,12 +145,12 @@ int main()
         labelBounds.height = 64;
         panel = PanelRect( rt, labelBounds );
         panel.setPosition( labelBounds.left + uiOffset.x, labelBounds.top + uiOffset.y );
-        //rWin.draw(panel);
+        rWin.draw(panel);
         sf::Text labelText;
         labelText.setFont( TextFont() );
         labelText.setCharacterSize( 26 );
-        //labelText.setColor( sf::Color::Black );
-        labelText.setColor( sf::Color::White );
+        labelText.setColor( sf::Color::Black );
+        //labelText.setColor( sf::Color::White );
         labelText.setString("Tanks Very Much");
         sf::Vector2f labelPos;
         labelPos.x = labelBounds.left + uiOffset.x;

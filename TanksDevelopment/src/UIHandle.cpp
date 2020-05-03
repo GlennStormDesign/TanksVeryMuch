@@ -12,8 +12,6 @@ static UIManager uiMgr;
 
 sf::Sprite PanelRect( sf::RenderTexture& composite, const sf::IntRect& rect )
 {
-    // REVIEW: need to multiply rect by 1/globalScale before composing?
-
     // returns composed sprite with a 'stretched' texture, aside from the 8x8 corners, based on rect (later: screen space pct)
     //  1) take ui element tex, divide into 9 pieces; four 8x8 corners, four borders and a 16x16 center
     //  2) take minimum size (16x16) from rect and place four corners within
@@ -22,41 +20,41 @@ sf::Sprite PanelRect( sf::RenderTexture& composite, const sf::IntRect& rect )
     //  5) make sprite (use sprite from input?) apply composed texture, size sprite to rect, return
     sf::Sprite piece;
     piece.setTexture( TexUIElement() );
+    piece.setScale(2.f,2.f); // hard-coded x2 scale for aesthetics, not using globalScale here
+    unsigned short int borderWidth = 8;
     sf::IntRect segment;
     sf::Vector2f pPos;
 
     composite.create(rect.width, rect.height);
 
     // corners
-    segment.height = 8;
-    segment.width = 8;
+    segment.height = borderWidth;
+    segment.width = borderWidth;
     for ( int x=0; x<32; x+=25 )
     {
         for ( int y=0; y<32; y+=25 )
         {
             segment.left = x;
-            // todo: adjust
             segment.top = y;
-            // todo: adjust
             piece.setTextureRect( segment );
             // set piece position
             if ( x == 0 )
                 pPos.x = 0;
             else
-                pPos.x = (rect.width-8);
+                pPos.x = (rect.width-(borderWidth*2));
             if ( y == 0 )
                 pPos.y = 0;
             else
-                pPos.y = (rect.height-8);
+                pPos.y = (rect.height-(borderWidth*2));
             piece.setPosition( pPos );
             composite.draw(piece);
         }
     }
     // borders
-    segment.left = 8;
-    segment.width = 16; // todo: handle remainder
-    segment.height = 8;
-    for ( int x=8; x<(rect.width-8); x+=16 )
+    segment.left = borderWidth;
+    segment.width = borderWidth * 2; // todo: handle remainder, if not multiple of borderWidth
+    segment.height = borderWidth;
+    for ( int x=borderWidth*2; x<(rect.width-(borderWidth*4)); x+=borderWidth*2 )
     {
         segment.top = 0;
         piece.setTextureRect( segment );
@@ -68,14 +66,14 @@ sf::Sprite PanelRect( sf::RenderTexture& composite, const sf::IntRect& rect )
         segment.top = 25;
         piece.setTextureRect( segment );
         // set piece position
-        pPos.y = (rect.height-8);
+        pPos.y = (rect.height-(borderWidth*2));
         piece.setPosition( pPos );
         composite.draw(piece);
     }
-    segment.top = 8;
-    segment.width = 8;
-    segment.height = 16; // todo: handle remainder
-    for ( int y=8; y<(rect.height-8); y+=16 )
+    segment.top = borderWidth;
+    segment.width = borderWidth;
+    segment.height = borderWidth * 2; // todo: handle remainder, if not multiple of borderWidth
+    for ( int y=borderWidth*2; y<(rect.height-(borderWidth*4)); y+=borderWidth*2 )
     {
         segment.left = 0;
         piece.setTextureRect( segment );
@@ -87,19 +85,19 @@ sf::Sprite PanelRect( sf::RenderTexture& composite, const sf::IntRect& rect )
         segment.left = 25;
         piece.setTextureRect( segment );
         // set piece position
-        pPos.x = (rect.width-8);
+        pPos.x = (rect.width-(borderWidth*2));
         piece.setPosition( pPos );
         composite.draw(piece);
     }
     // center
-    segment.left = 8;
-    segment.top = 8;
-    segment.width = 16;
-    segment.height = 16;
+    segment.left = borderWidth;
+    segment.top = borderWidth;
+    segment.width = borderWidth * 2;
+    segment.height = borderWidth * 2;
     piece.setTextureRect( segment );
-    for ( int x=8; x<(rect.width-8); x+=16 )
+    for ( int x=(borderWidth*2); x<(rect.width-(borderWidth*4)); x+=(borderWidth*2) )
     {
-        for ( int y=8; y<(rect.height-8); y+=16 )
+        for ( int y=(borderWidth*2); y<(rect.height-(borderWidth*4)); y+=(borderWidth*2) )
         {
             // set piece position
             pPos.x = x;
@@ -114,7 +112,6 @@ sf::Sprite PanelRect( sf::RenderTexture& composite, const sf::IntRect& rect )
 
     panelSprite.setTextureRect( sf::IntRect(0,0,rect.width-1,rect.height-1) );
     panelSprite.setPosition( rect.left, rect.top );
-    //panelSprite.setScale(globalScale, globalScale); // REVIEW: find a way to provide 'look' of panel x2 scale
 
     return panelSprite;
 }

@@ -28,3 +28,24 @@ public:
     sf::Font& GetDetailFont();
 private:
 };
+
+enum HeadingAlignment {
+    Center,
+    Left,
+    Right
+};
+
+class FontHeading {
+public:
+private:
+    sf::Font m_font;
+    unsigned short int m_fontSize;
+    sf::Color m_fontColor;
+    HeadingAlignment m_fontAlign;
+public:
+    FontHeading();
+    ~FontHeading();
+protected:
+    virtual void InitHeadingText( sf::Text& t ); // initialize text object from this heading
+    virtual HeadingAlignment GetAlignment();
+};

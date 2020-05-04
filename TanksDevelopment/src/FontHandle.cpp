@@ -64,3 +64,15 @@ sf::Font& FontManager::GetDetailFont()
 {
     return m_detailFont;
 }
+
+void FontHeading::InitHeadingText( sf::Text& textObj )
+{
+    textObj.setFont( m_font );
+    textObj.setFillColor( m_fontColor );
+    textObj.setCharacterSize( m_fontSize );
+}
+
+HeadingAlignment FontHeading::GetAlignment()
+{
+    return m_fontAlign;
+}

@@ -68,5 +68,116 @@ class DebugHeading : public FontHeading {
         m_font = DetailFont();
         m_fontColor = sf::Color::Yellow;
         m_fontSize = 12;
+        //m_lineSpace = ?;
+    }
+};
+
+class ClearSmallHeading : public FontHeading {
+    ClearSmallHeading() { HeadingInit(); }
+    void SubInit() override
+    {
+        m_font = DetailFont();
+        m_fontColor = sf::Color::Black;
+        m_fontSize = 24;
+        //m_lineSpace = ?;
+    }
+};
+
+class ClearLargeHeading : public FontHeading {
+    ClearLargeHeading() { HeadingInit(); }
+    void SubInit() override
+    {
+        m_font = DetailFont();
+        m_fontColor = sf::Color::Black;
+        m_fontSize = 36;
+        //m_lineSpace = ?;
+    }
+};
+
+class HUDLabelSemi : public FontHeading {
+    HUDLabelSemi() { HeadingInit(); }
+    void SubInit() override
+    {
+        m_font = TextFont();
+        m_fontColor = sf::Color(255,255,255,128);
+        m_fontSize = 32;
+        //m_lineSpace = ?;
+    }
+};
+
+class HUDLabelWhite : public FontHeading {
+    HUDLabelWhite() { HeadingInit(); }
+    void SubInit() override
+    {
+        m_font = TextFont();
+        m_fontColor = sf::Color::White;
+        m_fontSize = 32;
+        //m_lineSpace = ?;
+    }
+};
+
+class PanelLabel : public FontHeading {
+    PanelLabel() { HeadingInit(); }
+    void SubInit() override
+    {
+        m_font = TextFont();
+        m_fontColor = sf::Color::Black;
+        m_fontSize = 24;
+        //m_lineSpace = ?;
+    }
+};
+
+class PanelDescription : public FontHeading {
+    PanelDescription() { HeadingInit(); }
+    void SubInit() override
+    {
+        m_font = TextFont();
+        m_fontColor = sf::Color::Black;
+        m_fontSize = 18;
+        //m_lineSpace = ?;
+    }
+};
+
+class SubTitle : FontHeading {
+    SubTitle() { HeadingInit(); }
+    void SubInit() override
+    {
+        m_font = HeadingFont();
+        m_fontColor = sf::Color::Black;
+        m_fontSize = 48;
+        //m_lineSpace = ?;
+    }
+};
+
+class PanelTitle : FontHeading {
+    PanelTitle() { HeadingInit(); }
+    void SubInit() override
+    {
+        m_font = HeadingFont();
+        m_fontColor = sf::Color::Black;
+        m_fontSize = 36;
+        //m_lineSpace = ?;
+    }
+};
+
+class PanelHeading : FontHeading {
+    PanelHeading() { HeadingInit(); }
+    void SubInit() override
+    {
+        m_font = HeadingFont();
+        m_fontColor = sf::Color::Black;
+        m_fontSize = 24;
+        //m_lineSpace = ?;
+    }
+};
+
+class MainTitle : FontHeading {
+    MainTitle() { HeadingInit(); }
+    void SubInit() override
+    {
+        m_font = TitleFont();
+        m_fontColor = sf::Color::Black;
+        m_fontSize = 49;
+        //m_lineSpace = ?;
     }
 };

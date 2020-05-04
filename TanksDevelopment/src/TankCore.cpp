@@ -54,8 +54,7 @@ extern void DrawDebug( sf::RenderWindow& window )
 void DebugLogger::DebugInit( const sf::Font& font )
 {
     m_debugLine.setFont(font);
-    m_debugLine.setCharacterSize(32);
-    m_debugLine.setScale(.381f,.381f);
+    m_debugLine.setCharacterSize(12);
     m_debugLine.setFillColor(sf::Color::Yellow);
 }
 std::string DebugLogger::GetDebugText()

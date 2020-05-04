@@ -76,3 +76,10 @@ HeadingAlignment FontHeading::GetAlignment()
 {
     return m_fontAlign;
 }
+
+int FontHeading::GetLineSpace()
+{
+    return m_lineSpace;
+}
+
+// Font Heading subclasses defined in header

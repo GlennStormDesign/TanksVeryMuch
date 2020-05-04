@@ -37,15 +37,36 @@ enum HeadingAlignment {
 
 class FontHeading {
 public:
-private:
+protected:
     sf::Font m_font;
-    unsigned short int m_fontSize;
+    int m_fontSize;
     sf::Color m_fontColor;
     HeadingAlignment m_fontAlign;
+    int m_lineSpace;
 public:
-    FontHeading();
-    ~FontHeading();
+    FontHeading() { HeadingInit(); };
+    ~FontHeading() { };
+
+    void HeadingInit()
+    {
+        // general init
+        SubInit();
+        // specific init
+    }
 protected:
-    virtual void InitHeadingText( sf::Text& t ); // initialize text object from this heading
-    virtual HeadingAlignment GetAlignment();
+    virtual void SubInit();
+    void InitHeadingText( sf::Text& t ); // initialize text object from this heading
+    HeadingAlignment GetAlignment();
+    int GetLineSpace();
+};
+
+
+class DebugHeading : public FontHeading {
+    DebugHeading() { HeadingInit(); }
+    void SubInit() override
+    {
+        m_font = DetailFont();
+        m_fontColor = sf::Color::Yellow;
+        m_fontSize = 12;
+    }
 };

@@ -77,9 +77,9 @@ HeadingAlignment FontHeading::GetAlignment()
     return m_fontAlign;
 }
 
-int FontHeading::GetLineSpace()
+sf::Vector2f FontHeading::GetFontSpace()
 {
-    return m_lineSpace;
+    return sf::Vector2f( (m_charSpace*m_fontSize), (m_lineSpace*m_fontSize) );
 }
 
 // Font Heading subclasses defined in header

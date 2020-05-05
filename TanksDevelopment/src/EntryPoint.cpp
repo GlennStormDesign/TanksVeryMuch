@@ -149,10 +149,19 @@ int main()
         sf::Text labelText;
         labelText.setFont( TextFont() );
         labelText.setCharacterSize( 28 );
-        labelText.setColor( sf::Color::Black );
-        //labelText.setColor( sf::Color::White );
         labelText.setString("Tanks Very Much");
         sf::Vector2f labelPos;
+        labelPos.x = labelBounds.left + uiOffset.x;
+        labelPos.y = labelBounds.top + uiOffset.y;
+        // drop shadow drawn first
+        labelText.setColor( sf::Color(128,128,128,255) );
+        labelPos.x += ( labelBounds.width /2 ) - ( labelText.getLocalBounds().width/2 );
+        // (only half of vertical offset, no horizontal offset)
+        labelPos.y += ( labelBounds.height /2 ) - ((labelText.getCharacterSize()*0.115f) /2 )- ( labelText.getLocalBounds().height/2 );
+        labelText.setPosition( labelPos );
+        rWin.draw(labelText);
+        // main text draw
+        labelText.setColor( sf::Color::Black );
         labelPos.x = labelBounds.left + uiOffset.x;
         labelPos.y = labelBounds.top + uiOffset.y;
         // NOTE: centering involves reducing space, which is proportional to size and differs among fonts

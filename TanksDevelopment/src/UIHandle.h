@@ -3,7 +3,7 @@
 // UI Element Handling
 
 // NICETOHAVE: UIElement manager class animates position, adds vfx, animated image
-// NICETOHAVE: drop shadow option for labels (shadow color drawn first without 'center offset')
+// NICETOHAVE: drop shadow option for labels (shadow color drawn first with only half of vertical 'center offset', no h offset)
 
 // NOTE: all UI Elements are meant to be drawn in an order (layers), and all have component layers within them
 // NOTE: movement of UI Elements is an integral factor (position, scale, color / fading) to accent change

@@ -148,16 +148,16 @@ int main()
         rWin.draw(panel);
         sf::Text labelText;
         labelText.setFont( TextFont() );
-        labelText.setCharacterSize( 26 );
+        labelText.setCharacterSize( 28 );
         labelText.setColor( sf::Color::Black );
         //labelText.setColor( sf::Color::White );
         labelText.setString("Tanks Very Much");
         sf::Vector2f labelPos;
         labelPos.x = labelBounds.left + uiOffset.x;
         labelPos.y = labelBounds.top + uiOffset.y;
-        labelPos.x += ( labelBounds.width /2 ) - ( labelText.getLocalBounds().width/2 );
-        // NOTE: centering vertically involves reducing one line space, which is proportional to size and differs among fonts
-        labelPos.y += ( labelBounds.height /2 ) - (labelText.getCharacterSize()/8) - ( labelText.getLocalBounds().height/2 );
+        // NOTE: centering involves reducing space, which is proportional to size and differs among fonts
+        labelPos.x += ( labelBounds.width /2 ) - (labelText.getCharacterSize()*0.04f) - ( labelText.getLocalBounds().width/2 );
+        labelPos.y += ( labelBounds.height /2 ) - (labelText.getCharacterSize()*0.115f) - ( labelText.getLocalBounds().height/2 );
         labelText.setPosition( labelPos );
         rWin.draw(labelText);
 

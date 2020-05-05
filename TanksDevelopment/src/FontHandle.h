@@ -42,7 +42,8 @@ protected:
     int m_fontSize;
     sf::Color m_fontColor;
     HeadingAlignment m_fontAlign;
-    int m_lineSpace;
+    float m_charSpace; // pct of char size (horizontal centering adjust)
+    float m_lineSpace; // pct of char size (vertical centering adjust)
 public:
     FontHeading() { HeadingInit(); };
     ~FontHeading() { };
@@ -61,14 +62,15 @@ protected:
 };
 
 
-class DebugHeading : public FontHeading {
-    DebugHeading() { HeadingInit(); }
+class ToolipHeading : public FontHeading {
+    ToolipHeading() { HeadingInit(); }
     void SubInit() override
     {
         m_font = DetailFont();
         m_fontColor = sf::Color::Yellow;
         m_fontSize = 12;
-        //m_lineSpace = ?;
+        m_charSpace = 0.06f;
+        m_lineSpace = 0.15f;
     }
 };
 
@@ -79,7 +81,8 @@ class ClearSmallHeading : public FontHeading {
         m_font = DetailFont();
         m_fontColor = sf::Color::Black;
         m_fontSize = 24;
-        //m_lineSpace = ?;
+        m_charSpace = 0.06f;
+        m_lineSpace = 0.15f;
     }
 };
 
@@ -90,7 +93,8 @@ class ClearLargeHeading : public FontHeading {
         m_font = DetailFont();
         m_fontColor = sf::Color::Black;
         m_fontSize = 36;
-        //m_lineSpace = ?;
+        m_charSpace = 0.06f;
+        m_lineSpace = 0.15f;
     }
 };
 
@@ -101,7 +105,8 @@ class HUDLabelSemi : public FontHeading {
         m_font = TextFont();
         m_fontColor = sf::Color(255,255,255,128);
         m_fontSize = 32;
-        //m_lineSpace = ?;
+        m_charSpace = 0.04f;
+        m_lineSpace = 0.115f;
     }
 };
 
@@ -112,7 +117,8 @@ class HUDLabelWhite : public FontHeading {
         m_font = TextFont();
         m_fontColor = sf::Color::White;
         m_fontSize = 32;
-        //m_lineSpace = ?;
+        m_charSpace = 0.04f;
+        m_lineSpace = 0.115f;
     }
 };
 
@@ -123,7 +129,8 @@ class PanelLabel : public FontHeading {
         m_font = TextFont();
         m_fontColor = sf::Color::Black;
         m_fontSize = 24;
-        //m_lineSpace = ?;
+        m_charSpace = 0.04f;
+        m_lineSpace = 0.115f;
     }
 };
 
@@ -134,7 +141,8 @@ class PanelDescription : public FontHeading {
         m_font = TextFont();
         m_fontColor = sf::Color::Black;
         m_fontSize = 18;
-        //m_lineSpace = ?;
+        m_charSpace = 0.04f;
+        m_lineSpace = 0.115f;
     }
 };
 
@@ -145,7 +153,8 @@ class SubTitle : FontHeading {
         m_font = HeadingFont();
         m_fontColor = sf::Color::Black;
         m_fontSize = 48;
-        //m_lineSpace = ?;
+        m_charSpace = 0.05f;
+        m_lineSpace = 0.19f;
     }
 };
 
@@ -156,7 +165,8 @@ class PanelTitle : FontHeading {
         m_font = HeadingFont();
         m_fontColor = sf::Color::Black;
         m_fontSize = 36;
-        //m_lineSpace = ?;
+        m_charSpace = 0.05f;
+        m_lineSpace = 0.19f;
     }
 };
 
@@ -167,7 +177,8 @@ class PanelHeading : FontHeading {
         m_font = HeadingFont();
         m_fontColor = sf::Color::Black;
         m_fontSize = 24;
-        //m_lineSpace = ?;
+        m_charSpace = 0.05f;
+        m_lineSpace = 0.19f;
     }
 };
 
@@ -178,6 +189,7 @@ class MainTitle : FontHeading {
         m_font = TitleFont();
         m_fontColor = sf::Color::Black;
         m_fontSize = 49;
-        //m_lineSpace = ?;
+        m_charSpace = 0.f;
+        m_lineSpace = 0.15f;
     }
 };

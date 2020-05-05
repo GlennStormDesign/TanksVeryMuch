@@ -155,8 +155,16 @@ int main()
         labelPos.y = labelBounds.top + uiOffset.y;
         // drop shadow drawn first
         labelText.setColor( sf::Color(128,128,128,255) );
+        // [left align]
+        //labelPos.x += (labelText.getCharacterSize()*0.04f * 8.f);
+        // [end left align]
+        // [right align]
+        //labelPos.x += ( labelBounds.width ) - (labelText.getCharacterSize()*0.04f * 9.f) - labelText.getLocalBounds().width;
+        // [end right align]
+        // [center align]
         labelPos.x += ( labelBounds.width /2 ) - ( labelText.getLocalBounds().width/2 );
-        // (only half of vertical offset, no horizontal offset)
+        // [end center align]
+        // (for drop shadow, only half of vertical offset, no horizontal offset)
         labelPos.y += ( labelBounds.height /2 ) - ((labelText.getCharacterSize()*0.115f) /2 )- ( labelText.getLocalBounds().height/2 );
         labelText.setPosition( labelPos );
         rWin.draw(labelText);
@@ -164,8 +172,16 @@ int main()
         labelText.setColor( sf::Color::Black );
         labelPos.x = labelBounds.left + uiOffset.x;
         labelPos.y = labelBounds.top + uiOffset.y;
+        // [left align]
+        //labelPos.x += (labelText.getCharacterSize()*0.04f * 7.f);
+        // [end left align]
+        // [right align]
+        //labelPos.x += ( labelBounds.width ) - (labelText.getCharacterSize()*0.04f * 10.f) - labelText.getLocalBounds().width;
+        // [end right align]
+        // [center align]
         // NOTE: centering involves reducing space, which is proportional to size and differs among fonts
         labelPos.x += ( labelBounds.width /2 ) - (labelText.getCharacterSize()*0.04f) - ( labelText.getLocalBounds().width/2 );
+        // [end center align]
         labelPos.y += ( labelBounds.height /2 ) - (labelText.getCharacterSize()*0.115f) - ( labelText.getLocalBounds().height/2 );
         labelText.setPosition( labelPos );
         rWin.draw(labelText);

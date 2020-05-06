@@ -1,5 +1,7 @@
 #pragma once
 
+#include "SFML/Graphics.hpp"
+
 #include "FontHandle.h"
 
 // UI Element Handling
@@ -84,6 +86,15 @@ public:
     {
         //
     }
+
+    void UIUpdate( const float& timeDelta ) override
+    {
+        //
+    }
+    void DrawUI( const sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
+    {
+        //
+    }
 private:
 };
 
@@ -98,6 +109,15 @@ public:
     {
         //
     }
+
+    void UIUpdate( const float& timeDelta ) override
+    {
+        //
+    }
+    void DrawUI( const sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
+    {
+        //
+    }
 private:
 };
 
@@ -106,10 +126,21 @@ class UILabel : public UIElement {
 public:
 private:
     FontHeading m_heading;
+    std::string m_string;
 public:
-    UILabel( const sf::IntRect& r, const sf::Color& c, const FontHeading& f )
-        { SetUIRect(r); SetUIColor(c); m_heading = f; UIInit(); }
+    UILabel() { }
+    UILabel( const sf::IntRect& r, const sf::Color& c, const FontHeading& f, const std::string& s )
+        { SetUIRect(r); SetUIColor(c); m_heading = f; m_string = s; UIInit(); }
     void ElementInit() override
+    {
+        //
+    }
+
+    void UIUpdate( const float& timeDelta ) override
+    {
+        //
+    }
+    void DrawUI( const sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
     {
         //
     }
@@ -120,7 +151,23 @@ private:
 class UIIcon : public UIElement {
 public:
 private:
+    sf::Texture m_texture;
 public:
+    UIIcon( const sf::IntRect& r, const sf::Color& c, const sf::Texture& t )
+        { SetUIRect(r); SetUIColor(c); m_texture = t; UIInit(); }
+    void ElementInit() override
+    {
+        //
+    }
+
+    void UIUpdate( const float& timeDelta ) override
+    {
+        //
+    }
+    void DrawUI( const sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
+    {
+        //
+    }
 private:
 };
 
@@ -128,7 +175,23 @@ private:
 class UIButton : public UIElement {
 public:
 private:
+    UILabel m_buttonLabel;
 public:
+    UIButton( const sf::IntRect& r, const sf::Color& c, const UILabel& buttonLabel )
+        { SetUIRect(r); SetUIColor(c); m_buttonLabel = buttonLabel; UIInit(); }
+    void ElementInit() override
+    {
+        //
+    }
+
+    void UIUpdate( const float& timeDelta ) override
+    {
+        //
+    }
+    void DrawUI( const sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
+    {
+        //
+    }
 private:
 };
 

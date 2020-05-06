@@ -26,6 +26,7 @@ public:
     bool visible = true; // use to skip draw
 private:
 	sf::Vector2f m_uiPos = sf::Vector2f(0.f,0.f); // relative to view pos
+	// may need vector2f size as well, essentially a float rect
 	unsigned int m_uiLayer = 0; // ui elements drawn last; ui depth layer sorts draw; - = behind, + = in front
 public:
     UIElement() { }
@@ -50,6 +51,13 @@ public:
 
     virtual void UIUpdate( const float& timeDelta ) { /* define in subclasses */ }
     virtual void DrawUI( const sf::RenderWindow& window, const sf::Vector2f& viewPos ) { /* define in subclasses */ }
+private:
+};
+
+class UIField : public UIElement {
+public:
+private:
+public:
 private:
 };
 

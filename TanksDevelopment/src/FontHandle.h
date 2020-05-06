@@ -59,6 +59,7 @@ public:
     void InitHeadingText( sf::Text& t ); // initialize text object from this heading
     HeadingAlignment GetAlignment();
     sf::Vector2f GetFontSpace(); // horizontal and vertical offset to center heading
+    sf::Color GetShadowColor();
 protected:
     virtual void SubInit();
 };

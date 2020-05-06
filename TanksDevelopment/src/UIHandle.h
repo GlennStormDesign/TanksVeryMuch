@@ -1,5 +1,7 @@
 #pragma once
 
+#include "FontHandle.h"
+
 // UI Element Handling
 
 // NICETOHAVE: UIElement manager class animates position, adds vfx, animated image
@@ -26,10 +28,20 @@ public:
     bool visible = true; // use to skip draw
 private:
 	sf::IntRect m_uiRect = sf::IntRect(0,0,0,0); // left and top relative to view pos x,y
+	sf::Color m_uiColor = sf::Color::White; // primary color (foreground)
 	unsigned int m_uiLayer = 0; // ui elements drawn last; ui depth layer sorts draw; - = behind, + = in front
 public:
-    UIElement() { }
+    UIElement() { UIInit(); }
     ~UIElement() { }
+
+    virtual void ElementInit() { } // define in subclasses
+
+    void UIInit()
+    {
+        // general config
+        ElementInit();
+        // specific config
+    }
 
     sf::IntRect& GetUIRect()
     {
@@ -38,6 +50,14 @@ public:
     void SetUIRect( const sf::IntRect& pos )
     {
         m_uiRect = pos;
+    }
+    sf::Color& GetUIColor()
+    {
+        return m_uiColor;
+    }
+    void SetUIColor( const sf::Color& col )
+    {
+        m_uiColor = col;
     }
     unsigned int& GetLayerOrder()
     {
@@ -58,6 +78,12 @@ class UIField : public UIElement {
 public:
 private:
 public:
+    UIField( const sf::IntRect& r, const sf::Color& c )
+        { SetUIRect(r); SetUIColor(c); UIInit(); }
+    void ElementInit() override
+    {
+        //
+    }
 private:
 };
 
@@ -66,6 +92,12 @@ class UIFrame : public UIElement {
 public:
 private:
 public:
+    UIFrame( const sf::IntRect& r, const sf::Color& c )
+        { SetUIRect(r); SetUIColor(c); UIInit(); }
+    void ElementInit() override
+    {
+        //
+    }
 private:
 };
 
@@ -73,7 +105,14 @@ private:
 class UILabel : public UIElement {
 public:
 private:
+    FontHeading m_heading;
 public:
+    UILabel( const sf::IntRect& r, const sf::Color& c, const FontHeading& f )
+        { SetUIRect(r); SetUIColor(c); m_heading = f; UIInit(); }
+    void ElementInit() override
+    {
+        //
+    }
 private:
 };
 

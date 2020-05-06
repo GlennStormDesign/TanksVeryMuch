@@ -25,20 +25,19 @@ public:
     bool active = false; // use to skip update
     bool visible = true; // use to skip draw
 private:
-	sf::Vector2f m_uiPos = sf::Vector2f(0.f,0.f); // relative to view pos
-	// may need vector2f size as well, essentially a float rect
+	sf::IntRect m_uiRect = sf::IntRect(0,0,0,0); // left and top relative to view pos x,y
 	unsigned int m_uiLayer = 0; // ui elements drawn last; ui depth layer sorts draw; - = behind, + = in front
 public:
     UIElement() { }
     ~UIElement() { }
 
-    sf::Vector2f& GetUIPos()
+    sf::IntRect& GetUIRect()
     {
-        return m_uiPos;
+        return m_uiRect;
     }
-    void SetUIPos( const sf::Vector2f& pos )
+    void SetUIRect( const sf::IntRect& pos )
     {
-        m_uiPos = pos;
+        m_uiRect = pos;
     }
     unsigned int& GetLayerOrder()
     {
@@ -49,11 +48,12 @@ public:
         m_uiLayer = layerOrder;
     }
 
-    virtual void UIUpdate( const float& timeDelta ) { /* define in subclasses */ }
-    virtual void DrawUI( const sf::RenderWindow& window, const sf::Vector2f& viewPos ) { /* define in subclasses */ }
+    virtual void UIUpdate( const float& timeDelta ) { }  // define in subclasses
+    virtual void DrawUI( const sf::RenderWindow& window, const sf::Vector2f& viewPos ) { } // define in subclasses
 private:
 };
 
+// UI Field is a rectangle area of solid visible color (a background rectangle)
 class UIField : public UIElement {
 public:
 private:
@@ -61,6 +61,15 @@ public:
 private:
 };
 
+// UI Frame is a background made from the 'stretched' ui graphic with a pixelated border
+class UIFrame : public UIElement {
+public:
+private:
+public:
+private:
+};
+
+// UI Label is a text display with a particular font heading, against a particular background, either field or frame
 class UILabel : public UIElement {
 public:
 private:
@@ -68,6 +77,7 @@ public:
 private:
 };
 
+// UI Icon is a graphic image display, against a particular background, either field or frame
 class UIIcon : public UIElement {
 public:
 private:
@@ -75,6 +85,7 @@ public:
 private:
 };
 
+// UI Button is an interactive element (accepts touch or mouse click as a press), with label or icon against field or frame
 class UIButton : public UIElement {
 public:
 private:
@@ -82,6 +93,7 @@ public:
 private:
 };
 
+// UI Panel is a collection of labels, icons and buttons against a single background, either field or frame
 class UIPanel : public UIElement {
 public:
 private:
@@ -89,6 +101,7 @@ public:
 private:
 };
 
+// UI HUD is a label or icon display meant to be displayed directly over the rendered viewport (usually without background)
 class UIHUD : public UIPanel {
 public:
 private:
@@ -96,6 +109,7 @@ public:
 private:
 };
 
+// UI Alert is a popup panel with title label, description label and single button to confirm alert was received
 class UIAlert : public UIPanel {
 public:
 private:
@@ -103,6 +117,7 @@ public:
 private:
 };
 
+// UI Confirm is a popup panel with title label, description label and more than one button to accept or cancel an action
 class UIConfirm : public UIPanel {
 public:
 private:
@@ -110,6 +125,7 @@ public:
 private:
 };
 
+// UI Menu is a collection of labels, icons and buttons within a panel, meant to become a screen separate from gameplay
 class UIMenu : public UIPanel {
 public:
 private:
@@ -117,6 +133,7 @@ public:
 private:
 };
 
+// UI Manager is the primary handler of UI Element initialization, updating and drawing in sorted layers
 class UIManager {
 public:
 private:

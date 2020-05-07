@@ -118,4 +118,62 @@ sf::Sprite PanelRect( sf::RenderTexture& composite, const sf::IntRect& rect )
 
 // UIElement implementation
 
+void UIElement::UIInit()
+{
+    // general config
+    ElementInit();
+    // specific config
+}
+sf::IntRect& UIElement::GetUIRect()
+{
+    return m_uiRect;
+}
+void UIElement::SetUIRect( const sf::IntRect& pos )
+{
+    m_uiRect = pos;
+}
+sf::Color& UIElement::GetUIColor()
+{
+    return m_uiColor;
+}
+void UIElement::SetUIColor( const sf::Color& col )
+{
+    m_uiColor = col;
+}
+unsigned int& UIElement::GetLayerOrder()
+{
+    return m_uiLayer;
+}
+void UIElement::SetLayerOrder( const unsigned int& layerOrder )
+{
+    m_uiLayer = layerOrder;
+}
+
+void UIElement::UIUpdate( const float& timeDelta ) { } // define in subclasses
+void UIElement::DrawUI( sf::RenderWindow& window, const sf::Vector2f& viewPos ) { } // define in subclasses
+
+// UIField implementation
+void UIField::ElementInit()
+{
+    //
+}
+void UIField::UIUpdate( const float& timeDelta )
+{
+    if ( !active )
+        return;
+
+    //
+}
+void UIField::DrawUI( sf::RenderWindow& window, const sf::Vector2f& viewPos )
+{
+    if ( !visible )
+        return;
+
+    sf::RectangleShape s;
+    s.setPosition( sf::Vector2f( viewPos.x + m_uiRect.left, viewPos.y + m_uiRect.top ) );
+    s.setSize( sf::Vector2f( m_uiRect.width, m_uiRect.height ) );
+    s.setFillColor( m_uiColor );
+    window.draw( s );
+}
+
 // UIManager implementation

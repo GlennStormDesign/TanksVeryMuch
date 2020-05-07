@@ -194,6 +194,14 @@ int main()
         // Field Notes:
         // A field is a solid color rectangle, suitable for tooltip, or simply colorizing a background
         // It will need a rect and a color
+        sf::IntRect r = sf::IntRect(300,300,128,64);
+        sf::Color c = sf::Color::Blue;
+        UIField f( r, c );
+        sf::Vector2f uiO = uiOffset; // REFACTOR: Turn this 'zeroed' uiOffset into pixel position of screen space within view
+        uiO.x += 512 - (rWin.getSize().x / 2); // NOTE: '512' is the original position the view was set (tank position)
+        uiO.y += 512 - (rWin.getSize().y / 2);
+        // NOTE: iow, this is viewposition - half window size (need view position as input at all?)
+        f.DrawUI(rWin, uiO);
 
         // Label Notes:
         // A label will need to know the string to display, the rect to use, and the heading

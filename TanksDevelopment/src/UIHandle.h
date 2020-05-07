@@ -28,7 +28,7 @@ class UIElement {
 public:
     bool active = false; // use to skip update
     bool visible = true; // use to skip draw
-private:
+protected:
 	sf::IntRect m_uiRect = sf::IntRect(0,0,0,0); // left and top relative to view pos x,y
 	sf::Color m_uiColor = sf::Color::White; // primary color (foreground)
 	unsigned int m_uiLayer = 0; // ui elements drawn last; ui depth layer sorts draw; - = behind, + = in front
@@ -38,40 +38,17 @@ public:
 
     virtual void ElementInit() { } // define in subclasses
 
-    void UIInit()
-    {
-        // general config
-        ElementInit();
-        // specific config
-    }
+    void UIInit();
 
-    sf::IntRect& GetUIRect()
-    {
-        return m_uiRect;
-    }
-    void SetUIRect( const sf::IntRect& pos )
-    {
-        m_uiRect = pos;
-    }
-    sf::Color& GetUIColor()
-    {
-        return m_uiColor;
-    }
-    void SetUIColor( const sf::Color& col )
-    {
-        m_uiColor = col;
-    }
-    unsigned int& GetLayerOrder()
-    {
-        return m_uiLayer;
-    }
-    void SetLayerOrder( const unsigned int& layerOrder )
-    {
-        m_uiLayer = layerOrder;
-    }
+    sf::IntRect& GetUIRect();
+    void SetUIRect( const sf::IntRect& pos );
+    sf::Color& GetUIColor();
+    void SetUIColor( const sf::Color& col );
+    unsigned int& GetLayerOrder();
+    void SetLayerOrder( const unsigned int& layerOrder );
 
-    virtual void UIUpdate( const float& timeDelta ) { }  // define in subclasses
-    virtual void DrawUI( const sf::RenderWindow& window, const sf::Vector2f& viewPos ) { } // define in subclasses
+    virtual void UIUpdate( const float& timeDelta ); // define in subclasses
+    virtual void DrawUI( sf::RenderWindow& window, const sf::Vector2f& viewPos ); // define in subclasses
 private:
 };
 
@@ -82,19 +59,10 @@ private:
 public:
     UIField( const sf::IntRect& r, const sf::Color& c )
         { SetUIRect(r); SetUIColor(c); UIInit(); }
-    void ElementInit() override
-    {
-        //
-    }
+    void ElementInit() override;
 
-    void UIUpdate( const float& timeDelta ) override
-    {
-        //
-    }
-    void DrawUI( const sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
-    {
-        //
-    }
+    void UIUpdate( const float& timeDelta ) override;
+    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& viewPos ) override;
 private:
 };
 
@@ -112,11 +80,13 @@ public:
 
     void UIUpdate( const float& timeDelta ) override
     {
-        //
+        if ( !active )
+            return;
     }
-    void DrawUI( const sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
+    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
     {
-        //
+        if ( !visible )
+            return;
     }
 private:
 };
@@ -138,11 +108,13 @@ public:
 
     void UIUpdate( const float& timeDelta ) override
     {
-        //
+        if ( !active )
+            return;
     }
-    void DrawUI( const sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
+    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
     {
-        //
+        if ( !visible )
+            return;
     }
 private:
 };
@@ -162,11 +134,13 @@ public:
 
     void UIUpdate( const float& timeDelta ) override
     {
-        //
+        if ( !active )
+            return;
     }
-    void DrawUI( const sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
+    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
     {
-        //
+        if ( !visible )
+            return;
     }
 private:
 };
@@ -186,20 +160,28 @@ public:
 
     void UIUpdate( const float& timeDelta ) override
     {
-        //
+        if ( !active )
+            return;
     }
-    void DrawUI( const sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
+    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
     {
-        //
+        if ( !visible )
+            return;
     }
 private:
 };
 
-// UI Panel is a collection of labels, icons and buttons against a single background, either field or frame
+// UI Panel is a collection of labels, icons and buttons against a single background, either field or frame (base for others)
 class UIPanel : public UIElement {
 public:
 private:
 public:
+    // REVIEW: consider how various elements contained with this panel are defined and initialized (pool?)
+    UIPanel() { UIInit(); }
+    void ElementInit() override
+    {
+        //
+    }
 private:
 };
 
@@ -208,6 +190,11 @@ class UIHUD : public UIPanel {
 public:
 private:
 public:
+    UIHUD() { UIInit(); }
+    void ElementInit() override
+    {
+        //
+    }
 private:
 };
 
@@ -216,6 +203,11 @@ class UIAlert : public UIPanel {
 public:
 private:
 public:
+    UIAlert() { UIInit(); }
+    void ElementInit() override
+    {
+        //
+    }
 private:
 };
 
@@ -224,6 +216,11 @@ class UIConfirm : public UIPanel {
 public:
 private:
 public:
+    UIConfirm() { UIInit(); }
+    void ElementInit() override
+    {
+        //
+    }
 private:
 };
 
@@ -232,6 +229,11 @@ class UIMenu : public UIPanel {
 public:
 private:
 public:
+    UIMenu() { UIInit(); }
+    void ElementInit() override
+    {
+        //
+    }
 private:
 };
 

@@ -150,7 +150,7 @@ void UIElement::SetLayerOrder( const unsigned int& layerOrder )
 }
 
 void UIElement::UIUpdate( const float& timeDelta ) { } // define in subclasses
-void UIElement::DrawUI( sf::RenderWindow& window, const sf::Vector2f& viewPos ) { } // define in subclasses
+void UIElement::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) { } // define in subclasses
 
 // UIField implementation
 void UIField::ElementInit()
@@ -164,16 +164,91 @@ void UIField::UIUpdate( const float& timeDelta )
 
     //
 }
-void UIField::DrawUI( sf::RenderWindow& window, const sf::Vector2f& viewPos )
+void UIField::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
 {
     if ( !visible )
         return;
 
     sf::RectangleShape s;
-    s.setPosition( sf::Vector2f( viewPos.x + m_uiRect.left, viewPos.y + m_uiRect.top ) );
+    s.setPosition( sf::Vector2f( uiOffset.x + m_uiRect.left, uiOffset.y + m_uiRect.top ) );
     s.setSize( sf::Vector2f( m_uiRect.width, m_uiRect.height ) );
     s.setFillColor( m_uiColor );
     window.draw( s );
+}
+
+// UIFrame implementation
+
+void UIFrame::ElementInit()
+{
+    //
+}
+
+void UIFrame::UIUpdate( const float& timeDelta )
+{
+    if ( !active )
+        return;
+
+    //
+}
+void UIFrame::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
+{
+    if ( !visible )
+        return;
+
+    sf::RenderTexture rt;
+    sf::Sprite s = PanelRect( rt, m_uiRect );
+    s.setPosition( uiOffset.x + m_uiRect.left, uiOffset.y + m_uiRect.top );
+    s.setColor( m_uiColor );
+    window.draw( s );
+}
+
+// UILabel implementation
+
+void UILabel::ElementInit()
+{
+    //
+}
+
+void UILabel::UIUpdate( const float& timeDelta )
+{
+    if ( !active )
+        return;
+
+    //
+}
+void UILabel::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
+{
+    if ( !visible )
+        return;
+
+    sf::Text t;
+    m_heading.InitHeadingText(t);
+    t.setString(m_string);
+    sf::Vector2f tOffset;
+    sf::Color fillColorTmp = t.getFillColor();
+    if ( m_dropShadow )
+    {
+        if ( m_heading.GetAlignment() == Center )
+            tOffset.x = ( m_uiRect.width / 2 ) - ( t.getLocalBounds().width / 2 );
+        else if ( m_heading.GetAlignment() == Left )
+            tOffset.x = ( m_heading.GetFontSpace().x * 8.f );
+        else if ( m_heading.GetAlignment() == Right )
+            tOffset.x = m_uiRect.width - t.getLocalBounds().width - ( m_heading.GetFontSpace().x * 9.f );
+        tOffset.y = ( m_uiRect.height / 2 ) - ( t.getLocalBounds().height / 2 ) - ( m_heading.GetFontSpace().y / 2);
+        t.setPosition( uiOffset.x + m_uiRect.left + tOffset.x, uiOffset.y + m_uiRect.top + tOffset.y );
+        t.setFillColor(m_heading.GetShadowColor());
+        window.draw(t);
+        t.setFillColor(fillColorTmp);
+    }
+    if ( m_heading.GetAlignment() == Center )
+        tOffset.x = ( m_uiRect.width / 2 ) - ( t.getLocalBounds().width / 2 ) - m_heading.GetFontSpace().x;
+    else if ( m_heading.GetAlignment() == Left )
+        tOffset.x = ( m_heading.GetFontSpace().x * 7.f );
+    else if ( m_heading.GetAlignment() == Right )
+        tOffset.x = m_uiRect.width - t.getLocalBounds().width - ( m_heading.GetFontSpace().x * 10.f );
+    tOffset.y = ( m_uiRect.height / 2 ) - ( t.getLocalBounds().height / 2 ) - m_heading.GetFontSpace().y;
+    t.setPosition( uiOffset.x + m_uiRect.left + tOffset.x, uiOffset.y + m_uiRect.top + tOffset.y );
+    window.draw( t );
 }
 
 // UIManager implementation

@@ -82,7 +82,7 @@ sf::Vector2f FontHeading::GetFontSpace()
     return sf::Vector2f( (m_charSpace*m_fontSize), (m_lineSpace*m_fontSize) );
 }
 
-sf::Color FontHeading::GetShadowColor()
+sf::Color& FontHeading::GetShadowColor()
 {
     return m_shadowColor;
 }

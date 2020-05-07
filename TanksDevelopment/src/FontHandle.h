@@ -46,8 +46,8 @@ protected:
     float m_charSpace; // pct of char size (horizontal centering adjust)
     float m_lineSpace; // pct of char size (vertical centering adjust)
 public:
-    FontHeading() { HeadingInit(); };
-    ~FontHeading() { };
+    FontHeading() { HeadingInit(); }
+    ~FontHeading() { }
 
     void HeadingInit()
     {
@@ -59,13 +59,14 @@ public:
     void InitHeadingText( sf::Text& t ); // initialize text object from this heading
     HeadingAlignment GetAlignment();
     sf::Vector2f GetFontSpace(); // horizontal and vertical offset to center heading
-    sf::Color GetShadowColor();
+    sf::Color& GetShadowColor();
 protected:
-    virtual void SubInit();
+    virtual void SubInit() { }
 };
 
 
 class ToolipHeading : public FontHeading {
+public:
     ToolipHeading() { HeadingInit(); }
     void SubInit() override
     {
@@ -80,6 +81,7 @@ class ToolipHeading : public FontHeading {
 };
 
 class ClearSmallHeading : public FontHeading {
+public:
     ClearSmallHeading() { HeadingInit(); }
     void SubInit() override
     {
@@ -87,13 +89,14 @@ class ClearSmallHeading : public FontHeading {
         m_fontAlign = Left;
         m_fontColor = sf::Color::Black;
         m_shadowColor = sf::Color(128,128,128,255);
-        m_fontSize = 24;
+        m_fontSize = 20;
         m_charSpace = 0.06f;
         m_lineSpace = 0.15f;
     }
 };
 
 class ClearLargeHeading : public FontHeading {
+public:
     ClearLargeHeading() { HeadingInit(); }
     void SubInit() override
     {
@@ -108,6 +111,7 @@ class ClearLargeHeading : public FontHeading {
 };
 
 class HUDLabelSemi : public FontHeading {
+public:
     HUDLabelSemi() { HeadingInit(); }
     void SubInit() override
     {
@@ -122,6 +126,7 @@ class HUDLabelSemi : public FontHeading {
 };
 
 class HUDLabelWhite : public FontHeading {
+public:
     HUDLabelWhite() { HeadingInit(); }
     void SubInit() override
     {
@@ -136,6 +141,7 @@ class HUDLabelWhite : public FontHeading {
 };
 
 class PanelLabel : public FontHeading {
+public:
     PanelLabel() { HeadingInit(); }
     void SubInit() override
     {
@@ -150,6 +156,7 @@ class PanelLabel : public FontHeading {
 };
 
 class PanelDescription : public FontHeading {
+public:
     PanelDescription() { HeadingInit(); }
     void SubInit() override
     {
@@ -164,6 +171,7 @@ class PanelDescription : public FontHeading {
 };
 
 class SubTitle : FontHeading {
+public:
     SubTitle() { HeadingInit(); }
     void SubInit() override
     {
@@ -178,6 +186,7 @@ class SubTitle : FontHeading {
 };
 
 class PanelTitle : FontHeading {
+public:
     PanelTitle() { HeadingInit(); }
     void SubInit() override
     {
@@ -192,6 +201,7 @@ class PanelTitle : FontHeading {
 };
 
 class PanelHeading : FontHeading {
+public:
     PanelHeading() { HeadingInit(); }
     void SubInit() override
     {
@@ -206,6 +216,7 @@ class PanelHeading : FontHeading {
 };
 
 class MainTitle : FontHeading {
+public:
     MainTitle() { HeadingInit(); }
     void SubInit() override
     {

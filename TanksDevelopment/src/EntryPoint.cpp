@@ -108,12 +108,12 @@ int main()
 
         // ui draw
         sf::Vector2f uiOffset = GetLocalPlayerTank().GetBaseSprite().getPosition();
-        uiOffset.x -= 512;
-        uiOffset.y -= 512;
+        uiOffset.x -= rWin.getSize().x / 2;
+        uiOffset.y -= rWin.getSize().y / 2;
 
         sf::RenderTexture rt;
         sf::Sprite panel = PanelRect( rt, sf::IntRect( 0, 0, 512, 128 ) );
-        panel.setPosition( (uiOffset.x + 256), (uiOffset.y + 640) );
+        panel.setPosition( (uiOffset.x + 256), (uiOffset.y + 440) );
         panel.setColor( sf::Color(255,255,255,128) );
         if ( GetActiveTankCount() == 1 || !GetLocalPlayerTank().GetActiveState() )
             rWin.draw( panel );
@@ -138,9 +138,7 @@ int main()
 
         sf::IntRect labelBounds;
         labelBounds.left = rWin.getSize().x - 256 - 8;
-        labelBounds.left += 512 - ( rWin.getSize().x /2 );
         labelBounds.top = 8;
-        labelBounds.top += 512 - ( rWin.getSize().y /2 );
         labelBounds.width = 256;
         labelBounds.height = 64;
         panel = PanelRect( rt, labelBounds );
@@ -194,17 +192,18 @@ int main()
         // Field Notes:
         // A field is a solid color rectangle, suitable for tooltip, or simply colorizing a background
         // It will need a rect and a color
-        sf::IntRect r = sf::IntRect(300,300,128,64);
-        sf::Color c = sf::Color::Blue;
-        UIField f( r, c );
-        sf::Vector2f uiO = uiOffset; // REFACTOR: Turn this 'zeroed' uiOffset into pixel position of screen space within view
-        uiO.x += 512 - (rWin.getSize().x / 2); // NOTE: '512' is the original position the view was set (tank position)
-        uiO.y += 512 - (rWin.getSize().y / 2);
-        // NOTE: iow, this is viewposition - half window size (need view position as input at all?)
-        f.DrawUI(rWin, uiO);
+        UIField f( sf::IntRect(50,50,192,64), sf::Color(200,200,128,255) );
+        f.DrawUI(rWin, uiOffset);
+
+        // Frame Notes:
+        UIFrame fm( sf::IntRect(50,125,192,64), sf::Color::White );
+        fm.DrawUI(rWin, uiOffset);
 
         // Label Notes:
-        // A label will need to know the string to display, the rect to use, and the heading
+        // A label will need to know the string to display, the rect to use, the heading, and if draw drop shadow
+        HUDLabelWhite fh;
+        UILabel l( sf::IntRect(50,200,192,64), sf::Color(255,255,255,128), fh, true, "TESTING" );
+        l.DrawUI(rWin, uiOffset);
 
         // Button Notes:
         // A button can use a button heading, and will then need to know the string to display and the rect to use

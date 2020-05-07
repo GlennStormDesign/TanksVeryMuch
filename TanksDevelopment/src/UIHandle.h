@@ -48,7 +48,7 @@ public:
     void SetLayerOrder( const unsigned int& layerOrder );
 
     virtual void UIUpdate( const float& timeDelta ); // define in subclasses
-    virtual void DrawUI( sf::RenderWindow& window, const sf::Vector2f& viewPos ); // define in subclasses
+    virtual void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ); // define in subclasses
 private:
 };
 
@@ -62,7 +62,7 @@ public:
     void ElementInit() override;
 
     void UIUpdate( const float& timeDelta ) override;
-    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& viewPos ) override;
+    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) override;
 private:
 };
 
@@ -73,21 +73,10 @@ private:
 public:
     UIFrame( const sf::IntRect& r, const sf::Color& c )
         { SetUIRect(r); SetUIColor(c); UIInit(); }
-    void ElementInit() override
-    {
-        //
-    }
+    void ElementInit() override;
 
-    void UIUpdate( const float& timeDelta ) override
-    {
-        if ( !active )
-            return;
-    }
-    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
-    {
-        if ( !visible )
-            return;
-    }
+    void UIUpdate( const float& timeDelta ) override;
+    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) override;
 private:
 };
 
@@ -96,26 +85,16 @@ class UILabel : public UIElement {
 public:
 private:
     FontHeading m_heading;
-    std::string m_string;
+    bool m_dropShadow = false;
+    std::string m_string = "";
 public:
     UILabel() { }
-    UILabel( const sf::IntRect& r, const sf::Color& c, const FontHeading& f, const std::string& s )
-        { SetUIRect(r); SetUIColor(c); m_heading = f; m_string = s; UIInit(); }
-    void ElementInit() override
-    {
-        //
-    }
+    UILabel( const sf::IntRect& r, const sf::Color& c, const FontHeading& f, const bool& dropShadow, const std::string& s )
+        { SetUIRect(r); SetUIColor(c); m_heading = f; m_dropShadow = dropShadow; m_string = s; UIInit(); }
+    void ElementInit() override;
 
-    void UIUpdate( const float& timeDelta ) override
-    {
-        if ( !active )
-            return;
-    }
-    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
-    {
-        if ( !visible )
-            return;
-    }
+    void UIUpdate( const float& timeDelta ) override;
+    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) override;
 private:
 };
 
@@ -137,7 +116,7 @@ public:
         if ( !active )
             return;
     }
-    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
+    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) override
     {
         if ( !visible )
             return;
@@ -163,7 +142,7 @@ public:
         if ( !active )
             return;
     }
-    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& viewPos ) override
+    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) override
     {
         if ( !visible )
             return;

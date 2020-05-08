@@ -6,7 +6,7 @@
 
 // Core Declarations
 
-static const std::string TANKSVERYMUCH_VERSION = "v.0.21.05.07.20";
+static const std::string TANKSVERYMUCH_VERSION = "v.0.21.05.08.20";
 static const float DEG2RAD = 0.0174532f;
 
 static float globalTime = 1.f;

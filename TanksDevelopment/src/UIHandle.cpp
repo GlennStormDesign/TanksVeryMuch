@@ -348,4 +348,114 @@ void UIButton::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     m_buttonLabel.DrawUI(window,uiOffset);
 }
 
+// UIBox implementation
+
+void UIBox::ElementInit()
+{
+    //
+}
+
+void UIBox::UIUpdate( const float& timeDelta )
+{
+    if ( !active )
+        return;
+
+    //
+}
+void UIBox::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
+{
+    if ( !visible )
+        return;
+
+    //
+}
+
+// UIAlert implementation
+
+void UIAlert::ElementInit()
+{
+    //
+}
+
+void UIAlert::UIUpdate( const float& timeDelta )
+{
+    if ( !active )
+        return;
+
+    //
+}
+void UIAlert::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
+{
+    if ( !visible )
+        return;
+
+    //
+}
+
+// UIConfirm implementation
+
+void UIConfirm::ElementInit()
+{
+    //
+}
+
+void UIConfirm::UIUpdate( const float& timeDelta )
+{
+    if ( !active )
+        return;
+
+    //
+}
+void UIConfirm::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
+{
+    if ( !visible )
+        return;
+
+    //
+}
+
+// UIHUD implementation
+
+void UIHUD::ElementInit()
+{
+    //
+}
+
+void UIHUD::UIUpdate( const float& timeDelta )
+{
+    if ( !active )
+        return;
+
+    //
+}
+void UIHUD::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
+{
+    if ( !visible )
+        return;
+
+    //
+}
+
+// UIMenu implementation
+
+void UIMenu::ElementInit()
+{
+    //
+}
+
+void UIMenu::UIUpdate( const float& timeDelta )
+{
+    if ( !active )
+        return;
+
+    //
+}
+void UIMenu::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
+{
+    if ( !visible )
+        return;
+
+    //
+}
+
 // UIManager implementation

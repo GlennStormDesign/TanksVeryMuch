@@ -140,69 +140,80 @@ public:
 private:
 };
 
-// UI Panel is a collection of labels, icons and buttons against a single background, either field or frame (base for others)
-class UIPanel : public UIElement {
+// UI Box is a collection of labels and buttons against a single background, either field or frame (base for others)
+// REVIEW: consider how various elements contained with this panel are defined and initialized (pool?)
+class UIBox : public UIElement {
 public:
-private:
+protected:
+    std::string m_boxTitle;
+    std::string m_boxMessage;
+    std::string m_boxButtonLabel;
 public:
-    // REVIEW: consider how various elements contained with this panel are defined and initialized (pool?)
-    UIPanel() { UIInit(); }
-    void ElementInit() override
-    {
-        //
-    }
-private:
-};
+    UIBox() { UIInit(); }
+    UIBox( const sf::IntRect& r, const sf::Color& c, const std::string& title, const std::string& message, const std::string& buttonLabel )
+        { m_boxTitle = title; m_boxMessage = message; m_boxButtonLabel = buttonLabel; UIInit(); }
+    void ElementInit() override;
 
-// UI HUD is a label or icon display meant to be displayed directly over the rendered viewport (usually without background)
-class UIHUD : public UIPanel {
-public:
-private:
-public:
-    UIHUD() { UIInit(); }
-    void ElementInit() override
-    {
-        //
-    }
+    void UIUpdate( const float& timeDelta ) override;
+    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) override;
 private:
 };
 
 // UI Alert is a popup panel with title label, description label and single button to confirm alert was received
-class UIAlert : public UIPanel {
+class UIAlert : public UIBox {
 public:
 private:
 public:
     UIAlert() { UIInit(); }
-    void ElementInit() override
-    {
-        //
-    }
+    UIAlert( const sf::IntRect& r, const sf::Color& c, const std::string& title, const std::string& message, const std::string& buttonLabel )
+        { m_boxTitle = title; m_boxMessage = message; m_boxButtonLabel = buttonLabel; UIInit(); }
+    void ElementInit() override;
+
+    void UIUpdate( const float& timeDelta ) override;
+    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) override;
 private:
 };
 
 // UI Confirm is a popup panel with title label, description label and more than one button to accept or cancel an action
-class UIConfirm : public UIPanel {
+class UIConfirm : public UIBox {
+public:
+private:
+    std::string m_altButtonLabel;
+    std::string m_cancelButtonLabel;
+public:
+    UIConfirm() { UIInit(); }
+    UIConfirm( const sf::IntRect& r, const sf::Color& c, const std::string& title, const std::string& message, const std::string& buttonLabel, const std::string& altButtonLabel, const std::string& canceButtonLabel )
+        { m_boxTitle = title; m_boxMessage = message; m_boxButtonLabel = buttonLabel; m_altButtonLabel = altButtonLabel; m_cancelButtonLabel = canceButtonLabel; UIInit(); }
+    void ElementInit() override;
+
+    void UIUpdate( const float& timeDelta ) override;
+    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) override;
+private:
+};
+
+// UI HUD is a label or icon display meant to be displayed directly over the rendered viewport (usually without background)
+class UIHUD : public UIElement {
 public:
 private:
 public:
-    UIConfirm() { UIInit(); }
-    void ElementInit() override
-    {
-        //
-    }
+    UIHUD() { UIInit(); }
+    void ElementInit() override;
+
+    void UIUpdate( const float& timeDelta ) override;
+    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) override;
 private:
 };
 
 // UI Menu is a collection of labels, icons and buttons within a panel, meant to become a screen separate from gameplay
-class UIMenu : public UIPanel {
+class UIMenu : public UIElement {
 public:
 private:
 public:
     UIMenu() { UIInit(); }
-    void ElementInit() override
-    {
-        //
-    }
+    void ElementInit() override;
+
+    void UIUpdate( const float& timeDelta ) override;
+    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) override;
 private:
 };
 

@@ -206,7 +206,7 @@ int main()
         l.DrawUI(rWin, uiOffset);
 
         // Icon Notes:
-        // An image (texture) display
+        // An image (texture) display, needs rect, color, texture and a scale factor
         UIIcon i( sf::IntRect(50,275,192,64), sf::Color::White, TexVFXShot5(), 2.f );
         i.DrawUI(rWin, uiOffset);
 
@@ -220,20 +220,17 @@ int main()
         //b.SetState(Disabled);
         b.DrawUI(rWin, uiOffset);
         if ( b.GetState() == Active )
-            LaunchSFXUIFwd();
+            LaunchSFXUIFwd(); // UIButton object state can be used to signal press
 
         // Box Notes:
         // A box is a panel with a label heading and at least one button
         // It can use box headings, but it will need to know label string, button strings (+callbacks), and a rect to use
 
-        // Panel Notes:
-        // A panel is a vertical series of labels (left) and buttons (right), a label heading and at least one button bottom
-
         // HUD Notes:
-        //
+        // A collection of icons and labels arranged on top of the active game view port
 
         // Menu Notes:
-        //
+        // A menu is a vertical series of labels (left) and buttons (right), a label heading and at least one button bottom
 
         // UI Manager Notes:
         // UI Manager should handle creation, update and drawing of ui elements in concert

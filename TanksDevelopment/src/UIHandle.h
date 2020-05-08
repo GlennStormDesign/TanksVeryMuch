@@ -22,6 +22,13 @@
 // NOTE: follow pattern for polymorphism used with SceneObject ( functionality modules -> base class -> subclasses )
 // NOTE: follow pattern for manager used with others ( static instance defined in cpp, extern functions interface project )
 
+enum ButtonState {
+    Normal,
+    Hover,
+    Active,
+    Disabled
+};
+
 sf::Sprite PanelRect( sf::RenderTexture& rt, const sf::IntRect& rect );
 
 class UIElement {
@@ -103,24 +110,14 @@ class UIIcon : public UIElement {
 public:
 private:
     sf::Texture m_texture;
+    float m_scaleFactor;
 public:
-    UIIcon( const sf::IntRect& r, const sf::Color& c, const sf::Texture& t )
-        { SetUIRect(r); SetUIColor(c); m_texture = t; UIInit(); }
-    void ElementInit() override
-    {
-        //
-    }
+    UIIcon( const sf::IntRect& r, const sf::Color& c, const sf::Texture& t, const float& scale )
+        { SetUIRect(r); SetUIColor(c); m_texture = t; m_scaleFactor = scale; UIInit(); }
+    void ElementInit() override;
 
-    void UIUpdate( const float& timeDelta ) override
-    {
-        if ( !active )
-            return;
-    }
-    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) override
-    {
-        if ( !visible )
-            return;
-    }
+    void UIUpdate( const float& timeDelta ) override;
+    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) override;
 private:
 };
 
@@ -129,24 +126,17 @@ class UIButton : public UIElement {
 public:
 private:
     UILabel m_buttonLabel;
+    ButtonState m_state = Normal;
 public:
     UIButton( const sf::IntRect& r, const sf::Color& c, const UILabel& buttonLabel )
         { SetUIRect(r); SetUIColor(c); m_buttonLabel = buttonLabel; UIInit(); }
-    void ElementInit() override
-    {
-        //
-    }
+    void ElementInit() override;
 
-    void UIUpdate( const float& timeDelta ) override
-    {
-        if ( !active )
-            return;
-    }
-    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) override
-    {
-        if ( !visible )
-            return;
-    }
+    const ButtonState& GetState();
+    void SetState( const ButtonState& state );
+
+    void UIUpdate( const float& timeDelta ) override;
+    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) override;
 private:
 };
 

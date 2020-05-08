@@ -33,6 +33,8 @@ extern void MusicTesting( const bool& debug );
 extern void SFXLoopUpdate( const float& timeDelta );
 extern void LocalTankEngage( const bool& idle, const bool& turret );
 extern void SFXLoopKill();
+extern void LaunchSFXUIFwd();
+extern void LaunchSFXUIBack();
 extern void LaunchSFXShot();
 extern void LaunchSFXImpact();
 extern void LaunchSFXKill();
@@ -108,6 +110,8 @@ public:
     void SFXStingInit();
     void SFXLoopUpdate( const float& timeDelta );
     bool SafeSFXInterval();
+    void LaunchSFXUIFwd();
+    void LaunchSFXUIBack();
     void LaunchSFXShot();
     void LaunchSFXImpact();
     void LaunchSFXKill();

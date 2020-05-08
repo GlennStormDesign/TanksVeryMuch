@@ -75,8 +75,8 @@ public:
         m_fontColor = sf::Color::Yellow;
         m_shadowColor = sf::Color::Black;
         m_fontSize = 12;
-        m_charSpace = 0.06f;
-        m_lineSpace = 0.15f;
+        m_charSpace = 0.12f;
+        m_lineSpace = 0.318f;
     }
 };
 
@@ -90,8 +90,8 @@ public:
         m_fontColor = sf::Color::Black;
         m_shadowColor = sf::Color(128,128,128,255);
         m_fontSize = 20;
-        m_charSpace = 0.06f;
-        m_lineSpace = 0.15f;
+        m_charSpace = 0.12f;
+        m_lineSpace = 0.318f;
     }
 };
 
@@ -105,8 +105,8 @@ public:
         m_fontColor = sf::Color::Black;
         m_shadowColor = sf::Color(128,128,128,255);
         m_fontSize = 36;
-        m_charSpace = 0.06f;
-        m_lineSpace = 0.15f;
+        m_charSpace = 0.12f;
+        m_lineSpace = 0.318f;
     }
 };
 

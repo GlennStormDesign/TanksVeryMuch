@@ -51,6 +51,14 @@ extern void LocalTankEngage( const bool& idle, const bool& turret )
     sfxMgr.pIdleEngaged = idle;
     sfxMgr.pTurretEngaged = turret;
 }
+extern void LaunchSFXUIFwd()
+{
+    sfxMgr.LaunchSFXUIFwd();
+}
+extern void LaunchSFXUIBack()
+{
+    sfxMgr.LaunchSFXUIBack();
+}
 extern void SFXLoopKill()
 {
     sfxMgr.SFXLoopKill();
@@ -392,6 +400,14 @@ void AudioSFXManager::SFXLoopUpdate( const float& timeDelta )
 bool AudioSFXManager::SafeSFXInterval()
 {
     return ( m_sfxStep.restart().asSeconds() > MIN_SFX_INTERVAL );
+}
+void AudioSFXManager::LaunchSFXUIFwd()
+{
+    LaunchSFXSting(fxbUIFwd);
+}
+void AudioSFXManager::LaunchSFXUIBack()
+{
+    LaunchSFXSting(fxbUIBack);
 }
 void AudioSFXManager::LaunchSFXShot()
 {

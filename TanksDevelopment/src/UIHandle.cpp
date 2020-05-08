@@ -234,7 +234,7 @@ void UILabel::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
             tOffset.x = ( m_heading.GetFontSpace().x * 8.f );
         else if ( m_heading.GetAlignment() == Right )
             tOffset.x = m_uiRect.width - t.getLocalBounds().width - ( m_heading.GetFontSpace().x * 9.f );
-        tOffset.y = ( m_uiRect.height / 2 ) - ( t.getLocalBounds().height / 2 ) - ( m_heading.GetFontSpace().y / 2);
+        tOffset.y = ( m_uiRect.height / 2 ) - ( t.getLocalBounds().height / 2 ) - ( m_heading.GetFontSpace().y / 2 );
         t.setPosition( uiOffset.x + m_uiRect.left + tOffset.x, uiOffset.y + m_uiRect.top + tOffset.y );
         t.setFillColor(m_heading.GetShadowColor());
         window.draw(t);
@@ -249,6 +249,103 @@ void UILabel::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     tOffset.y = ( m_uiRect.height / 2 ) - ( t.getLocalBounds().height / 2 ) - m_heading.GetFontSpace().y;
     t.setPosition( uiOffset.x + m_uiRect.left + tOffset.x, uiOffset.y + m_uiRect.top + tOffset.y );
     window.draw( t );
+}
+
+// UIIcon implementation
+
+void UIIcon::ElementInit()
+{
+    //
+}
+
+void UIIcon::UIUpdate( const float& timeDelta )
+{
+    if ( !active )
+        return;
+
+    //
+}
+void UIIcon::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
+{
+    if ( !visible )
+        return;
+
+    sf::Sprite s;
+    s.setTexture( m_texture );
+    s.setScale( m_scaleFactor, m_scaleFactor );
+    sf::Vector2f iOffset( (m_uiRect.width - s.getLocalBounds().width)/2, (m_uiRect.height - s.getLocalBounds().height)/2 );
+    iOffset.x -= s.getLocalBounds().width/2;
+    iOffset.y -= s.getLocalBounds().height/2;
+    s.setPosition( uiOffset.x + m_uiRect.left + iOffset.x, uiOffset.y + m_uiRect.top + iOffset.y );
+    s.setColor( m_uiColor );
+    window.draw( s );
+}
+
+// UIButton implementation
+
+void UIButton::ElementInit()
+{
+    //
+}
+
+const ButtonState& UIButton::GetState()
+{
+    return m_state;
+}
+void UIButton::SetState( const ButtonState& state )
+{
+    m_state = state;
+}
+
+void UIButton::UIUpdate( const float& timeDelta )
+{
+    if ( !active )
+        return;
+
+    //
+}
+void UIButton::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
+{
+    if ( !visible )
+        return;
+
+    // dynamic values
+    sf::IntRect uir = m_uiRect;
+    sf::Color uic = m_uiColor;
+
+    if ( GetState() == Disabled )
+        uic.a /= 4;
+    else
+    {
+        SetState(Normal);
+        // detect hover
+        sf::Vector2i mp = sf::Mouse::getPosition(window);
+        if ( uir.contains(mp) )
+        {
+            uic = sf::Color(128,255,128,255);
+            SetState(Hover);
+            // detect mouse click
+            if ( sf::Mouse::isButtonPressed(sf::Mouse::Left) )
+            {
+                uic = sf::Color(64,128,64,255);
+                uir.left += 2;
+                uir.top += 2;
+                uir.width -= 4;
+                uir.height -= 4;
+                SetState(Active);
+            }
+        }
+    }
+
+    sf::RenderTexture rt;
+    sf::Sprite p = PanelRect( rt, uir );
+    p.setPosition( uir.left + uiOffset.x, uir.top + uiOffset.y );
+    p.setColor( uic );
+    window.draw( p );
+    // overlay button label
+    // REVIEW: look into adjusting rect or color of label in relation to button
+    m_buttonLabel.SetUIRect( uir );
+    m_buttonLabel.DrawUI(window,uiOffset);
 }
 
 // UIManager implementation

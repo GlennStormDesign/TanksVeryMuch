@@ -205,9 +205,22 @@ int main()
         UILabel l( sf::IntRect(50,200,192,64), sf::Color(255,255,255,128), fh, true, "TESTING" );
         l.DrawUI(rWin, uiOffset);
 
+        // Icon Notes:
+        // An image (texture) display
+        UIIcon i( sf::IntRect(50,275,192,64), sf::Color::White, TexVFXShot5(), 2.f );
+        i.DrawUI(rWin, uiOffset);
+
         // Button Notes:
         // A button can use a button heading, and will then need to know the string to display and the rect to use
         // It will also need to know what to do when button is pressed ( an arbitrary action ) (function callback?)
+        // REVIEW: condense this series of elements used to build button, into just a call for a button
+        ClearLargeHeading bh;
+        UILabel bl( sf::IntRect(50,350,192,64), sf::Color::White, bh, false, "PRESS ME" );
+        UIButton b( sf::IntRect(50,350,192,64), sf::Color::White, bl );
+        //b.SetState(Disabled);
+        b.DrawUI(rWin, uiOffset);
+        if ( b.GetState() == Active )
+            LaunchSFXUIFwd();
 
         // Box Notes:
         // A box is a panel with a label heading and at least one button

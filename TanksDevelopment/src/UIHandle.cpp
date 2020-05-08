@@ -318,21 +318,24 @@ void UIButton::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     else
     {
         SetState(Normal);
-        // detect hover
-        sf::Vector2i mp = sf::Mouse::getPosition(window);
-        if ( uir.contains(mp) )
+        if ( window.hasFocus() )
         {
-            uic = sf::Color(128,255,128,255);
-            SetState(Hover);
-            // detect mouse click
-            if ( sf::Mouse::isButtonPressed(sf::Mouse::Left) )
+            // detect hover
+            sf::Vector2i mp = sf::Mouse::getPosition(window);
+            if ( uir.contains(mp) )
             {
-                uic = sf::Color(64,128,64,255);
-                uir.left += 2;
-                uir.top += 2;
-                uir.width -= 4;
-                uir.height -= 4;
-                SetState(Active);
+                uic = sf::Color(128,255,128,255);
+                SetState(Hover);
+                // detect mouse click
+                if ( sf::Mouse::isButtonPressed(sf::Mouse::Left) )
+                {
+                    uic = sf::Color(64,128,64,255);
+                    uir.left += 2;
+                    uir.top += 2;
+                    uir.width -= 4;
+                    uir.height -= 4;
+                    SetState(Active);
+                }
             }
         }
     }
@@ -343,7 +346,7 @@ void UIButton::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     p.setColor( uic );
     window.draw( p );
     // overlay button label
-    // REVIEW: look into adjusting rect or color of label in relation to button
+    // REVIEW: look into adjusting rect or color of label in relation to button (overload label with RenderTexture?)
     m_buttonLabel.SetUIRect( uir );
     m_buttonLabel.DrawUI(window,uiOffset);
 }
@@ -367,7 +370,29 @@ void UIBox::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     if ( !visible )
         return;
 
-    //
+    UIFrame bf(m_uiRect, m_uiColor);
+    sf::IntRect boxItemR = m_uiRect;
+    boxItemR.top = m_uiRect.top + 8;
+    boxItemR.height *= 0.381f;
+    int itemSpacing = boxItemR.height;
+    PanelTitle ft;
+    UILabel bt( boxItemR, sf::Color::White, ft, true, m_boxTitle );
+    PanelLabel fd;
+    boxItemR.top = m_uiRect.top + (m_uiRect.height / 2) - (boxItemR.height / 2);
+    UILabel bd( boxItemR, sf::Color::White, fd, false, m_boxMessage );
+    // NOTE: could use a measure of local bounds for the text item within label to help with formatting here
+    boxItemR.height = 64;
+    boxItemR.top = m_uiRect.top + m_uiRect.height - boxItemR.height - 8;
+    boxItemR.width /= 4;
+    boxItemR.left += ( ( m_uiRect.width / 2 ) - ( boxItemR.width / 2 ) );
+    ClearLargeHeading fb;
+    UILabel bl( boxItemR, sf::Color::White, fb, false, m_boxButtonLabel );
+    UIButton bb( boxItemR, sf::Color::White, bl );
+
+    bf.DrawUI(window,uiOffset);
+    bt.DrawUI(window,uiOffset);
+    bd.DrawUI(window,uiOffset);
+    bb.DrawUI(window,uiOffset);
 }
 
 // UIAlert implementation

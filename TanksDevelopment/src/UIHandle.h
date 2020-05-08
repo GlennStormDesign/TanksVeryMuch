@@ -151,7 +151,7 @@ protected:
 public:
     UIBox() { UIInit(); }
     UIBox( const sf::IntRect& r, const sf::Color& c, const std::string& title, const std::string& message, const std::string& buttonLabel )
-        { m_boxTitle = title; m_boxMessage = message; m_boxButtonLabel = buttonLabel; UIInit(); }
+        { m_uiRect = r; m_uiColor = c; m_boxTitle = title; m_boxMessage = message; m_boxButtonLabel = buttonLabel; UIInit(); }
     void ElementInit() override;
 
     void UIUpdate( const float& timeDelta ) override;

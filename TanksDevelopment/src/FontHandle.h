@@ -170,7 +170,7 @@ public:
     }
 };
 
-class SubTitle : FontHeading {
+class SubTitle : public FontHeading {
 public:
     SubTitle() { HeadingInit(); }
     void SubInit() override
@@ -185,7 +185,7 @@ public:
     }
 };
 
-class PanelTitle : FontHeading {
+class PanelTitle : public FontHeading {
 public:
     PanelTitle() { HeadingInit(); }
     void SubInit() override
@@ -200,7 +200,7 @@ public:
     }
 };
 
-class PanelHeading : FontHeading {
+class PanelHeading : public FontHeading {
 public:
     PanelHeading() { HeadingInit(); }
     void SubInit() override
@@ -215,7 +215,7 @@ public:
     }
 };
 
-class MainTitle : FontHeading {
+class MainTitle : public FontHeading {
 public:
     MainTitle() { HeadingInit(); }
     void SubInit() override

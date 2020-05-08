@@ -57,6 +57,9 @@ int main()
     frameTimer.restart();
 
     // ui
+    // (temp)
+    bool displayBox = false;
+    bool buttonWasPressed = false;
 
     // scene
     NewScene( TestTankScene() );
@@ -99,6 +102,9 @@ int main()
 
         // scene update
         UpdateScene( timeDelta );
+
+        // (temp fix for un-focused window) (fold into DrawScene?)
+        GetLocalPlayerTank().controller.SetActiveState( rWin.hasFocus() );
 
         // draw calls
         rWin.clear();
@@ -220,11 +226,25 @@ int main()
         //b.SetState(Disabled);
         b.DrawUI(rWin, uiOffset);
         if ( b.GetState() == Active )
+        {
             LaunchSFXUIFwd(); // UIButton object state can be used to signal press
+            if ( !buttonWasPressed )
+            {
+                buttonWasPressed = true; // NOTE: all buttons should do this ( toggle only per press )
+                displayBox = !displayBox;
+            }
+        }
+        else
+            buttonWasPressed = false;
 
         // Box Notes:
         // A box is a panel with a label heading and at least one button
         // It can use box headings, but it will need to know label string, button strings (+callbacks), and a rect to use
+        UIBox bx( sf::IntRect(256,256,512,192), sf::Color::White, "UI Box", "This is a message for you", "OK" );
+        // NOTE: using above button for toggle display of this box
+        bx.visible = displayBox;
+        // REVIEW: no visible UIElement is active?
+        bx.DrawUI(rWin, uiOffset);
 
         // HUD Notes:
         // A collection of icons and labels arranged on top of the active game view port

@@ -3,7 +3,7 @@
 // C++, SFML, OpenGL, GLSL
 
 Tank Prototype
-(latest addition: ui box)
+(latest addition: ui boxes)
 5.8.2020 
 
 Controls:

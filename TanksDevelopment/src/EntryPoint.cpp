@@ -61,6 +61,7 @@ int main()
     bool displayBox = false;
     bool buttonWasPressed = false;
     int confirmCallback = 0;
+    float progressBarValue = 0.15f;
 
     // scene
     NewScene( TestTankScene() );
@@ -264,21 +265,30 @@ int main()
             SetDebugText( "Confirm = 1" );
             LaunchSFXUIFwd();
             displayBox = false;
+            progressBarValue += 0.15f;
         }
         else if ( confirmCallback == 2 )
         {
             SetDebugText( "Confirm = 2" );
             LaunchSFXImpact();
             displayBox = false;
+            progressBarValue += 0.1f;
         }
         else if ( confirmCallback == 3 )
         {
             SetDebugText( "Confirm = 3" );
             LaunchSFXUIBack();
             displayBox = false;
+            progressBarValue += 0.05f;
         }
         else
             SetDebugText( FormatDebugHeader() );
+
+        // Progress Bar Notes:
+        // A background field and a brighter color field that scales from one side to indicate a proportion
+        UIProgressBar p( sf::IntRect(50,425,192,64), sf::Color::Red, sf::Color(128,128,128,64), false, 4 );
+        p.DrawUI(rWin,uiOffset);
+        p.SetProgress(progressBarValue);
 
         // HUD Notes:
         // A collection of icons and labels arranged on top of the active game view port

@@ -440,13 +440,14 @@ void UIAlert::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     ClearLargeHeading fb;
     UILabel bl( boxItemR, sf::Color::White, fb, false, m_boxButtonLabel );
     m_boxButton = UIButton( boxItemR, sf::Color::White, bl );
-    if ( m_boxButton.GetState() == Active )
-        m_callBackSignal = 1; // REVIEW: does it make sense to reset this signal each frame?
 
     bf.DrawUI(window,uiOffset);
     bt.DrawUI(window,uiOffset);
     m_messageLabel.DrawUI(window,uiOffset);
     m_boxButton.DrawUI(window,uiOffset);
+
+    if ( m_boxButton.GetState() == Active )
+        m_callBackSignal = 1; // REVIEW: does it make sense to reset this signal each frame?
 }
 
 // UIConfirm implementation
@@ -513,6 +514,49 @@ void UIConfirm::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     m_cancelButton.DrawUI(window,uiOffset);
     if ( m_cancelButton.GetState() == Active )
         m_callBackSignal = 3;
+}
+
+// UIProgressBar implementation
+
+void UIProgressBar::ElementInit()
+{
+    //
+}
+
+float UIProgressBar::SetProgress( const float& progress )
+{
+    m_progress = progress;
+    // clamp between 0 and 1
+    if ( m_progress < 0.f )
+        m_progress = 0.f;
+    else if ( m_progress > 1.f )
+        m_progress = 1.f;
+}
+
+void UIProgressBar::UIUpdate( const float& timeDelta )
+{
+    if ( !active )
+        return;
+
+    //
+}
+void UIProgressBar::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
+{
+    if ( !visible )
+        return;
+
+    UIField pf( m_uiRect, m_backgroundColor );
+    pf.DrawUI( window, uiOffset );
+    sf::IntRect pr = m_uiRect;
+    pr.top += m_border;
+    pr.left += m_border;
+    pr.width -= m_border * 2;
+    pr.height -= m_border * 2;
+    pr.width *= m_progress;
+    if ( m_toLeft )
+        pr.left = m_uiRect.left + m_uiRect.width - pr.width;
+    pf = UIField( pr, m_uiColor );
+    pf.DrawUI( window, uiOffset );
 }
 
 // UIHUD implementation

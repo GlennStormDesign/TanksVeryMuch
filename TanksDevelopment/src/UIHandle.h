@@ -199,6 +199,26 @@ public:
 private:
 };
 
+// UI Progress Bar is a field background with a brighter field on top that scales from one side to indicate a proportion
+class UIProgressBar : public UIElement {
+public:
+private:
+    sf::Color m_backgroundColor;
+    float m_progress;
+    bool m_toLeft; // REVIEW: any reason to progress from top or bottom?
+    int m_border;
+public:
+    UIProgressBar( const sf::IntRect& r, const sf::Color& c, const sf::Color& bgColor, const bool& toLeft, const int& border )
+        { m_uiRect = r; m_uiColor = c; m_backgroundColor = bgColor; m_toLeft = toLeft; m_border = border; UIInit(); }
+    void ElementInit() override;
+
+    float SetProgress( const float& progress );
+
+    void UIUpdate( const float& timeDelta ) override;
+    void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) override;
+private:
+};
+
 // UI HUD is a label or icon display meant to be displayed directly over the rendered viewport (usually without background)
 class UIHUD : public UIElement {
 public:

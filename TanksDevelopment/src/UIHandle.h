@@ -128,6 +128,7 @@ private:
     UILabel m_buttonLabel;
     ButtonState m_state = Normal;
 public:
+    UIButton() { UIInit(); }
     UIButton( const sf::IntRect& r, const sf::Color& c, const UILabel& buttonLabel )
         { SetUIRect(r); SetUIColor(c); m_buttonLabel = buttonLabel; UIInit(); }
     void ElementInit() override;
@@ -148,11 +149,16 @@ protected:
     std::string m_boxTitle;
     std::string m_boxMessage;
     std::string m_boxButtonLabel;
+    UILabel m_messageLabel;
+    UIButton m_boxButton;
+    int m_callBackSignal = 0; // this reflects which button has been pressed
 public:
     UIBox() { UIInit(); }
     UIBox( const sf::IntRect& r, const sf::Color& c, const std::string& title, const std::string& message, const std::string& buttonLabel )
         { m_uiRect = r; m_uiColor = c; m_boxTitle = title; m_boxMessage = message; m_boxButtonLabel = buttonLabel; UIInit(); }
     void ElementInit() override;
+
+    int GetCallBack();
 
     void UIUpdate( const float& timeDelta ) override;
     void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) override;
@@ -166,7 +172,7 @@ private:
 public:
     UIAlert() { UIInit(); }
     UIAlert( const sf::IntRect& r, const sf::Color& c, const std::string& title, const std::string& message, const std::string& buttonLabel )
-        { m_boxTitle = title; m_boxMessage = message; m_boxButtonLabel = buttonLabel; UIInit(); }
+        { m_uiRect = r; m_uiColor = c; m_boxTitle = title; m_boxMessage = message; m_boxButtonLabel = buttonLabel; UIInit(); }
     void ElementInit() override;
 
     void UIUpdate( const float& timeDelta ) override;
@@ -180,10 +186,12 @@ public:
 private:
     std::string m_altButtonLabel;
     std::string m_cancelButtonLabel;
+    UIButton m_altButton;
+    UIButton m_cancelButton;
 public:
     UIConfirm() { UIInit(); }
     UIConfirm( const sf::IntRect& r, const sf::Color& c, const std::string& title, const std::string& message, const std::string& buttonLabel, const std::string& altButtonLabel, const std::string& canceButtonLabel )
-        { m_boxTitle = title; m_boxMessage = message; m_boxButtonLabel = buttonLabel; m_altButtonLabel = altButtonLabel; m_cancelButtonLabel = canceButtonLabel; UIInit(); }
+        { m_uiRect = r; m_uiColor = c; m_boxTitle = title; m_boxMessage = message; m_boxButtonLabel = buttonLabel; m_altButtonLabel = altButtonLabel; m_cancelButtonLabel = canceButtonLabel; UIInit(); }
     void ElementInit() override;
 
     void UIUpdate( const float& timeDelta ) override;

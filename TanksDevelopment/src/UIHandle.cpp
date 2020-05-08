@@ -358,6 +358,11 @@ void UIBox::ElementInit()
     //
 }
 
+int UIBox::GetCallBack()
+{
+    return m_callBackSignal;
+}
+
 void UIBox::UIUpdate( const float& timeDelta )
 {
     if ( !active )
@@ -379,7 +384,7 @@ void UIBox::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     UILabel bt( boxItemR, sf::Color::White, ft, true, m_boxTitle );
     PanelLabel fd;
     boxItemR.top = m_uiRect.top + (m_uiRect.height / 2) - (boxItemR.height / 2);
-    UILabel bd( boxItemR, sf::Color::White, fd, false, m_boxMessage );
+    m_messageLabel = UILabel( boxItemR, sf::Color::White, fd, false, m_boxMessage );
     // NOTE: could use a measure of local bounds for the text item within label to help with formatting here
     boxItemR.height = 64;
     boxItemR.top = m_uiRect.top + m_uiRect.height - boxItemR.height - 8;
@@ -387,12 +392,15 @@ void UIBox::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     boxItemR.left += ( ( m_uiRect.width / 2 ) - ( boxItemR.width / 2 ) );
     ClearLargeHeading fb;
     UILabel bl( boxItemR, sf::Color::White, fb, false, m_boxButtonLabel );
-    UIButton bb( boxItemR, sf::Color::White, bl );
+    m_boxButton = UIButton( boxItemR, sf::Color::White, bl );
 
     bf.DrawUI(window,uiOffset);
     bt.DrawUI(window,uiOffset);
-    bd.DrawUI(window,uiOffset);
-    bb.DrawUI(window,uiOffset);
+    m_messageLabel.DrawUI(window,uiOffset);
+    m_boxButton.DrawUI(window,uiOffset);
+
+    if ( m_boxButton.GetState() == Active )
+        m_callBackSignal = 1; // REVIEW: does it make sense to reset this signal each frame?
 }
 
 // UIAlert implementation
@@ -414,7 +422,31 @@ void UIAlert::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     if ( !visible )
         return;
 
-    //
+    UIFrame bf(m_uiRect, m_uiColor);
+    sf::IntRect boxItemR = m_uiRect;
+    boxItemR.top = m_uiRect.top + 8;
+    boxItemR.height *= 0.381f;
+    int itemSpacing = boxItemR.height;
+    PanelTitle ft;
+    UILabel bt( boxItemR, sf::Color::White, ft, true, m_boxTitle );
+    PanelLabel fd;
+    boxItemR.top = m_uiRect.top + (m_uiRect.height / 2) - (boxItemR.height / 2);
+    m_messageLabel = UILabel( boxItemR, sf::Color::White, fd, false, m_boxMessage );
+    // NOTE: could use a measure of local bounds for the text item within label to help with formatting here
+    boxItemR.height = 64;
+    boxItemR.top = m_uiRect.top + m_uiRect.height - boxItemR.height - 8;
+    boxItemR.width /= 4;
+    boxItemR.left += ( ( m_uiRect.width / 2 ) - ( boxItemR.width / 2 ) );
+    ClearLargeHeading fb;
+    UILabel bl( boxItemR, sf::Color::White, fb, false, m_boxButtonLabel );
+    m_boxButton = UIButton( boxItemR, sf::Color::White, bl );
+    if ( m_boxButton.GetState() == Active )
+        m_callBackSignal = 1; // REVIEW: does it make sense to reset this signal each frame?
+
+    bf.DrawUI(window,uiOffset);
+    bt.DrawUI(window,uiOffset);
+    m_messageLabel.DrawUI(window,uiOffset);
+    m_boxButton.DrawUI(window,uiOffset);
 }
 
 // UIConfirm implementation
@@ -436,7 +468,51 @@ void UIConfirm::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     if ( !visible )
         return;
 
-    //
+    UIFrame bf(m_uiRect, m_uiColor);
+    sf::IntRect boxItemR = m_uiRect;
+    boxItemR.top = m_uiRect.top + 8;
+    boxItemR.height *= 0.381f;
+    int itemSpacing = boxItemR.height;
+    PanelTitle ft;
+    UILabel bt( boxItemR, sf::Color::White, ft, true, m_boxTitle );
+    PanelLabel fd;
+    boxItemR.top = m_uiRect.top + (m_uiRect.height / 2) - (boxItemR.height / 2);
+    m_messageLabel = UILabel( boxItemR, sf::Color::White, fd, false, m_boxMessage );
+    // NOTE: could use a measure of local bounds for the text item within label to help with formatting here
+    boxItemR.height = 64;
+    boxItemR.top = m_uiRect.top + m_uiRect.height - boxItemR.height - 8;
+
+    bf.DrawUI(window,uiOffset);
+    bt.DrawUI(window,uiOffset);
+    m_messageLabel.DrawUI(window,uiOffset);
+
+    // format multiple buttons
+    boxItemR.width = (m_uiRect.width * 0.275f );
+    ClearLargeHeading fb;
+    boxItemR.left = m_uiRect.left;
+    boxItemR.left += (m_uiRect.width / 16);
+    UILabel bl( boxItemR, sf::Color::White, fb, false, m_boxButtonLabel );
+    m_boxButton = UIButton( boxItemR, sf::Color::White, bl );
+    m_boxButton.DrawUI(window,uiOffset);
+    if ( m_boxButton.GetState() == Active )
+        m_callBackSignal = 1; // REVIEW: does it make sense to reset this signal each frame?
+    if ( m_altButtonLabel != "" )
+    {
+        boxItemR.left = m_uiRect.left;
+        boxItemR.left += ( ( m_uiRect.width / 2 ) - ( boxItemR.width / 2 ) );
+        bl = UILabel( boxItemR, sf::Color::White, fb, false, m_altButtonLabel );
+        m_altButton = UIButton( boxItemR, sf::Color::White, bl );
+        m_altButton.DrawUI(window,uiOffset); // REVIEW: do ui elment visible = false instead?
+        if ( m_altButton.GetState() == Active )
+            m_callBackSignal = 2;
+    }
+    boxItemR.left = m_uiRect.left + m_uiRect.width - boxItemR.width;
+    boxItemR.left -= (m_uiRect.width / 16);
+    bl = UILabel( boxItemR, sf::Color::White, fb, false, m_cancelButtonLabel );
+    m_cancelButton = UIButton( boxItemR, sf::Color::White, bl );
+    m_cancelButton.DrawUI(window,uiOffset);
+    if ( m_cancelButton.GetState() == Active )
+        m_callBackSignal = 3;
 }
 
 // UIHUD implementation

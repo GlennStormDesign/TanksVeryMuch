@@ -60,6 +60,7 @@ int main()
     // (temp)
     bool displayBox = false;
     bool buttonWasPressed = false;
+    int confirmCallback = 0;
 
     // scene
     NewScene( TestTankScene() );
@@ -242,9 +243,42 @@ int main()
         // It can use box headings, but it will need to know label string, button strings (+callbacks), and a rect to use
         UIBox bx( sf::IntRect(256,256,512,192), sf::Color::White, "UI Box", "This is a message for you", "OK" );
         // NOTE: using above button for toggle display of this box
-        bx.visible = displayBox;
+        bx.visible = false; //displayBox;
         // REVIEW: no visible UIElement is active?
         bx.DrawUI(rWin, uiOffset);
+        confirmCallback = bx.GetCallBack();
+        if ( confirmCallback == 1 )
+        {
+            displayBox = false;
+            LaunchSFXUIBack();
+        }
+
+        // UI Confirm Box Notes:
+        // A box with multiple buttons for accept, (alt) and cancel
+        UIConfirm cb( sf::IntRect(256,256,512,192), sf::Color::White, "UI Confirm", "Please confirm this message inquiry", "YES", "MAYBE", "NO" );
+        cb.visible = displayBox;
+        cb.DrawUI(rWin, uiOffset);
+        confirmCallback = cb.GetCallBack();
+        if ( confirmCallback == 1 )
+        {
+            SetDebugText( "Confirm = 1" );
+            LaunchSFXUIFwd();
+            displayBox = false;
+        }
+        else if ( confirmCallback == 2 )
+        {
+            SetDebugText( "Confirm = 2" );
+            LaunchSFXImpact();
+            displayBox = false;
+        }
+        else if ( confirmCallback == 3 )
+        {
+            SetDebugText( "Confirm = 3" );
+            LaunchSFXUIBack();
+            displayBox = false;
+        }
+        else
+            SetDebugText( FormatDebugHeader() );
 
         // HUD Notes:
         // A collection of icons and labels arranged on top of the active game view port

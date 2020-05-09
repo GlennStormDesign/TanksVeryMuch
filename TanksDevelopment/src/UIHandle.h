@@ -3,6 +3,7 @@
 #include "SFML/Graphics.hpp"
 
 #include "FontHandle.h"
+#include "TankScene.h"
 
 // UI Element Handling
 
@@ -28,6 +29,10 @@ enum ButtonState {
     Active,
     Disabled
 };
+
+extern void UIInit( const sf::Vector2u& winSize );
+extern void UpdateUI( const float& timeDelta );
+extern void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset );
 
 sf::Sprite PanelRect( sf::RenderTexture& rt, const sf::IntRect& rect );
 
@@ -68,6 +73,7 @@ class UIField : public UIElement {
 public:
 private:
 public:
+    UIField() { UIInit(); }
     UIField( const sf::IntRect& r, const sf::Color& c )
         { SetUIRect(r); SetUIColor(c); UIInit(); }
     void ElementInit() override;
@@ -82,6 +88,7 @@ class UIFrame : public UIElement {
 public:
 private:
 public:
+    UIFrame() { UIInit(); }
     UIFrame( const sf::IntRect& r, const sf::Color& c )
         { SetUIRect(r); SetUIColor(c); UIInit(); }
     void ElementInit() override;
@@ -99,7 +106,7 @@ private:
     bool m_dropShadow = false;
     std::string m_string = "";
 public:
-    UILabel() { }
+    UILabel() { UIInit(); }
     UILabel( const sf::IntRect& r, const sf::Color& c, const FontHeading& f, const bool& dropShadow, const std::string& s )
         { SetUIRect(r); SetUIColor(c); m_heading = f; m_dropShadow = dropShadow; m_string = s; UIInit(); }
     void ElementInit() override;
@@ -116,6 +123,7 @@ private:
     sf::Texture m_texture;
     float m_scaleFactor;
 public:
+    UIIcon() { UIInit(); }
     UIIcon( const sf::IntRect& r, const sf::Color& c, const sf::Texture& t, const float& scale )
         { SetUIRect(r); SetUIColor(c); m_texture = t; m_scaleFactor = scale; UIInit(); }
     void ElementInit() override;
@@ -212,6 +220,7 @@ private:
     bool m_toLeft; // REVIEW: any reason to progress from top or bottom?
     int m_border;
 public:
+    UIProgressBar() { UIInit(); }
     UIProgressBar( const sf::IntRect& r, const sf::Color& c, const sf::Color& bgColor, const bool& toLeft, const int& border )
         { m_uiRect = r; m_uiColor = c; m_backgroundColor = bgColor; m_toLeft = toLeft; m_border = border; UIInit(); }
     void ElementInit() override;
@@ -249,12 +258,7 @@ public:
 private:
 };
 
-// UI Manager is the primary handler of UI Element initialization, updating and drawing in sorted layers
-// NOTES: given the issues that surround either making UIElement out of functional modules (circular dependency) or
-//     creating an uber-UIElement out of the subclasses (no way to init, update or draw both generically and particularly),
-//     the current solution appears to be to compose the UIManager specifically for the UI needs of this game.
-//   Menus, HUD, Popups
-// UI HUD (above) may also be specifically composed for this game prototype
+// UI Manager is the primary handler of UI Element initialization, updating and drawing in sorted layers (game-specific)
 class UIManager {
 public:
     enum TutorialStage {
@@ -266,24 +270,50 @@ public:
         QuestTutorial,
     };
 private:
+    sf::Vector2u m_windowSize;
+
     bool m_displayHUD = true;
     TutorialStage m_tutStage = Welcome;
     bool m_tutorialDisplay = false;
-    bool m_displayWinPop = false;
-    bool m_displayLosePop = false;
+    bool m_displayQuit = false;
+
+    int m_inputCallback = 0;
 
     // HUD Elements
-    //  . progress bar for armor, with label
     //  . game title banner
+    UIFrame m_gameTitleFrame;
+    UILabel m_gameTitleLabel;
+    //  . progress bar for armor, with label
+    UIFrame m_armorProgressFrame;
+    UIProgressBar m_armorProgressBar;
+    UILabel m_armorProgressLabel;
     //  . enemy tanks remaining label and number count
+    UILabel m_enemyTanksLabel;
     //  . quit button (launches quit confirm popup)
-    // Tutorial Popups
-    // Win/Lose/Quit Popups
+    UIButton m_quitButton;
+    // Tutorial popups
+    sf::Clock m_tutorialTimer;
+    UIAlert m_tutWelcome;
+    UIAlert m_tutHUD;
+    UIAlert m_tutMove;
+    UIAlert m_tutTurret;
+    UIAlert m_tutCombat;
+    UIAlert m_tutQuest;
+    // Win/Lose banners
+    UILabel m_winBanner;
+    UILabel m_loseBanner;
+    // Quit confirm
+    UIConfirm m_quitPop;
 public:
     UIManager() { }
     ~UIManager() { }
 
-    virtual void UpdateUIMgr( const float& timeDelta );
-    virtual void DrawUIMgr( sf::RenderWindow& window, const sf::Vector2f& uiOffset );
+    void UIInit( const sf::Vector2u& winSize );
+
+    void HUDInit();
+    void MenuInit();
+
+    void UpdateUIMgr( const float& timeDelta );
+    void DrawUIMgr( sf::RenderWindow& window, const sf::Vector2f& uiOffset );
 private:
 };

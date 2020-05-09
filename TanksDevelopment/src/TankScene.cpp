@@ -468,6 +468,9 @@ void TankScene::DrawScene( sf::RenderWindow& window )
     // do draw calls for terrain, tanks, shots and vfx
     DrawTerrain( window, v.getCenter() );
 
+    // local player control active only if main window has focus
+    GetLocalPlayerTank().controller.SetActiveState( window.hasFocus() );
+
     // draw scene objects
     // REVIEW: scene object layering
     for ( unsigned int o=0; o<m_objectPool.size(); o++ )

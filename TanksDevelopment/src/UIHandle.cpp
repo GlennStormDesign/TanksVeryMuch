@@ -8,7 +8,22 @@
 
 static UIManager uiMgr;
 
-// UI interface
+// UI Manager interface
+
+extern void UIInit( const sf::Vector2u& winSize )
+{
+    uiMgr.UIInit(winSize);
+}
+extern void UpdateUI( const float& timeDelta )
+{
+    uiMgr.UpdateUIMgr(timeDelta);
+}
+extern void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
+{
+    uiMgr.DrawUIMgr(window,uiOffset);
+}
+
+// PanelRect method
 
 sf::Sprite PanelRect( sf::RenderTexture& composite, const sf::IntRect& rect )
 {
@@ -605,6 +620,48 @@ void UIMenu::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
 
 // UIManager implementation
 
+void UIManager::UIInit( const sf::Vector2u& winSize )
+{
+    m_windowSize = winSize;
+    HUDInit();
+    MenuInit();
+}
+
+void UIManager::HUDInit()
+{
+    //  . game title banner
+    m_gameTitleFrame = UIFrame( sf::IntRect((m_windowSize.x - 256 - 8),8,256,64), sf::Color(128,200,64,128) );
+    PanelLabel gtl;
+    m_gameTitleLabel = UILabel( sf::IntRect((m_windowSize.x - 256 - 8),8,256,64), sf::Color::Black, gtl, true, "Tanks Very Much" );
+    //  . progress bar for armor, with label
+    m_armorProgressFrame = UIFrame( sf::IntRect(8,8,256,64), sf::Color(128,200,64,128) );
+    m_armorProgressBar = UIProgressBar( sf::IntRect(18,18,236,20), sf::Color(200,32,32,255), sf::Color(64,64,64,128), false, 4 );
+    ClearSmallHeading af;
+    m_armorProgressLabel = UILabel( sf::IntRect(8,40,256,24), sf::Color::White, af, true, "ARMOR" );
+    //  . enemy tanks remaining label and number count
+    std::string tanksRemainString = "Enemy Tanks ";
+    HUDLabelSemi trf;
+    m_enemyTanksLabel = UILabel( sf::IntRect(8,(m_windowSize.y - 64 - 8),256,64), sf::Color::White, trf, true, tanksRemainString );
+    //  . quit button (launches quit confirm popup)
+    ToolipHeading qbf;
+    UILabel ql( sf::IntRect((m_windowSize.x - 64 -8),(m_windowSize.y - 32 - 8),64,32), sf::Color::Black, qbf, true, "QUIT" );
+    m_quitButton = UIButton( sf::IntRect((m_windowSize.x - 64 -8),(m_windowSize.y - 32 - 8),64,32), sf::Color(128,200,64,128), ql );
+
+    // tutorial pops
+
+    // win/lose banners
+    MainTitle wlf;
+    m_winBanner = UILabel( sf::IntRect((m_windowSize.x/2-256),(m_windowSize.y/2-128),512,128), sf::Color::White, wlf, true, "YOU WIN" );
+    m_loseBanner = UILabel( sf::IntRect((m_windowSize.x/2-256),(m_windowSize.y/2-128),512,128), sf::Color::White, wlf, true, "GAME OVER" );
+
+    // quit confirm
+    //m_quitPop = UIConfirm();
+}
+void UIManager::MenuInit()
+{
+    //
+}
+
 void UIManager::UpdateUIMgr( const float& timeDelta )
 {
     //
@@ -612,5 +669,43 @@ void UIManager::UpdateUIMgr( const float& timeDelta )
 
 void UIManager::DrawUIMgr( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
 {
+    if ( !m_displayHUD )
+        return;
+
+    // TODO: use render texture and combine to one draw call
     //
+    m_gameTitleFrame.DrawUI(window,uiOffset);
+    m_gameTitleLabel.DrawUI(window,uiOffset);
+    //
+    m_armorProgressFrame.DrawUI(window,uiOffset);
+    m_armorProgressBar.SetProgress( (GetLocalPlayerTank().GetArmor() / 100.f) );
+    m_armorProgressBar.DrawUI(window,uiOffset);
+    m_armorProgressLabel.DrawUI(window,uiOffset);
+    //
+    std::string tanksRemainString = "Enemy Tanks ";
+    int t = GetActiveTankCount();
+    if ( GetLocalPlayerTank().GetActiveState() )
+        t--;
+    tanksRemainString += FormatInt( t );
+    HUDLabelSemi trf;
+    m_enemyTanksLabel = UILabel( sf::IntRect(8,(m_windowSize.y - 64 - 8),256,64), sf::Color::White, trf, true, tanksRemainString );
+    m_enemyTanksLabel.DrawUI(window,uiOffset);
+    //
+    m_quitButton.DrawUI(window,uiOffset);
+
+    // tutorial pops
+
+    // win/lose banners
+    if ( GetLocalPlayerTank().GetActiveState() )
+    {
+        if ( GetActiveTankCount() == 1 )
+            m_winBanner.DrawUI(window,uiOffset);
+    }
+    else
+        m_loseBanner.DrawUI(window,uiOffset);
+
+    // quit confirm
+    if ( m_displayQuit )
+        m_quitPop.DrawUI(window,uiOffset);
+    // TODO: handle quit callback
 }

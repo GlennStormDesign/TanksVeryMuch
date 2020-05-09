@@ -285,7 +285,7 @@ int main()
             SetDebugText( FormatDebugHeader() );
 
         // Progress Bar Notes:
-        // A background field and a brighter color field that scales from one side to indicate a proportion
+        // A background field and an indented color field that scales from one side to indicate a proportion
         UIProgressBar p( sf::IntRect(50,425,192,64), sf::Color::Red, sf::Color(128,128,128,64), false, 4 );
         p.DrawUI(rWin,uiOffset);
         p.SetProgress(progressBarValue);

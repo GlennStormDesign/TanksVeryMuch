@@ -18,6 +18,7 @@ enum ObjectType {
 };
 
 // modules of functionality can be used to compose SceneObject
+
 class DisplayObject {
 public:
 protected:

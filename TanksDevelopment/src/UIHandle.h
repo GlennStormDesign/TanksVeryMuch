@@ -31,6 +31,70 @@ enum ButtonState {
 
 sf::Sprite PanelRect( sf::RenderTexture& rt, const sf::IntRect& rect );
 
+// UI functional modules
+// REVIEW: This technique would work, just like SceneObject, to allow a collection of UIElements in UIManger, but...
+//     ... there is a circular dependency when inherited UILabal or UIButton is used in composition for further objects.
+// So,
+// Perhaps, after all the definition originally set up, UIElement, then subclasses, a derivative class can be made
+//     using the subclasses as the modules. (maybe?) Then the UIManager can use a collection of the derivative class.
+// Spoiler alert: no
+
+/*
+class UITextModule {
+protected:
+    FontHeading m_heading;
+    bool m_dropShadow = false;
+    std::string m_string = "";
+};
+
+class UIImageModule {
+protected:
+    sf::Texture m_texture;
+    float m_scaleFactor;
+};
+
+class UIButtonModule {
+protected:
+    UILabel m_buttonLabel;
+    ButtonState m_state = Normal;
+public:
+    const ButtonState& GetState();
+    void SetState( const ButtonState& state );
+};
+
+class UIBoxModule {
+protected:
+    std::string m_boxTitle;
+    std::string m_boxMessage;
+    std::string m_boxButtonLabel;
+    UILabel m_messageLabel;
+    UIButton m_boxButton;
+    int m_callBackSignal = 0; // this reflects which button has been pressed
+public:
+    int GetCallBack();
+};
+
+class UIConfirmModule {
+protected:
+    std::string m_altButtonLabel;
+    std::string m_cancelButtonLabel;
+    UIButton m_altButton;
+    UIButton m_cancelButton;
+};
+
+class UIProgressBarModule {
+protected:
+    sf::Color m_backgroundColor;
+    float m_progress;
+    bool m_toLeft; // REVIEW: any reason to progress from top or bottom?
+    int m_border;
+public:
+    float SetProgress( const float& progress );
+};
+*/
+
+// UI Element
+
 class UIElement {
 public:
     bool active = false; // use to skip update
@@ -245,10 +309,27 @@ public:
 private:
 };
 
+// REVIEW:
+// Can a derivative class be made from UIElement, and all subclasses, as one super-UI class to use as UI Manager items?
+// Answer: no, there's no way to a) initialize 'generically' and b) update or draw particularly
+/*
+// UI Collection
+class UICollection : public UIElement, UIField, UIFrame, UILabel, UIButton, UIBox, UIAlert, UIConfirm, UIProgressBar {
+public:
+    UICollection() { }
+    ~UICollection() { }
+};
+*/
+
 // UI Manager is the primary handler of UI Element initialization, updating and drawing in sorted layers
+// NOTES: given the issues that surround either making UIElement out of functional modules (circular dependency) or
+//     creating an uber-UIElement out of the subclasses (no way to init, update or draw both generically and particularly),
+//     the current solution appears to be to compose the UIManager specifically for the UI needs of this game.
+//   Menus, HUD, Popups
 class UIManager {
 public:
 private:
+
 public:
     UIManager() { }
     ~UIManager() { }

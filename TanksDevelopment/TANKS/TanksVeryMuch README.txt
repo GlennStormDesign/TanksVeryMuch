@@ -3,8 +3,8 @@
 // C++, SFML, OpenGL, GLSL
 
 Tank Prototype
-(latest addition: UIconfirm)
-5.8.2020 
+(latest addition: prog bar)
+5.8.2020
 
 Controls:
 Move with arrow keys

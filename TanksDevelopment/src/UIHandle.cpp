@@ -375,7 +375,9 @@ void UIBox::ElementInit()
 
 int UIBox::GetCallBack()
 {
-    return m_callBackSignal;
+    int retSignal = m_callBackSignal;
+    m_callBackSignal = 0; // reset
+    return retSignal;
 }
 
 void UIBox::UIUpdate( const float& timeDelta )
@@ -407,7 +409,7 @@ void UIBox::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     boxItemR.left += ( ( m_uiRect.width / 2 ) - ( boxItemR.width / 2 ) );
     ClearLargeHeading fb;
     UILabel bl( boxItemR, sf::Color::White, fb, false, m_boxButtonLabel );
-    m_boxButton = UIButton( boxItemR, sf::Color::White, bl );
+    m_boxButton = UIButton( boxItemR, m_uiColor, bl );
 
     bf.DrawUI(window,uiOffset);
     bt.DrawUI(window,uiOffset);
@@ -454,7 +456,7 @@ void UIAlert::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     boxItemR.left += ( ( m_uiRect.width / 2 ) - ( boxItemR.width / 2 ) );
     ClearLargeHeading fb;
     UILabel bl( boxItemR, sf::Color::White, fb, false, m_boxButtonLabel );
-    m_boxButton = UIButton( boxItemR, sf::Color::White, bl );
+    m_boxButton = UIButton( boxItemR, m_uiColor, bl );
 
     bf.DrawUI(window,uiOffset);
     bt.DrawUI(window,uiOffset);
@@ -508,7 +510,7 @@ void UIConfirm::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     boxItemR.left = m_uiRect.left;
     boxItemR.left += (m_uiRect.width / 16);
     UILabel bl( boxItemR, sf::Color::White, fb, false, m_boxButtonLabel );
-    m_boxButton = UIButton( boxItemR, sf::Color::White, bl );
+    m_boxButton = UIButton( boxItemR, m_uiColor, bl );
     m_boxButton.DrawUI(window,uiOffset);
     if ( m_boxButton.GetState() == Active )
         m_callBackSignal = 1; // REVIEW: does it make sense to reset this signal each frame?
@@ -517,7 +519,7 @@ void UIConfirm::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
         boxItemR.left = m_uiRect.left;
         boxItemR.left += ( ( m_uiRect.width / 2 ) - ( boxItemR.width / 2 ) );
         bl = UILabel( boxItemR, sf::Color::White, fb, false, m_altButtonLabel );
-        m_altButton = UIButton( boxItemR, sf::Color::White, bl );
+        m_altButton = UIButton( boxItemR, m_uiColor, bl );
         m_altButton.DrawUI(window,uiOffset); // REVIEW: do ui elment visible = false instead?
         if ( m_altButton.GetState() == Active )
             m_callBackSignal = 2;
@@ -525,7 +527,7 @@ void UIConfirm::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     boxItemR.left = m_uiRect.left + m_uiRect.width - boxItemR.width;
     boxItemR.left -= (m_uiRect.width / 16);
     bl = UILabel( boxItemR, sf::Color::White, fb, false, m_cancelButtonLabel );
-    m_cancelButton = UIButton( boxItemR, sf::Color::White, bl );
+    m_cancelButton = UIButton( boxItemR, m_uiColor, bl );
     m_cancelButton.DrawUI(window,uiOffset);
     if ( m_cancelButton.GetState() == Active )
         m_callBackSignal = 3;
@@ -655,7 +657,7 @@ void UIManager::HUDInit()
     m_loseBanner = UILabel( sf::IntRect((m_windowSize.x/2-256),(m_windowSize.y/2-128),512,128), sf::Color::White, wlf, true, "GAME OVER" );
 
     // quit confirm
-    //m_quitPop = UIConfirm();
+    m_quitPop = UIConfirm( sf::IntRect((m_windowSize.x/2-256),(m_windowSize.y/2+32),512,192),sf::Color(128,200,64,128), "QUIT", "You are about to quit the game", "Ok", "", "Cancel" );
 }
 void UIManager::MenuInit()
 {
@@ -692,6 +694,11 @@ void UIManager::DrawUIMgr( sf::RenderWindow& window, const sf::Vector2f& uiOffse
     m_enemyTanksLabel.DrawUI(window,uiOffset);
     //
     m_quitButton.DrawUI(window,uiOffset);
+    if ( m_quitButton.GetState() == Active )
+    {
+        m_displayQuit = true;
+        m_quitButton.SetState(Disabled);
+    }
 
     // tutorial pops
 
@@ -707,5 +714,14 @@ void UIManager::DrawUIMgr( sf::RenderWindow& window, const sf::Vector2f& uiOffse
     // quit confirm
     if ( m_displayQuit )
         m_quitPop.DrawUI(window,uiOffset);
-    // TODO: handle quit callback
+
+    m_inputCallback = m_quitPop.GetCallBack();
+    if ( m_inputCallback == 1 )
+        window.close();
+    else if ( m_inputCallback == 3 )
+    {
+        m_quitButton.SetState(Normal);
+        m_displayQuit = false;
+        m_inputCallback = 0;
+    }
 }

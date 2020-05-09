@@ -604,3 +604,13 @@ void UIMenu::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
 }
 
 // UIManager implementation
+
+void UIManager::UpdateUIMgr( const float& timeDelta )
+{
+    //
+}
+
+void UIManager::DrawUIMgr( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
+{
+    //
+}

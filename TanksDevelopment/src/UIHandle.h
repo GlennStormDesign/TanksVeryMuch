@@ -261,6 +261,12 @@ private:
 // UI Manager is the primary handler of UI Element initialization, updating and drawing in sorted layers (game-specific)
 class UIManager {
 public:
+    enum UIState {
+        Splash,
+        Menu,
+        Game,
+        Special
+    };
     enum TutorialStage {
         Welcome,
         HUDTutorial,
@@ -272,7 +278,7 @@ public:
 private:
     sf::Vector2u m_windowSize;
 
-    bool m_displayHUD = true;
+    UIState m_uiState = Game; // temp
     TutorialStage m_tutStage = Welcome;
     bool m_tutorialDisplay = false;
     bool m_displayQuit = false;
@@ -310,10 +316,27 @@ public:
 
     void UIInit( const sf::Vector2u& winSize );
 
+    void SplashInit();
     void HUDInit();
     void MenuInit();
 
+    const UIManager::UIState& GetUIState();
+    void SetUIState( const UIManager::UIState& state );
+    int GetInputCallBack();
+
+    void ResetSplash();
+    void ResetHUD();
+    void ResetMenu();
+
     void UpdateUIMgr( const float& timeDelta );
     void DrawUIMgr( sf::RenderWindow& window, const sf::Vector2f& uiOffset );
+
+    void UpdateSplash( const float& timeDelta );
+    void UpdateHUD( const float& timeDelta );
+    void UpdateMenu( const float& timeDelta );
+
+    void DrawSplash( sf::RenderWindow& window, const sf::Vector2f& uiOffset );
+    void DrawMenu( sf::RenderWindow& window, const sf::Vector2f& uiOffset );
+    void DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset );
 private:
 };

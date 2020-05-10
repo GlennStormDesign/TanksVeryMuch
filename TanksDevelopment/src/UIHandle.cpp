@@ -513,7 +513,7 @@ void UIConfirm::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     m_boxButton = UIButton( boxItemR, m_uiColor, bl );
     m_boxButton.DrawUI(window,uiOffset);
     if ( m_boxButton.GetState() == Active )
-        m_callBackSignal = 1; // REVIEW: does it make sense to reset this signal each frame?
+        m_callBackSignal = 1; // reset once received
     if ( m_altButtonLabel != "" )
     {
         boxItemR.left = m_uiRect.left;
@@ -625,10 +625,15 @@ void UIMenu::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
 void UIManager::UIInit( const sf::Vector2u& winSize )
 {
     m_windowSize = winSize;
+    SplashInit();
     HUDInit();
     MenuInit();
 }
 
+void UIManager::SplashInit()
+{
+    //
+}
 void UIManager::HUDInit()
 {
     //  . game title banner
@@ -664,16 +669,87 @@ void UIManager::MenuInit()
     //
 }
 
-void UIManager::UpdateUIMgr( const float& timeDelta )
+const UIManager::UIState& UIManager::GetUIState()
+{
+    return m_uiState;
+}
+void UIManager::SetUIState( const UIManager::UIState& state )
+{
+    if ( m_uiState != state )
+    {
+        if ( m_uiState == Splash )
+            ResetSplash();
+        else if ( m_uiState == Menu )
+            ResetMenu();
+        else if ( m_uiState == Game )
+            ResetHUD();
+    }
+    m_uiState = state;
+}
+int UIManager::GetInputCallBack()
+{
+    int tmp = m_inputCallback;
+    m_inputCallback = 0; // reset
+    return tmp;
+}
+
+void UIManager::ResetSplash()
+{
+    //
+}
+void UIManager::ResetHUD()
+{
+    //
+}
+void UIManager::ResetMenu()
 {
     //
 }
 
+void UIManager::UpdateUIMgr( const float& timeDelta )
+{
+    // update based on ui state
+    if ( m_uiState == Splash )
+        UpdateSplash( timeDelta );
+    else if ( m_uiState == Menu )
+        UpdateMenu( timeDelta );
+    else if ( m_uiState == Game )
+        UpdateHUD( timeDelta );
+}
 void UIManager::DrawUIMgr( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
 {
-    if ( !m_displayHUD )
-        return;
+    // draw based on ui state
+    if ( m_uiState == Splash )
+        DrawSplash( window, uiOffset );
+    else if ( m_uiState == Menu )
+        DrawMenu( window, uiOffset );
+    else if ( m_uiState == Game )
+        DrawHUD( window, uiOffset );
+}
 
+void UIManager::UpdateSplash( const float& timeDelta )
+{
+    //
+}
+void UIManager::UpdateMenu( const float& timeDelta )
+{
+    //
+}
+void UIManager::UpdateHUD( const float& timeDelta )
+{
+    //
+}
+
+void UIManager::DrawSplash( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
+{
+    //
+}
+void UIManager::DrawMenu( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
+{
+    //
+}
+void UIManager::DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
+{
     // TODO: use render texture and combine to one draw call
     //
     m_gameTitleFrame.DrawUI(window,uiOffset);

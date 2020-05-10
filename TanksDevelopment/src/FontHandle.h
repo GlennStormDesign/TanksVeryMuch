@@ -224,7 +224,7 @@ public:
         m_fontAlign = Center;
         m_fontColor = sf::Color::Black;
         m_shadowColor = sf::Color(128,128,128,255);
-        m_fontSize = 49;
+        m_fontSize = 80;
         m_charSpace = 0.f;
         m_lineSpace = 0.15f;
     }

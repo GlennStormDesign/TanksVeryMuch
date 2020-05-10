@@ -3,8 +3,8 @@
 // C++, SFML, OpenGL, GLSL
 
 Tank Prototype
-(latest addition: HUD)
-5.9.2020
+(latest addition: Splash)
+5.10.2020
 
 Controls:
 Move with arrow keys

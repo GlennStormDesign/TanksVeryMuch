@@ -632,7 +632,30 @@ void UIManager::UIInit( const sf::Vector2u& winSize )
 
 void UIManager::SplashInit()
 {
-    //
+    m_splashField = UIField( sf::IntRect(0,0,(m_windowSize.x),(m_windowSize.y)), sf::Color(128,128,100,255) );
+    MainTitle sf;
+    m_splashTitleLabel = UILabel( sf::IntRect(0,(m_windowSize.y/8)*1.f,(m_windowSize.x),(m_windowSize.y/6)), sf::Color::White, sf, false, "TANKS VERY MUCH" );
+    PanelTitle stf;
+    m_splashSubtitleLabel = UILabel( sf::IntRect(0,(m_windowSize.y/8)*3.f,(m_windowSize.x),(m_windowSize.y/6)), sf::Color::White, stf, true, "Gameplay Prototype" );
+    PanelTitle sbf;
+    UILabel sbl = UILabel( sf::IntRect( sf::IntRect((m_windowSize.x/4)*1.5f,(m_windowSize.y/8)*5.f,(m_windowSize.x/4),(m_windowSize.y/6)) ), sf::Color::White, sbf, true, "START" );
+    m_splashStartButton = UIButton( sf::IntRect((m_windowSize.x/4)*1.5f,(m_windowSize.y/8)*5.f,(m_windowSize.x/4),(m_windowSize.y/6)), sf::Color(128,200,100,255), sbl );
+    m_splashStartButton.SetState(Disabled);
+    // temp
+    for ( int i=1; i<4; i++ )
+        GetTank(i).SetActiveState(false);
+}
+void UIManager::MenuInit()
+{
+    m_menuField = UIField();
+    m_menuFrame = UIFrame();
+    m_menuTitleLabel = UILabel();
+    m_menuSubtitleLabel = UILabel();
+    m_menuFootnoteLabel = UILabel();
+    m_menuPlayButton = UIButton();
+    m_menuCreditsButton = UIButton();
+    m_menuQuitButton = UIButton();
+    m_menuCreditsPop = UIAlert();
 }
 void UIManager::HUDInit()
 {
@@ -664,10 +687,6 @@ void UIManager::HUDInit()
     // quit confirm
     m_quitPop = UIConfirm( sf::IntRect((m_windowSize.x/2-256),(m_windowSize.y/2+32),512,192),sf::Color(128,200,64,128), "QUIT", "You are about to quit the game", "Ok", "", "Cancel" );
 }
-void UIManager::MenuInit()
-{
-    //
-}
 
 const UIManager::UIState& UIManager::GetUIState()
 {
@@ -684,6 +703,7 @@ void UIManager::SetUIState( const UIManager::UIState& state )
         else if ( m_uiState == Game )
             ResetHUD();
     }
+    m_uiStateTimer.restart();
     m_uiState = state;
 }
 int UIManager::GetInputCallBack()
@@ -696,12 +716,15 @@ int UIManager::GetInputCallBack()
 void UIManager::ResetSplash()
 {
     //
+    m_splashStartButton.SetState(Disabled);
+    for ( int i=1; i<4; i++ )
+        GetTank(i).SetActiveState(false);
 }
-void UIManager::ResetHUD()
+void UIManager::ResetMenu()
 {
     //
 }
-void UIManager::ResetMenu()
+void UIManager::ResetHUD()
 {
     //
 }
@@ -729,7 +752,10 @@ void UIManager::DrawUIMgr( sf::RenderWindow& window, const sf::Vector2f& uiOffse
 
 void UIManager::UpdateSplash( const float& timeDelta )
 {
-    //
+    if ( m_uiStateTimer.getElapsedTime().asSeconds() > m_UI_STATE_TIMER_INTERVAL && m_splashStartButton.GetState() == Disabled )
+    {
+        m_splashStartButton.SetState(Normal);
+    }
 }
 void UIManager::UpdateMenu( const float& timeDelta )
 {
@@ -743,6 +769,16 @@ void UIManager::UpdateHUD( const float& timeDelta )
 void UIManager::DrawSplash( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
 {
     //
+    m_splashField.DrawUI(window,uiOffset);
+    m_splashTitleLabel.DrawUI(window,uiOffset);
+    m_splashSubtitleLabel.DrawUI(window,uiOffset);
+    m_splashStartButton.DrawUI(window,uiOffset);
+    if ( m_splashStartButton.GetState() == Active )
+    {
+        SetUIState(Game); // temp
+        for ( int i=1; i<4; i++ )
+            GetTank(i).SetActiveState(true);
+    }
 }
 void UIManager::DrawMenu( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
 {

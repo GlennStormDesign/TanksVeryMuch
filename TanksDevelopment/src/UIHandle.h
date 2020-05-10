@@ -278,12 +278,36 @@ public:
 private:
     sf::Vector2u m_windowSize;
 
-    UIState m_uiState = Game; // temp
+    sf::Clock m_uiStateTimer;
+    const float m_UI_STATE_TIMER_INTERVAL = 2.7f;
+
+    UIState m_uiState = Splash; // temp
     TutorialStage m_tutStage = Welcome;
     bool m_tutorialDisplay = false;
     bool m_displayQuit = false;
 
+    sf::Clock m_uiInputTimer;
+    const float m_UI_INPUT_TIMER_MIN = 0.381f;
     int m_inputCallback = 0;
+
+    // TODO: move to individual element classes
+
+    // Splash Elements
+    UIField m_splashField;
+    UILabel m_splashTitleLabel;
+    UILabel m_splashSubtitleLabel;
+    UIButton m_splashStartButton;
+
+    // Menu Elements
+    UIField m_menuField;
+    UIFrame m_menuFrame;
+    UILabel m_menuTitleLabel;
+    UILabel m_menuSubtitleLabel;
+    UILabel m_menuFootnoteLabel;
+    UIButton m_menuPlayButton;
+    UIButton m_menuCreditsButton;
+    UIButton m_menuQuitButton;
+    UIAlert m_menuCreditsPop;
 
     // HUD Elements
     //  . game title banner
@@ -317,23 +341,23 @@ public:
     void UIInit( const sf::Vector2u& winSize );
 
     void SplashInit();
-    void HUDInit();
     void MenuInit();
+    void HUDInit();
 
     const UIManager::UIState& GetUIState();
     void SetUIState( const UIManager::UIState& state );
     int GetInputCallBack();
 
     void ResetSplash();
-    void ResetHUD();
     void ResetMenu();
+    void ResetHUD();
 
     void UpdateUIMgr( const float& timeDelta );
     void DrawUIMgr( sf::RenderWindow& window, const sf::Vector2f& uiOffset );
 
     void UpdateSplash( const float& timeDelta );
-    void UpdateHUD( const float& timeDelta );
     void UpdateMenu( const float& timeDelta );
+    void UpdateHUD( const float& timeDelta );
 
     void DrawSplash( sf::RenderWindow& window, const sf::Vector2f& uiOffset );
     void DrawMenu( sf::RenderWindow& window, const sf::Vector2f& uiOffset );

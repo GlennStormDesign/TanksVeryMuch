@@ -56,12 +56,12 @@ int main()
     sf::Clock frameTimer;
     frameTimer.restart();
 
-    // ui
-    UIInit( rWin.getSize() );
-
     // scene
     NewScene( TestTankScene() );
     // TEST: if no local player tank, does terrainMgr set correct viewOffset ?
+
+    // ui
+    UIInit( rWin.getSize() );
 
     // debug feedback display
     DebugInit( DetailFont() );

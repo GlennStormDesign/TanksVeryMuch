@@ -266,6 +266,13 @@ void Tank::TankInit()
     SetTankColor( DEF_TANK_COLOR );
     for ( int i=0; i<4; i++ ) { shots[i].active = false; }
 }
+void Tank::TankReset()
+{
+    controller.SetActiveState(true);
+    m_armor = 100.f;
+    m_dust.active = true;
+    m_exhaust.active = true;
+}
 bool& Tank::IsTankMoving()
 {
     return m_tankMoving;

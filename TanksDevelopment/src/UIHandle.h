@@ -111,6 +111,9 @@ public:
         { SetUIRect(r); SetUIColor(c); m_heading = f; m_dropShadow = dropShadow; m_string = s; UIInit(); }
     void ElementInit() override;
 
+    std::string GetString();
+    void SetString( const std::string& s );
+
     void UIUpdate( const float& timeDelta ) override;
     void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) override;
 private:
@@ -279,7 +282,7 @@ private:
     sf::Vector2u m_windowSize;
 
     sf::Clock m_uiStateTimer;
-    const float m_UI_STATE_TIMER_INTERVAL = 2.7f;
+    const float m_UI_STATE_TIMER_INTERVAL = 0.618f;
 
     UIState m_uiState = Splash; // temp
     TutorialStage m_tutStage = Welcome;
@@ -304,9 +307,11 @@ private:
     UILabel m_menuTitleLabel;
     UILabel m_menuSubtitleLabel;
     UILabel m_menuFootnoteLabel;
+    UIButton m_menuHowToButton;
     UIButton m_menuPlayButton;
     UIButton m_menuCreditsButton;
     UIButton m_menuQuitButton;
+    UIAlert m_menuHowToPop;
     UIAlert m_menuCreditsPop;
 
     // HUD Elements

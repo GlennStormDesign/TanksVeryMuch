@@ -3,7 +3,7 @@
 // C++, SFML, OpenGL, GLSL
 
 Tank Prototype
-(latest addition: Splash)
+(latest addition: Menu)
 5.10.2020
 
 Controls:

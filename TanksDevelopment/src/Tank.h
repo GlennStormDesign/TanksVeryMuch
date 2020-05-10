@@ -194,6 +194,7 @@ public:
     ~Tank() { /* delete[] shots; */ }
 
     void TankInit();
+    void TankReset();
     bool& IsTankMoving();
     bool& IsTurretMoving();
     bool& GetActiveState();

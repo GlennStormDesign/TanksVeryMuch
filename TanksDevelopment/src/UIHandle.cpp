@@ -224,6 +224,15 @@ void UILabel::ElementInit()
     //
 }
 
+std::string UILabel::GetString()
+{
+    return m_string;
+}
+void UILabel::SetString( const std::string& s )
+{
+    m_string = s;
+}
+
 void UILabel::UIUpdate( const float& timeDelta )
 {
     if ( !active )
@@ -376,7 +385,7 @@ void UIBox::ElementInit()
 int UIBox::GetCallBack()
 {
     int retSignal = m_callBackSignal;
-    m_callBackSignal = 0; // reset
+    m_callBackSignal = 0; // reset (REVIEW: why need reset each frame?)
     return retSignal;
 }
 
@@ -391,6 +400,8 @@ void UIBox::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
 {
     if ( !visible )
         return;
+
+    m_callBackSignal = 0;
 
     UIFrame bf(m_uiRect, m_uiColor);
     sf::IntRect boxItemR = m_uiRect;
@@ -417,7 +428,7 @@ void UIBox::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     m_boxButton.DrawUI(window,uiOffset);
 
     if ( m_boxButton.GetState() == Active )
-        m_callBackSignal = 1; // REVIEW: does it make sense to reset this signal each frame?
+        m_callBackSignal = 1;
 }
 
 // UIAlert implementation
@@ -439,6 +450,8 @@ void UIAlert::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     if ( !visible )
         return;
 
+    m_callBackSignal = 0;
+
     UIFrame bf(m_uiRect, m_uiColor);
     sf::IntRect boxItemR = m_uiRect;
     boxItemR.top = m_uiRect.top + 8;
@@ -464,7 +477,7 @@ void UIAlert::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     m_boxButton.DrawUI(window,uiOffset);
 
     if ( m_boxButton.GetState() == Active )
-        m_callBackSignal = 1; // REVIEW: does it make sense to reset this signal each frame?
+        m_callBackSignal = 1;
 }
 
 // UIConfirm implementation
@@ -485,6 +498,8 @@ void UIConfirm::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
 {
     if ( !visible )
         return;
+
+    m_callBackSignal = 0;
 
     UIFrame bf(m_uiRect, m_uiColor);
     sf::IntRect boxItemR = m_uiRect;
@@ -513,7 +528,7 @@ void UIConfirm::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     m_boxButton = UIButton( boxItemR, m_uiColor, bl );
     m_boxButton.DrawUI(window,uiOffset);
     if ( m_boxButton.GetState() == Active )
-        m_callBackSignal = 1; // reset once received
+        m_callBackSignal = 1;
     if ( m_altButtonLabel != "" )
     {
         boxItemR.left = m_uiRect.left;
@@ -628,6 +643,7 @@ void UIManager::UIInit( const sf::Vector2u& winSize )
     SplashInit();
     HUDInit();
     MenuInit();
+    m_uiStateTimer.restart();
 }
 
 void UIManager::SplashInit()
@@ -647,15 +663,33 @@ void UIManager::SplashInit()
 }
 void UIManager::MenuInit()
 {
-    m_menuField = UIField();
-    m_menuFrame = UIFrame();
-    m_menuTitleLabel = UILabel();
-    m_menuSubtitleLabel = UILabel();
-    m_menuFootnoteLabel = UILabel();
-    m_menuPlayButton = UIButton();
-    m_menuCreditsButton = UIButton();
-    m_menuQuitButton = UIButton();
-    m_menuCreditsPop = UIAlert();
+    m_menuField = UIField( sf::IntRect(0,0,(m_windowSize.x),(m_windowSize.y)), sf::Color(128,128,100,255) );
+    m_menuFrame = UIFrame( sf::IntRect((m_windowSize.x*0.05f),(m_windowSize.y*0.05f),(m_windowSize.x*0.9f),(m_windowSize.y*0.9f)), sf::Color(128,100,64,255) );
+    MainTitle mf;
+    m_menuTitleLabel = UILabel( sf::IntRect(0,(m_windowSize.y/8)*1.f,(m_windowSize.x),(m_windowSize.y/8)), sf::Color::White, mf, false, "TANKS VERY MUCH" );
+    ClearLargeHeading stf;
+    m_menuSubtitleLabel = UILabel( sf::IntRect(0,(m_windowSize.y/8)*2.f,(m_windowSize.x),(m_windowSize.y/8)), sf::Color::White, stf, false, "Gameplay Prototype - Pre Alpha - Proof of Concept" );
+    m_menuFootnoteLabel = UILabel( sf::IntRect(0,(m_windowSize.y)*0.85f,(m_windowSize.x),(m_windowSize.y/8)), sf::Color::White, stf, false, "Spring 2020 Glenn Storm at Hot Iron Productions" );
+    PanelTitle mbf;
+    UILabel mbl = UILabel( sf::IntRect((m_windowSize.x/4)*1.5f,(m_windowSize.y/8)*3.f,(m_windowSize.x/4),(m_windowSize.y/8)), sf::Color::White, mbf, true, "How To" );
+    m_menuHowToButton = UIButton( sf::IntRect((m_windowSize.x/4)*1.5f,(m_windowSize.y/8)*3.f,(m_windowSize.x/4),(m_windowSize.y/8)), sf::Color(128,200,100,255), mbl );
+    mbl.SetString("Play");
+    m_menuPlayButton = UIButton( sf::IntRect((m_windowSize.x/4)*1.5f,(m_windowSize.y/8)*4.f,(m_windowSize.x/4),(m_windowSize.y/8)), sf::Color(128,200,100,255), mbl );
+    mbl.SetString("Credits");
+    m_menuCreditsButton = UIButton( sf::IntRect((m_windowSize.x/4)*1.5f,(m_windowSize.y/8)*5.f,(m_windowSize.x/4),(m_windowSize.y/8)), sf::Color(128,200,100,255), mbl );
+    mbl.SetString("Quit");
+    m_menuQuitButton = UIButton( sf::IntRect((m_windowSize.x/4)*1.5f,(m_windowSize.y/8)*6.f,(m_windowSize.x/4),(m_windowSize.y/8)), sf::Color(128,200,100,255), mbl );
+
+    m_menuHowToButton.SetState(Disabled);
+    m_menuPlayButton.SetState(Disabled);
+    m_menuCreditsButton.SetState(Disabled);
+    m_menuQuitButton.SetState(Disabled);
+
+    m_menuHowToPop = UIAlert( sf::IntRect( (m_windowSize.x/4), (m_windowSize.y/4), m_windowSize.x*0.5f, m_windowSize.y*0.5f ), sf::Color(128,200,64,255), "How To Play", "Arrow keys move\nBrackets turn the turret\nBackslash fires", "OK" );
+    m_menuCreditsPop = UIAlert(  sf::IntRect( (m_windowSize.x/4), (m_windowSize.y/4), m_windowSize.x*0.5f, m_windowSize.y*0.5f ), sf::Color(128,200,64,255), "Credits", "Art, Design, Programming\nGlenn Storm at\nHot Iron Productions", "OK" );
+
+    m_menuHowToPop.visible = false;
+    m_menuCreditsPop.visible = false;
 }
 void UIManager::HUDInit()
 {
@@ -674,7 +708,7 @@ void UIManager::HUDInit()
     m_enemyTanksLabel = UILabel( sf::IntRect(8,(m_windowSize.y - 64 - 8),256,64), sf::Color::White, trf, true, tanksRemainString );
     //  . quit button (launches quit confirm popup)
     ToolipHeading qbf;
-    UILabel ql( sf::IntRect((m_windowSize.x - 64 -8),(m_windowSize.y - 32 - 8),64,32), sf::Color::Black, qbf, true, "QUIT" );
+    UILabel ql( sf::IntRect((m_windowSize.x - 64 -8),(m_windowSize.y - 32 - 8),64,32), sf::Color::Black, qbf, true, "Exit" );
     m_quitButton = UIButton( sf::IntRect((m_windowSize.x - 64 -8),(m_windowSize.y - 32 - 8),64,32), sf::Color(128,200,64,128), ql );
 
     // tutorial pops
@@ -685,7 +719,7 @@ void UIManager::HUDInit()
     m_loseBanner = UILabel( sf::IntRect((m_windowSize.x/2-256),(m_windowSize.y/2-128),512,128), sf::Color::White, wlf, true, "GAME OVER" );
 
     // quit confirm
-    m_quitPop = UIConfirm( sf::IntRect((m_windowSize.x/2-256),(m_windowSize.y/2+32),512,192),sf::Color(128,200,64,128), "QUIT", "You are about to quit the game", "Ok", "", "Cancel" );
+    m_quitPop = UIConfirm( sf::IntRect((m_windowSize.x/2-256),(m_windowSize.y/2+32),512,192),sf::Color(128,200,64,128), "Exit", "You are about to exit the game", "Ok", "", "Cancel" );
 }
 
 const UIManager::UIState& UIManager::GetUIState()
@@ -723,6 +757,12 @@ void UIManager::ResetSplash()
 void UIManager::ResetMenu()
 {
     //
+    m_menuHowToButton.SetState(Disabled);
+    m_menuPlayButton.SetState(Disabled);
+    m_menuCreditsButton.SetState(Disabled);
+    m_menuQuitButton.SetState(Disabled);
+    for ( int i=1; i<4; i++ )
+        GetTank(i).SetActiveState(false);
 }
 void UIManager::ResetHUD()
 {
@@ -759,7 +799,13 @@ void UIManager::UpdateSplash( const float& timeDelta )
 }
 void UIManager::UpdateMenu( const float& timeDelta )
 {
-    //
+    if ( m_uiStateTimer.getElapsedTime().asSeconds() > m_UI_STATE_TIMER_INTERVAL && m_splashStartButton.GetState() == Disabled )
+    {
+        m_menuHowToButton.SetState(Normal);
+        m_menuPlayButton.SetState(Normal);
+        m_menuCreditsButton.SetState(Normal);
+        m_menuQuitButton.SetState(Normal);
+    }
 }
 void UIManager::UpdateHUD( const float& timeDelta )
 {
@@ -775,14 +821,72 @@ void UIManager::DrawSplash( sf::RenderWindow& window, const sf::Vector2f& uiOffs
     m_splashStartButton.DrawUI(window,uiOffset);
     if ( m_splashStartButton.GetState() == Active )
     {
-        SetUIState(Game); // temp
-        for ( int i=1; i<4; i++ )
-            GetTank(i).SetActiveState(true);
+        LaunchSFXUIFwd();
+        SetUIState(Menu);
+        LaunchMusicLoop((MLoopMode)Menu,true);
     }
 }
 void UIManager::DrawMenu( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
 {
     //
+    m_menuField.DrawUI(window,uiOffset);
+    m_menuFrame.DrawUI(window,uiOffset);
+    m_menuTitleLabel.DrawUI(window,uiOffset);
+    m_menuSubtitleLabel.DrawUI(window,uiOffset);
+    m_menuFootnoteLabel.DrawUI(window,uiOffset);
+    m_menuHowToButton.DrawUI(window,uiOffset);
+    m_menuPlayButton.DrawUI(window,uiOffset);
+    m_menuCreditsButton.DrawUI(window,uiOffset);
+    m_menuQuitButton.DrawUI(window,uiOffset);
+    m_menuHowToPop.DrawUI(window,uiOffset);
+    m_menuCreditsPop.DrawUI(window,uiOffset);
+    if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_menuHowToButton.GetState() == Active )
+    {
+        LaunchSFXUIFwd();
+        m_menuHowToButton.visible = false;
+        m_menuPlayButton.SetState(Disabled);
+        m_menuCreditsButton.SetState(Disabled);
+        m_menuQuitButton.SetState(Disabled);
+        m_menuHowToPop.visible = true;
+        m_uiInputTimer.restart();
+    }
+    if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_menuHowToPop.GetCallBack() == 1 )
+    {
+        LaunchSFXUIBack();
+        m_menuHowToPop.visible = false;
+        m_menuHowToButton.visible = true;
+        m_uiInputTimer.restart();
+    }
+    if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_menuPlayButton.GetState() == Active )
+    {
+        LaunchSFXUIFwd();
+        SetUIState(Game);
+        for ( int i=1; i<4; i++ )
+        {
+            GetTank(i).SetActiveState(true);
+            GetTank(i).TankReset();
+        }
+        LaunchMusicLoop((MLoopMode)Game,true);
+    }
+    if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_menuCreditsButton.GetState() == Active )
+    {
+        LaunchSFXUIFwd();
+        m_menuCreditsButton.visible = false;
+        m_menuHowToButton.SetState(Disabled);
+        m_menuPlayButton.SetState(Disabled);
+        m_menuQuitButton.SetState(Disabled);
+        m_menuCreditsPop.visible = true;
+        m_uiInputTimer.restart();
+    }
+    if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_menuCreditsPop.GetCallBack() == 1 )
+    {
+        LaunchSFXUIBack();
+        m_menuCreditsPop.visible = false;
+        m_menuCreditsButton.visible = true;
+        m_uiInputTimer.restart();
+    }
+    if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_menuQuitButton.GetState() == Active )
+        window.close();
 }
 void UIManager::DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
 {
@@ -808,6 +912,7 @@ void UIManager::DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset 
     m_quitButton.DrawUI(window,uiOffset);
     if ( m_quitButton.GetState() == Active )
     {
+        LaunchSFXUIFwd();
         m_displayQuit = true;
         m_quitButton.SetState(Disabled);
     }
@@ -829,9 +934,31 @@ void UIManager::DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset 
 
     m_inputCallback = m_quitPop.GetCallBack();
     if ( m_inputCallback == 1 )
-        window.close();
+    {
+        LaunchSFXUIBack();
+        SetUIState(Menu);
+        for ( int i=1; i<4; i++ )
+            GetTank(i).SetActiveState(false);
+        LaunchMusicLoop((MLoopMode)Menu,true);
+        // GAME RESET (temp)
+        GetLocalPlayerTank().SetPosition(512.f,512.f);
+        GetLocalPlayerTank().SetBaseRotation(0.f);
+        GetLocalPlayerTank().SetTurretRotation(0.f);
+        GetLocalPlayerTank().SetArmor(100.f);
+        SFXLoopKill();
+        for ( int i=1; i<4; i++ )
+        {
+            GetTank(i).SetPosition((200.f+(i*150.f)),300.f);
+            GetTank(i).SetBaseRotation( rand() % 360 );
+            GetTank(i).SetTurretRotation(0.f);
+        }
+        m_quitButton.SetState(Normal);
+        m_displayQuit = false;
+        m_inputCallback = 0;
+    }
     else if ( m_inputCallback == 3 )
     {
+        LaunchSFXUIBack();
         m_quitButton.SetState(Normal);
         m_displayQuit = false;
         m_inputCallback = 0;

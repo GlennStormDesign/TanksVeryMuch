@@ -21,7 +21,7 @@ Work on this project began late February 2020, and repository started here April
 * [DONE] Endless terrain
 * [DONE] Arbitrary scene (level) definitions
 * [DONE] Scene objects (from deco to triggers to destructables)
-* [WORKING] Nice UI
+* [DONE] Nice UI
 * Scriptable enemies (as in, they run off a timed script)
 * Reasonable enemy AI (more than opportunistic)
 * Campaign levels

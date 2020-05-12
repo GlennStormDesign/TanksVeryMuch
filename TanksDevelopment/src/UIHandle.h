@@ -87,6 +87,7 @@ private:
 class UIFrame : public UIElement {
 public:
 private:
+    sf::Sprite m_sprite; // panel rect frame sprite
 public:
     UIFrame() { UIInit(); }
     UIFrame( const sf::IntRect& r, const sf::Color& c )
@@ -140,6 +141,7 @@ private:
 class UIButton : public UIElement {
 public:
 private:
+    sf::Sprite m_sprite; // panel rect frame sprite
     UILabel m_buttonLabel;
     ButtonState m_state = Normal;
 public:

@@ -211,10 +211,15 @@ void UIFrame::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
         return;
 
     sf::RenderTexture rt;
-    sf::Sprite s = PanelRect( rt, m_uiRect );
-    s.setPosition( uiOffset.x + m_uiRect.left, uiOffset.y + m_uiRect.top );
-    s.setColor( m_uiColor );
-    window.draw( s );
+
+    // REVIEW: bug with graphic artifacts related to frame point to need to only create it if necessary; only if active?
+    //if ( active )
+    //{
+        m_sprite = PanelRect( rt, m_uiRect );
+        m_sprite.setColor( m_uiColor );
+    //}
+    m_sprite.setPosition( uiOffset.x + m_uiRect.left, uiOffset.y + m_uiRect.top );
+    window.draw( m_sprite );
 }
 
 // UILabel implementation
@@ -333,6 +338,8 @@ void UIButton::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     if ( !visible )
         return;
 
+    sf::RenderTexture rt;
+
     // dynamic values
     sf::IntRect uir = m_uiRect;
     sf::Color uic = m_uiColor;
@@ -364,11 +371,10 @@ void UIButton::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
         }
     }
 
-    sf::RenderTexture rt;
-    sf::Sprite p = PanelRect( rt, uir );
-    p.setPosition( uir.left + uiOffset.x, uir.top + uiOffset.y );
-    p.setColor( uic );
-    window.draw( p );
+    m_sprite = PanelRect( rt, uir );
+    m_sprite.setPosition( uir.left + uiOffset.x, uir.top + uiOffset.y );
+    m_sprite.setColor( uic );
+    window.draw( m_sprite );
     // overlay button label
     // REVIEW: look into adjusting rect or color of label in relation to button (overload label with RenderTexture?)
     m_buttonLabel.SetUIRect( uir );

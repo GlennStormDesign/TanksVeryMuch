@@ -40,6 +40,9 @@ sf::Sprite PanelRect( sf::RenderTexture& composite, const sf::IntRect& rect )
     sf::IntRect segment;
     sf::Vector2f pPos;
 
+    sf::RenderStates states;
+    states.blendMode = sf::BlendMode(sf::BlendMode::One, sf::BlendMode::OneMinusSrcAlpha); // attempt fix #28 alpha glitch
+
     composite.create(rect.width, rect.height);
 
     // corners
@@ -62,7 +65,7 @@ sf::Sprite PanelRect( sf::RenderTexture& composite, const sf::IntRect& rect )
             else
                 pPos.y = (rect.height-(borderWidth*2));
             piece.setPosition( pPos );
-            composite.draw(piece);
+            composite.draw(piece,states);
         }
     }
     // borders
@@ -77,13 +80,13 @@ sf::Sprite PanelRect( sf::RenderTexture& composite, const sf::IntRect& rect )
         pPos.x = x;
         pPos.y = 0;
         piece.setPosition( pPos );
-        composite.draw(piece);
+        composite.draw(piece,states);
         segment.top = 25;
         piece.setTextureRect( segment );
         // set piece position
         pPos.y = (rect.height-(borderWidth*2));
         piece.setPosition( pPos );
-        composite.draw(piece);
+        composite.draw(piece,states);
     }
     segment.top = borderWidth;
     segment.width = borderWidth;
@@ -96,13 +99,13 @@ sf::Sprite PanelRect( sf::RenderTexture& composite, const sf::IntRect& rect )
         pPos.x = 0;
         pPos.y = y;
         piece.setPosition( pPos );
-        composite.draw(piece);
+        composite.draw(piece,states);
         segment.left = 25;
         piece.setTextureRect( segment );
         // set piece position
         pPos.x = (rect.width-(borderWidth*2));
         piece.setPosition( pPos );
-        composite.draw(piece);
+        composite.draw(piece,states);
     }
     // center
     segment.left = borderWidth;
@@ -118,7 +121,7 @@ sf::Sprite PanelRect( sf::RenderTexture& composite, const sf::IntRect& rect )
             pPos.x = x;
             pPos.y = y;
             piece.setPosition( pPos );
-            composite.draw(piece);
+            composite.draw(piece,states);
         }
     }
 
@@ -652,16 +655,18 @@ void UIManager::UIInit( const sf::Vector2u& winSize )
     m_uiStateTimer.restart();
 }
 
+// REVIEW: Does explicitly computing the IntRect() element properties as proper ints ahead of time help fix graphic glitches?
+
 void UIManager::SplashInit()
 {
     m_splashField = UIField( sf::IntRect(0,0,(m_windowSize.x),(m_windowSize.y)), sf::Color(128,128,100,255) );
     MainTitle sf;
-    m_splashTitleLabel = UILabel( sf::IntRect(0,(m_windowSize.y/8)*1.f,(m_windowSize.x),(m_windowSize.y/6)), sf::Color::White, sf, false, "TANKS VERY MUCH" );
+    m_splashTitleLabel = UILabel( sf::IntRect(0,(int)((m_windowSize.y/8)*1.f),(m_windowSize.x),(int)(m_windowSize.y/6)), sf::Color::White, sf, false, "TANKS VERY MUCH" );
     PanelTitle stf;
-    m_splashSubtitleLabel = UILabel( sf::IntRect(0,(m_windowSize.y/8)*3.f,(m_windowSize.x),(m_windowSize.y/6)), sf::Color::White, stf, true, "Gameplay Prototype" );
+    m_splashSubtitleLabel = UILabel( sf::IntRect(0,(int)((m_windowSize.y/8)*3.f),(m_windowSize.x),(int)(m_windowSize.y/6)), sf::Color::White, stf, true, "Gameplay Prototype" );
     PanelTitle sbf;
-    UILabel sbl = UILabel( sf::IntRect( sf::IntRect((m_windowSize.x/4)*1.5f,(m_windowSize.y/8)*5.f,(m_windowSize.x/4),(m_windowSize.y/6)) ), sf::Color::White, sbf, true, "START" );
-    m_splashStartButton = UIButton( sf::IntRect((m_windowSize.x/4)*1.5f,(m_windowSize.y/8)*5.f,(m_windowSize.x/4),(m_windowSize.y/6)), sf::Color(128,200,100,255), sbl );
+    UILabel sbl = UILabel( sf::IntRect((int)((m_windowSize.x/4)*1.5f),(int)((m_windowSize.y/8)*5.f),(int)(m_windowSize.x/4),(int)(m_windowSize.y/6) ), sf::Color::White, sbf, true, "START" );
+    m_splashStartButton = UIButton( sf::IntRect((int)((m_windowSize.x/4)*1.5f),(int)((m_windowSize.y/8)*5.f),(int)((m_windowSize.x/4)),(int)((m_windowSize.y/6))), sf::Color(128,200,100,255), sbl );
     m_splashStartButton.SetState(Disabled);
     // temp
     for ( int i=1; i<4; i++ )
@@ -677,22 +682,22 @@ void UIManager::MenuInit()
     m_menuSubtitleLabel = UILabel( sf::IntRect(0,(m_windowSize.y/8)*2.f,(m_windowSize.x),(m_windowSize.y/8)), sf::Color::White, stf, false, "Gameplay Prototype - Pre Alpha - Proof of Concept" );
     m_menuFootnoteLabel = UILabel( sf::IntRect(0,(m_windowSize.y)*0.85f,(m_windowSize.x),(m_windowSize.y/8)), sf::Color::White, stf, false, "Spring 2020 Glenn Storm at Hot Iron Productions" );
     PanelTitle mbf;
-    UILabel mbl = UILabel( sf::IntRect((m_windowSize.x/4)*1.5f,(m_windowSize.y/8)*3.f,(m_windowSize.x/4),(m_windowSize.y/8)), sf::Color::White, mbf, true, "How To" );
-    m_menuHowToButton = UIButton( sf::IntRect((m_windowSize.x/4)*1.5f,(m_windowSize.y/8)*3.f,(m_windowSize.x/4),(m_windowSize.y/8)), sf::Color(128,200,100,255), mbl );
+    UILabel mbl = UILabel( sf::IntRect(((int)((m_windowSize.x/4)*1.5f)),((int)((m_windowSize.y/8)*3.f)),(m_windowSize.x/4),(m_windowSize.y/8)), sf::Color::White, mbf, true, "How To" );
+    m_menuHowToButton = UIButton( sf::IntRect(((int)((m_windowSize.x/4)*1.5f)),((int)((m_windowSize.y/8)*3.f)),(m_windowSize.x/4),(m_windowSize.y/8)), sf::Color(128,200,100,255), mbl );
     mbl.SetString("Play");
-    m_menuPlayButton = UIButton( sf::IntRect((m_windowSize.x/4)*1.5f,(m_windowSize.y/8)*4.f,(m_windowSize.x/4),(m_windowSize.y/8)), sf::Color(128,200,100,255), mbl );
+    m_menuPlayButton = UIButton( sf::IntRect(((int)((m_windowSize.x/4)*1.5f)),((int)((m_windowSize.y/8)*4.f)),(m_windowSize.x/4),(m_windowSize.y/8)), sf::Color(128,200,100,255), mbl );
     mbl.SetString("Credits");
-    m_menuCreditsButton = UIButton( sf::IntRect((m_windowSize.x/4)*1.5f,(m_windowSize.y/8)*5.f,(m_windowSize.x/4),(m_windowSize.y/8)), sf::Color(128,200,100,255), mbl );
+    m_menuCreditsButton = UIButton( sf::IntRect(((int)((m_windowSize.x/4)*1.5f)),((int)((m_windowSize.y/8)*5.f)),(m_windowSize.x/4),(m_windowSize.y/8)), sf::Color(128,200,100,255), mbl );
     mbl.SetString("Quit");
-    m_menuQuitButton = UIButton( sf::IntRect((m_windowSize.x/4)*1.5f,(m_windowSize.y/8)*6.f,(m_windowSize.x/4),(m_windowSize.y/8)), sf::Color(128,200,100,255), mbl );
+    m_menuQuitButton = UIButton( sf::IntRect(((int)((m_windowSize.x/4)*1.5f)),((int)((m_windowSize.y/8)*6.f)),(m_windowSize.x/4),(m_windowSize.y/8)), sf::Color(128,200,100,255), mbl );
 
     m_menuHowToButton.SetState(Disabled);
     m_menuPlayButton.SetState(Disabled);
     m_menuCreditsButton.SetState(Disabled);
     m_menuQuitButton.SetState(Disabled);
 
-    m_menuHowToPop = UIAlert( sf::IntRect( (m_windowSize.x/4), (m_windowSize.y/4), m_windowSize.x*0.5f, m_windowSize.y*0.5f ), sf::Color(128,200,64,255), "How To Play", "Arrow keys move\nBrackets turn the turret\nBackslash fires", "OK" );
-    m_menuCreditsPop = UIAlert(  sf::IntRect( (m_windowSize.x/4), (m_windowSize.y/4), m_windowSize.x*0.5f, m_windowSize.y*0.5f ), sf::Color(128,200,64,255), "Credits", "Art, Design, Programming\nGlenn Storm at\nHot Iron Productions", "OK" );
+    m_menuHowToPop = UIAlert( sf::IntRect( ((int)(m_windowSize.x/4)), ((int)(m_windowSize.y/4)), ((int)(m_windowSize.x*0.5f)), ((int)(m_windowSize.y*0.5f)) ), sf::Color(128,200,64,255), "How To Play", "Arrow keys move\nBrackets turn the turret\nBackslash fires", "OK" );
+    m_menuCreditsPop = UIAlert(  sf::IntRect( ((int)(m_windowSize.x/4)), ((int)(m_windowSize.y/4)), ((int)(m_windowSize.x*0.5f)), ((int)(m_windowSize.y*0.5f)) ), sf::Color(128,200,64,255), "Credits", "Art, Design, Programming\nGlenn Storm at\nHot Iron Productions", "OK" );
 
     m_menuHowToPop.visible = false;
     m_menuCreditsPop.visible = false;
@@ -700,9 +705,9 @@ void UIManager::MenuInit()
 void UIManager::HUDInit()
 {
     //  . game title banner
-    m_gameTitleFrame = UIFrame( sf::IntRect((m_windowSize.x - 256 - 8),8,256,64), sf::Color(128,200,64,128) );
+    m_gameTitleFrame = UIFrame( sf::IntRect( ((int)(m_windowSize.x - 256 - 8)),8,256,64), sf::Color(128,200,64,128) );
     PanelLabel gtl;
-    m_gameTitleLabel = UILabel( sf::IntRect((m_windowSize.x - 256 - 8),8,256,64), sf::Color::Black, gtl, true, "Tanks Very Much" );
+    m_gameTitleLabel = UILabel( sf::IntRect( ((int)(m_windowSize.x - 256 - 8)),8,256,64), sf::Color::Black, gtl, true, "Tanks Very Much" );
     //  . progress bar for armor, with label
     m_armorProgressFrame = UIFrame( sf::IntRect(8,8,256,64), sf::Color(128,200,64,128) );
     m_armorProgressBar = UIProgressBar( sf::IntRect(18,18,236,20), sf::Color(200,32,32,255), sf::Color(64,64,64,128), false, 4 );
@@ -711,21 +716,21 @@ void UIManager::HUDInit()
     //  . enemy tanks remaining label and number count
     std::string tanksRemainString = "Enemy Tanks ";
     HUDLabelSemi trf;
-    m_enemyTanksLabel = UILabel( sf::IntRect(8,(m_windowSize.y - 64 - 8),256,64), sf::Color::White, trf, true, tanksRemainString );
+    m_enemyTanksLabel = UILabel( sf::IntRect(8,((int)(m_windowSize.y - 64 - 8)),256,64), sf::Color::White, trf, true, tanksRemainString );
     //  . quit button (launches quit confirm popup)
     ToolipHeading qbf;
-    UILabel ql( sf::IntRect((m_windowSize.x - 64 -8),(m_windowSize.y - 32 - 8),64,32), sf::Color::Black, qbf, true, "Exit" );
-    m_quitButton = UIButton( sf::IntRect((m_windowSize.x - 64 -8),(m_windowSize.y - 32 - 8),64,32), sf::Color(128,200,64,128), ql );
+    UILabel ql( sf::IntRect(((int)(m_windowSize.x - 64 -8)),((int)(m_windowSize.y - 32 - 8)),64,32), sf::Color::Black, qbf, true, "Exit" );
+    m_quitButton = UIButton( sf::IntRect(((int)(m_windowSize.x - 64 -8)),((int)(m_windowSize.y - 32 - 8)),64,32), sf::Color(128,200,64,128), ql );
 
     // tutorial pops
 
     // win/lose banners
     MainTitle wlf;
-    m_winBanner = UILabel( sf::IntRect((m_windowSize.x/2-256),(m_windowSize.y/2-128),512,128), sf::Color::White, wlf, true, "YOU WIN" );
-    m_loseBanner = UILabel( sf::IntRect((m_windowSize.x/2-256),(m_windowSize.y/2-128),512,128), sf::Color::White, wlf, true, "GAME OVER" );
+    m_winBanner = UILabel( sf::IntRect(((int)((m_windowSize.x/2)-256)),((int)(m_windowSize.y/2)-128),512,128), sf::Color::White, wlf, true, "YOU WIN" );
+    m_loseBanner = UILabel( sf::IntRect(((int)((m_windowSize.x/2)-256)),((int)(m_windowSize.y/2)-128),512,128), sf::Color::White, wlf, true, "GAME OVER" );
 
     // quit confirm
-    m_quitPop = UIConfirm( sf::IntRect((m_windowSize.x/2-256),(m_windowSize.y/2+32),512,192),sf::Color(128,200,64,128), "Exit", "You are about to exit the game", "Ok", "", "Cancel" );
+    m_quitPop = UIConfirm( sf::IntRect(((int)((m_windowSize.x/2)-256)),((int)(m_windowSize.y/2)+32),512,192),sf::Color(128,200,64,128), "Exit", "You are about to exit the game", "Ok", "", "Cancel" );
 }
 
 const UIManager::UIState& UIManager::GetUIState()

@@ -55,11 +55,14 @@ bool operator== ( const PlayerStats& l, const PlayerStats& r );
 
 enum SceneType { Sandbox, Cinematic, Campaign, FreeBattle, NetBattle };
 
+
+
 class TankScene {
 public:
     SceneStats stats;
 private:
 protected:
+    //sf::Listener m_listener;
     SceneType m_type = Sandbox;
     TerrainSubstance m_terrain;
     std::vector<Tank> m_tankPool;
@@ -78,6 +81,8 @@ public:
 
     void UnloadScene();
     void LoadScene( const TankScene& level );
+
+    sf::Listener& GetSceneListener();
 
     SceneType& GetSceneType();
     void SetSceneType( const SceneType& type );
@@ -162,6 +167,7 @@ public:
 extern void NewScene( const TankScene& level );
 extern void UnloadScene();
 extern void LoadScene( const TankScene& level );
+//extern sf::Listener& GetSceneListener();
 extern SceneType& GetSceneType();
 extern void SetSceneType( const SceneType& type );
 extern void AddTank( Tank t );

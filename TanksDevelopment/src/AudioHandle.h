@@ -36,6 +36,7 @@ extern void SFXLoopKill();
 extern void LaunchSFXUIFwd();
 extern void LaunchSFXUIBack();
 extern void LaunchSFXShot();
+extern void LaunchSFXShot( const sf::Vector2f& sPos );
 extern void LaunchSFXImpact();
 extern void LaunchSFXKill();
 extern void SFXTesting( const bool& debug, const float& timeDelta );
@@ -44,6 +45,7 @@ int LaunchSFXLoop( const sf::SoundBuffer& sb );
 int LaunchSFXLoop( const sf::SoundBuffer& sb, const float& volume, const float& pitch );
 void TouchSFXLoop( const int& index, const float& volume, const float& pitch, const bool& stop );
 void LaunchSFXSting( const sf::SoundBuffer& sb );
+void LaunchSFXSting( const sf::SoundBuffer& sb, sf::Vector2f& sPos );
 
 class AudioMusicManager {
 public:
@@ -113,6 +115,7 @@ public:
     void LaunchSFXUIFwd();
     void LaunchSFXUIBack();
     void LaunchSFXShot();
+    void LaunchSFXShot( const sf::Vector2f& sPos );
     void LaunchSFXImpact();
     void LaunchSFXKill();
 

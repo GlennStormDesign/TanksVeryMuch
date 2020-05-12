@@ -3,6 +3,7 @@
 
 #include "AudioHandle.h"
 #include "Tank.h"
+#include "TankScene.h"
 
 // Tank Definitions
 
@@ -445,6 +446,7 @@ void Tank::UpdateTank( const float& timeDelta )
     TransformTank();
     if ( controller.GetControllerType() == LocalPlayer ) {
         // REVIEW: handle spacial sound and non-player tank sound (SoundSource)
+        //GetSceneListener().setPosition(m_posX,m_posY,0.f);
         LocalTankEngage( m_tankMoving, m_turretMoving );
     }
     if ( m_shotFrame == 0 && controller.GetControl( BIT_FIRE ) )
@@ -462,7 +464,10 @@ void Tank::UpdateTank( const float& timeDelta )
         {
             SetShotTimer( 1.f );
             TransformShotVFX();
-            LaunchSFXShot();
+            //if ( controller.GetControllerType() == LocalPlayer )
+                LaunchSFXShot();
+            //else
+            //    LaunchSFXShot(GetBaseSprite().getPosition());
         }
     }
     if ( m_shotTimer > 0.f )

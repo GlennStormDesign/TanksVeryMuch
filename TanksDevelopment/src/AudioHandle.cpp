@@ -67,6 +67,10 @@ extern void LaunchSFXShot()
 {
     sfxMgr.LaunchSFXShot();
 }
+extern void LaunchSFXShot( const sf::Vector2f& sPos )
+{
+    sfxMgr.LaunchSFXShot(sPos);
+}
 extern void LaunchSFXImpact()
 {
     sfxMgr.LaunchSFXImpact();
@@ -137,6 +141,21 @@ void LaunchSFXSting( const sf::SoundBuffer& sb )
     for ( int i=0; i<MAX_SFX_STINGS; i++ ) {
         if ( fxs[i].getStatus() == sf::Sound::Stopped )
         {
+            fxs[i].setPosition(0.f,0.f,0.f);
+            fxs[i].setBuffer( sb );
+            fxs[i].play();
+            break;
+        }
+    }
+}
+void LaunchSFXSting( const sf::SoundBuffer& sb, const sf::Vector2f& sPos )
+{
+    if ( !sfxMgr.SafeSFXInterval() )
+        return;
+    for ( int i=0; i<MAX_SFX_STINGS; i++ ) {
+        if ( fxs[i].getStatus() == sf::Sound::Stopped )
+        {
+            fxs[i].setPosition(sPos.x, sPos.y, 0.f);
             fxs[i].setBuffer( sb );
             fxs[i].play();
             break;
@@ -412,6 +431,10 @@ void AudioSFXManager::LaunchSFXUIBack()
 void AudioSFXManager::LaunchSFXShot()
 {
     LaunchSFXSting(fxbShot);
+}
+void AudioSFXManager::LaunchSFXShot( const sf::Vector2f& sPos )
+{
+    LaunchSFXSting(fxbShot,sPos);
 }
 void AudioSFXManager::LaunchSFXImpact()
 {

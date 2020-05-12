@@ -18,6 +18,12 @@ extern void LoadScene( const TankScene& level )
 {
     currentScene.LoadScene( level );
 }
+/*
+extern sf::Listener& GetSceneListener()
+{
+    return currentScene.GetSceneListener();
+}
+*/
 extern SceneType& GetSceneType()
 {
     return currentScene.GetSceneType();
@@ -147,6 +153,12 @@ void TankScene::LoadScene( const TankScene& level )
     stats = newStats;
     stats.isSceneActive = true;
 }
+/*
+sf::Listener& TankScene::GetSceneListener()
+{
+    return m_listener;
+}
+*/
 
 SceneType& TankScene::GetSceneType()
 {

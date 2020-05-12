@@ -861,7 +861,7 @@ void UIManager::DrawMenu( sf::RenderWindow& window, const sf::Vector2f& uiOffset
     {
         LaunchSFXUIFwd();
         SetUIState(Game);
-        for ( int i=1; i<4; i++ )
+        for ( int i=0; i<4; i++ )
         {
             GetTank(i).SetActiveState(true);
             GetTank(i).TankReset();

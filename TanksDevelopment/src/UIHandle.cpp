@@ -41,9 +41,10 @@ sf::Sprite PanelRect( sf::RenderTexture& composite, const sf::IntRect& rect )
     sf::Vector2f pPos;
 
     sf::RenderStates states;
-    states.blendMode = sf::BlendMode(sf::BlendMode::One, sf::BlendMode::OneMinusSrcAlpha); // attempt fix #28 alpha glitch
+    states.blendMode = sf::BlendMode(sf::BlendMode::One, sf::BlendMode::OneMinusSrcAlpha);
 
     composite.create(rect.width, rect.height);
+    composite.clear(sf::Color(0,0,0,0)); // NOTE: this turns out to clean up progressive graphic glitches wrt alpha
 
     // corners
     segment.height = borderWidth;
@@ -654,8 +655,6 @@ void UIManager::UIInit( const sf::Vector2u& winSize )
     MenuInit();
     m_uiStateTimer.restart();
 }
-
-// REVIEW: Does explicitly computing the IntRect() element properties as proper ints ahead of time help fix graphic glitches?
 
 void UIManager::SplashInit()
 {

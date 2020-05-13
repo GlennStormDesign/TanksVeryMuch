@@ -4,13 +4,16 @@
 
 Tank Prototype
 (latest addition: Menu)
-5.12.2020
+5.13.2020
 
 Controls:
 Move with arrow keys
 Turret left = [
 Turret right = ]
 Fire = \
+
+Debug Control:
+~ = display debug stats
 
 Music Control:
 Space = silent loop
@@ -19,3 +22,11 @@ G = game loop
 M = menu loop
 I = 'iron' sting
 S = 'snare' sting
+
+Troubleshooting:
+* If nothing happens when
+double-clicking the .exe,
+please re-install. The 
+application is designed to 
+stop if audio or images are
+missing.

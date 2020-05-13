@@ -18,12 +18,6 @@ extern void LoadScene( const TankScene& level )
 {
     currentScene.LoadScene( level );
 }
-/*
-extern sf::Listener& GetSceneListener()
-{
-    return currentScene.GetSceneListener();
-}
-*/
 extern SceneType& GetSceneType()
 {
     return currentScene.GetSceneType();
@@ -153,12 +147,6 @@ void TankScene::LoadScene( const TankScene& level )
     stats = newStats;
     stats.isSceneActive = true;
 }
-/*
-sf::Listener& TankScene::GetSceneListener()
-{
-    return m_listener;
-}
-*/
 
 SceneType& TankScene::GetSceneType()
 {
@@ -353,6 +341,7 @@ void TankScene::UpdateScene( const float& timeDelta )
                             if ( !GetLocalPlayerTank().GetActiveState() )
                                 SFXLoopKill();
                             LaunchSFXKill();
+                            //LaunchSFXKill(m_tankPool[n].GetBaseSprite().getPosition());
                             if ( GetActiveTankCount() == 1 )
                             {
                                 if ( GetLocalPlayerTank().GetActiveState() )
@@ -364,7 +353,10 @@ void TankScene::UpdateScene( const float& timeDelta )
                                 LaunchMusicEnd(false); // lose
                         }
                         else
+                        {
                             LaunchSFXImpact();
+                            //LaunchSFXImpact(m_tankPool[n].GetBaseSprite().getPosition());
+                        }
                         m_tankPool[i].shots[s].Detonate();
                     }
                 }
@@ -459,6 +451,7 @@ void TankScene::UpdateScene( const float& timeDelta )
                             else
                             {
                                 LaunchSFXImpact();
+                                //LaunchSFXImpact(m_tankPool[t].shots[s].shot.getPosition());
                                 m_tankPool[t].shots[s].Detonate();
                             }
                         }

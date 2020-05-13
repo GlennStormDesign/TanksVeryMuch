@@ -270,7 +270,7 @@ void Tank::TankInit()
 void Tank::TankReset()
 {
     controller.SetActiveState(true);
-    m_armor = 100.f;
+    SetArmor(100.f);
     m_dust.active = true;
     m_exhaust.active = true;
 }
@@ -407,6 +407,8 @@ void Tank::UpdateTank( const float& timeDelta )
         return;
     float tankMoveFwdX = sin(m_baseR * DEG2RAD) * M_PI;
     float tankMoveFwdY = cos(m_baseR * DEG2RAD) * M_PI;
+    // handle spacial sound listener direction (REVIEW: not intuitive?)
+    //sf::Listener::setDirection(tankMoveFwdX,tankMoveFwdY,0.f);
     if ( controller.GetControl( BIT_FWD ) )
     {
         m_posX += tankMoveFwdX * m_moveSpeed * timeDelta;
@@ -445,8 +447,8 @@ void Tank::UpdateTank( const float& timeDelta )
     }
     TransformTank();
     if ( controller.GetControllerType() == LocalPlayer ) {
-        // REVIEW: handle spacial sound and non-player tank sound (SoundSource)
-        //GetSceneListener().setPosition(m_posX,m_posY,0.f);
+        // handle spacial sound and non-player tank sound
+        //sf::Listener::setPosition(m_posX,m_posY,0.f); // REVIEW: is this 3D listener space not x & y with z of 0?
         LocalTankEngage( m_tankMoving, m_turretMoving );
     }
     if ( m_shotFrame == 0 && controller.GetControl( BIT_FIRE ) )
@@ -464,10 +466,7 @@ void Tank::UpdateTank( const float& timeDelta )
         {
             SetShotTimer( 1.f );
             TransformShotVFX();
-            //if ( controller.GetControllerType() == LocalPlayer )
-                LaunchSFXShot();
-            //else
-            //    LaunchSFXShot(GetBaseSprite().getPosition());
+            LaunchSFXShot(GetBaseSprite().getPosition());
         }
     }
     if ( m_shotTimer > 0.f )

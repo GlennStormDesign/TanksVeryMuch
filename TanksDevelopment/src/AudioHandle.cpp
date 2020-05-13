@@ -75,9 +75,17 @@ extern void LaunchSFXImpact()
 {
     sfxMgr.LaunchSFXImpact();
 }
+extern void LaunchSFXImpact( const sf::Vector2f& sPos )
+{
+    sfxMgr.LaunchSFXImpact(sPos);
+}
 extern void LaunchSFXKill()
 {
     sfxMgr.LaunchSFXKill();
+}
+extern void LaunchSFXKill( const sf::Vector2f& sPos )
+{
+    sfxMgr.LaunchSFXKill(sPos);
 }
 extern void SFXTesting( const bool& debug, const float& timeDelta )
 {
@@ -141,7 +149,6 @@ void LaunchSFXSting( const sf::SoundBuffer& sb )
     for ( int i=0; i<MAX_SFX_STINGS; i++ ) {
         if ( fxs[i].getStatus() == sf::Sound::Stopped )
         {
-            fxs[i].setPosition(0.f,0.f,0.f);
             fxs[i].setBuffer( sb );
             fxs[i].play();
             break;
@@ -155,7 +162,10 @@ void LaunchSFXSting( const sf::SoundBuffer& sb, const sf::Vector2f& sPos )
     for ( int i=0; i<MAX_SFX_STINGS; i++ ) {
         if ( fxs[i].getStatus() == sf::Sound::Stopped )
         {
-            fxs[i].setPosition(sPos.x, sPos.y, 0.f);
+            //fxs[i].setRelativeToListener(true);
+            //fxs[i].setMinDistance(38.1f);
+            //fxs[i].setAttenuation(0.1f);
+            //fxs[i].setPosition(sPos.x, sPos.y, 0.f);
             fxs[i].setBuffer( sb );
             fxs[i].play();
             break;
@@ -440,9 +450,17 @@ void AudioSFXManager::LaunchSFXImpact()
 {
     LaunchSFXSting(fxbImpact);
 }
+void AudioSFXManager::LaunchSFXImpact( const sf::Vector2f& sPos )
+{
+    LaunchSFXSting(fxbImpact,sPos);
+}
 void AudioSFXManager::LaunchSFXKill()
 {
     LaunchSFXSting(fxbKill);
+}
+void AudioSFXManager::LaunchSFXKill( const sf::Vector2f& sPos )
+{
+    LaunchSFXSting(fxbKill,sPos);
 }
 
 void AudioSFXManager::Testing( const bool& debug, const float& timeDelta )

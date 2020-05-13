@@ -38,7 +38,9 @@ extern void LaunchSFXUIBack();
 extern void LaunchSFXShot();
 extern void LaunchSFXShot( const sf::Vector2f& sPos );
 extern void LaunchSFXImpact();
+extern void LaunchSFXImpact( const sf::Vector2f& sPos );
 extern void LaunchSFXKill();
+extern void LaunchSFXKill( const sf::Vector2f& sPos );
 extern void SFXTesting( const bool& debug, const float& timeDelta );
 
 int LaunchSFXLoop( const sf::SoundBuffer& sb );
@@ -117,20 +119,11 @@ public:
     void LaunchSFXShot();
     void LaunchSFXShot( const sf::Vector2f& sPos );
     void LaunchSFXImpact();
+    void LaunchSFXImpact( const sf::Vector2f& sPos );
     void LaunchSFXKill();
+    void LaunchSFXKill( const sf::Vector2f& sPos );
 
     void Testing( const bool& debug, const float& timeDelta );
     void SFXLoopKill();
 private:
 };
-
-namespace Tanks {
-    // FIXME: (related to audio bugs) extern? singleton?
-    // NOTE: dependency was controlled prior to interface/implementation split
-    // TEST: maybe I can provide static functions for any use of these static vars, to avoid needed to make these until main()
-    //  those static functions can live declared here, defined in AudioHandle.cpp
-    //  these managers can live ... in main? AudioHandle.cpp? (either way, just once)
-    // [YES, that approach looks promising, all static functions, one manager made static within AudioManager.cpp]
-    //static AudioMusicManager musicMgr;
-    //static AudioSFXManager sfxMgr;
-}

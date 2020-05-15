@@ -101,6 +101,7 @@ public:
     PlayerStats& GetLocalPlayer();
 
     void UpdateScene( const float& timeDelta );
+    virtual void UpdateLevel( const float& timeDelta ) { }
 
     void DrawScene( sf::RenderWindow& window );
 private:
@@ -185,6 +186,20 @@ public:
         // scene setup
         stats.maxPlayers = 1;
     }
+
+    void UpdateLevel( const float& timeDelta ) override
+    {
+        // end game check
+        if ( GetActiveTankCount() == 1 )
+        {
+            if ( GetLocalPlayerTank().GetActiveState() )
+                LaunchMusicEnd(true); // win
+            else
+                LaunchMusicEnd(false); // lose
+        }
+        else if ( !GetLocalPlayerTank().GetActiveState() )
+            LaunchMusicEnd(false); // lose
+    }
 };
 
 class TutorialGameScene : public TankScene {
@@ -236,5 +251,24 @@ public:
 
         // scene setup
         stats.maxPlayers = 1;
+    }
+
+    void UpdateLevel( const float& timeDelta ) override
+    {
+        // FIXME: no worky, called at end of UpdateScene()
+        // debug test
+        SetDebugText( FormatDebugHeader() );
+        AddDebugText("\nLEVEL UPDATE CALLED\n");
+
+        // end game check
+        if ( GetActiveTankCount() == 1 )
+        {
+            if ( GetLocalPlayerTank().GetActiveState() )
+                LaunchMusicEnd(true); // win
+            else
+                LaunchMusicEnd(false); // lose
+        }
+        else if ( !GetLocalPlayerTank().GetActiveState() )
+            LaunchMusicEnd(false); // lose
     }
 };

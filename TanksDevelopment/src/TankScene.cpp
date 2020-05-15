@@ -350,6 +350,7 @@ void TankScene::UpdateScene( const float& timeDelta )
                                 SFXLoopKill();
                             LaunchSFXKill();
                             //LaunchSFXKill(m_tankPool[n].GetBaseSprite().getPosition());
+                            // TODO: end game check now done within level update
                             if ( GetActiveTankCount() == 1 )
                             {
                                 if ( GetLocalPlayerTank().GetActiveState() )
@@ -469,6 +470,9 @@ void TankScene::UpdateScene( const float& timeDelta )
             }
         }
     }
+
+    // update level subclass
+    UpdateLevel( timeDelta );
 }
 
 void TankScene::DrawScene( sf::RenderWindow& window )

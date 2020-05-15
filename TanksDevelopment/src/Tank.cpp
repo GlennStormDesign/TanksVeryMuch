@@ -407,8 +407,8 @@ void Tank::UpdateTank( const float& timeDelta )
         return;
     float tankMoveFwdX = sin(m_baseR * DEG2RAD) * M_PI;
     float tankMoveFwdY = cos(m_baseR * DEG2RAD) * M_PI;
-    // handle spacial sound listener direction (REVIEW: not intuitive?)
-    //sf::Listener::setDirection(tankMoveFwdX,tankMoveFwdY,0.f);
+    // handle spacial sound listener direction
+    //sf::Listener::setDirection(tankMoveFwdX,tankMoveFwdY,0.f); // REVIEW: not intuitive?
     if ( controller.GetControl( BIT_FWD ) )
     {
         m_posX += tankMoveFwdX * m_moveSpeed * timeDelta;
@@ -448,7 +448,7 @@ void Tank::UpdateTank( const float& timeDelta )
     TransformTank();
     if ( controller.GetControllerType() == LocalPlayer ) {
         // handle spacial sound and non-player tank sound
-        //sf::Listener::setPosition(m_posX,m_posY,0.f); // REVIEW: is this 3D listener space not x & y with z of 0?
+        // NOTE: Listener updated in main game loop on sound update
         LocalTankEngage( m_tankMoving, m_turretMoving );
     }
     if ( m_shotFrame == 0 && controller.GetControl( BIT_FIRE ) )

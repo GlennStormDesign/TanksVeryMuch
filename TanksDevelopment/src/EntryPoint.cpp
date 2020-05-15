@@ -92,7 +92,7 @@ int main()
         }
 
         // audio update
-        //sf::Listener::setPosition( vw.getCenter().x, vw.getCenter().y, 0.f ); // REVIEW: no worky
+        //sf::Listener::setPosition( vw.getCenter().x, 0.f, vw.getCenter().y ); // REVIEW: z = y? -y? (no worky)
         MusicStingUpdate( timeDelta );
         MusicLoopUpdate( timeDelta );
         SFXLoopUpdate( timeDelta );

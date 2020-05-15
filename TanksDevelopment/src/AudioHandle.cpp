@@ -149,6 +149,7 @@ void LaunchSFXSting( const sf::SoundBuffer& sb )
     for ( int i=0; i<MAX_SFX_STINGS; i++ ) {
         if ( fxs[i].getStatus() == sf::Sound::Stopped )
         {
+            fxs[i].setRelativeToListener( false ); // REVIEW: music never relative, sfx
             fxs[i].setBuffer( sb );
             fxs[i].play();
             break;
@@ -359,6 +360,7 @@ void AudioMusicManager::MusicLoopInit()
         m_musicOkay = false;
     mloop.setBuffer(msbMenu);
     mloop.setVolume(MUSIC_LOOP_MAX_VOLUME);
+    mloop.setRelativeToListener(false);
 }
 void AudioMusicManager::MusicStingInit()
 {
@@ -368,6 +370,7 @@ void AudioMusicManager::MusicStingInit()
             !msbLose.loadFromFile("audio/Music_Sting_Lose.wav") )
         m_musicOkay = false;
     msting.setVolume(100.f); // stings always full volume
+    msting.setRelativeToListener(false);
 }
 
 // AudioSFXManager implementation
@@ -389,6 +392,7 @@ void AudioSFXManager::SFXStingInit()
 }
 void AudioSFXManager::SFXLoopUpdate( const float& timeDelta )
 {
+    // TODO: handle other tank idle and turret as 3D sound relative to listener
     if ( pIdleEngaged )
     {
         if ( pIdleLoop == -1 )

@@ -215,13 +215,8 @@ void UIFrame::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
         return;
 
     sf::RenderTexture rt;
-
-    // REVIEW: bug with graphic artifacts related to frame point to need to only create it if necessary; only if active?
-    //if ( active )
-    //{
-        m_sprite = PanelRect( rt, m_uiRect );
-        m_sprite.setColor( m_uiColor );
-    //}
+    m_sprite = PanelRect( rt, m_uiRect );
+    m_sprite.setColor( m_uiColor );
     m_sprite.setPosition( uiOffset.x + m_uiRect.left, uiOffset.y + m_uiRect.top );
     window.draw( m_sprite );
 }
@@ -668,7 +663,7 @@ void UIManager::SplashInit()
     m_splashStartButton = UIButton( sf::IntRect((int)((m_windowSize.x/4)*1.5f),(int)((m_windowSize.y/8)*5.f),(int)((m_windowSize.x/4)),(int)((m_windowSize.y/6))), sf::Color(128,200,100,255), sbl );
     m_splashStartButton.SetState(Disabled);
     // temp
-    for ( int i=1; i<4; i++ )
+    for ( int i=1; i<GetTotalTankCount(); i++ )
         GetTank(i).SetActiveState(false);
 }
 void UIManager::MenuInit()
@@ -761,7 +756,7 @@ void UIManager::ResetSplash()
 {
     //
     m_splashStartButton.SetState(Disabled);
-    for ( int i=1; i<4; i++ )
+    for ( int i=1; i<GetTotalTankCount(); i++ )
         GetTank(i).SetActiveState(false);
 }
 void UIManager::ResetMenu()
@@ -771,7 +766,7 @@ void UIManager::ResetMenu()
     m_menuPlayButton.SetState(Disabled);
     m_menuCreditsButton.SetState(Disabled);
     m_menuQuitButton.SetState(Disabled);
-    for ( int i=1; i<4; i++ )
+    for ( int i=1; i<GetTotalTankCount(); i++ )
         GetTank(i).SetActiveState(false);
 }
 void UIManager::ResetHUD()
@@ -871,7 +866,7 @@ void UIManager::DrawMenu( sf::RenderWindow& window, const sf::Vector2f& uiOffset
     {
         LaunchSFXUIFwd();
         SetUIState(Game);
-        for ( int i=0; i<4; i++ )
+        for ( int i=0; i<GetTotalTankCount(); i++ )
         {
             GetTank(i).SetActiveState(true);
             GetTank(i).TankReset();
@@ -947,7 +942,7 @@ void UIManager::DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset 
     {
         LaunchSFXUIBack();
         SetUIState(Menu);
-        for ( int i=1; i<4; i++ )
+        for ( int i=1; i<GetTotalTankCount(); i++ )
             GetTank(i).SetActiveState(false);
         LaunchMusicLoop((MLoopMode)Menu,true);
         // GAME RESET (temp)
@@ -956,7 +951,7 @@ void UIManager::DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset 
         GetLocalPlayerTank().SetTurretRotation(0.f);
         GetLocalPlayerTank().SetArmor(100.f);
         SFXLoopKill();
-        for ( int i=1; i<4; i++ )
+        for ( int i=1; i<GetTotalTankCount(); i++ )
         {
             GetTank(i).SetPosition((200.f+(i*150.f)),300.f);
             GetTank(i).SetBaseRotation( rand() % 360 );

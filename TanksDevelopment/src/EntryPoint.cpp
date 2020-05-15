@@ -57,8 +57,8 @@ int main()
     frameTimer.restart();
 
     // scene
-    NewScene( TestTankScene() );
-    // TEST: if no local player tank, does terrainMgr set correct viewOffset ?
+    //NewScene( TestTankScene() );
+    NewScene( TutorialGameScene() );
 
     // ui
     UIInit( rWin.getSize() );

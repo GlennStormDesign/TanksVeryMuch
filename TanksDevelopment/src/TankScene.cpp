@@ -50,6 +50,10 @@ extern unsigned int GetActiveTankCount()
 {
     return currentScene.GetActiveTankCount();
 }
+extern int GetTotalTankCount()
+{
+    return currentScene.GetTotalTankCount();
+}
 extern void AddObject( SceneObject o )
 {
     currentScene.AddObject( o );
@@ -214,6 +218,10 @@ unsigned int TankScene::GetActiveTankCount()
         }
     }
     return cnt;
+}
+int TankScene::GetTotalTankCount()
+{
+    return m_tankPool.size();
 }
 
 void TankScene::AddObject( SceneObject o )

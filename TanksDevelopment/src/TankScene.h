@@ -55,8 +55,6 @@ bool operator== ( const PlayerStats& l, const PlayerStats& r );
 
 enum SceneType { Sandbox, Cinematic, Campaign, FreeBattle, NetBattle };
 
-
-
 class TankScene {
 public:
     SceneStats stats;
@@ -100,8 +98,10 @@ public:
     PlayerStats& GetPlayer( const unsigned int& index );
     PlayerStats& GetLocalPlayer();
 
+    virtual void UpdateLevel( const float& timeDelta ) {
+        SetDebugText( FormatDebugHeader() );
+        AddDebugText( "BASE CLASS VERSION CALLED" ); }
     void UpdateScene( const float& timeDelta );
-    virtual void UpdateLevel( const float& timeDelta ) { }
 
     void DrawScene( sf::RenderWindow& window );
 private:
@@ -189,16 +189,8 @@ public:
 
     void UpdateLevel( const float& timeDelta ) override
     {
-        // end game check
-        if ( GetActiveTankCount() == 1 )
-        {
-            if ( GetLocalPlayerTank().GetActiveState() )
-                LaunchMusicEnd(true); // win
-            else
-                LaunchMusicEnd(false); // lose
-        }
-        else if ( !GetLocalPlayerTank().GetActiveState() )
-            LaunchMusicEnd(false); // lose
+        SetDebugText( FormatDebugHeader() );
+        AddDebugText( "THIS IS THE TEST LEVEL" );
     }
 };
 
@@ -255,20 +247,7 @@ public:
 
     void UpdateLevel( const float& timeDelta ) override
     {
-        // FIXME: no worky, called at end of UpdateScene()
-        // debug test
         SetDebugText( FormatDebugHeader() );
-        AddDebugText("\nLEVEL UPDATE CALLED\n");
-
-        // end game check
-        if ( GetActiveTankCount() == 1 )
-        {
-            if ( GetLocalPlayerTank().GetActiveState() )
-                LaunchMusicEnd(true); // win
-            else
-                LaunchMusicEnd(false); // lose
-        }
-        else if ( !GetLocalPlayerTank().GetActiveState() )
-            LaunchMusicEnd(false); // lose
+        AddDebugText( "THIS IS THE TUTORIAL LEVEL" );
     }
 };

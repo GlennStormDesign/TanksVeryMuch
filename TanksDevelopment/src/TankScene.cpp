@@ -471,7 +471,7 @@ void TankScene::UpdateScene( const float& timeDelta )
         }
     }
 
-    // update level subclass
+    // update subclass levels
     UpdateLevel( timeDelta );
 }
 

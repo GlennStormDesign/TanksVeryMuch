@@ -872,6 +872,7 @@ void UIManager::DrawMenu( sf::RenderWindow& window, const sf::Vector2f& uiOffset
             GetTank(i).TankReset();
         }
         LaunchMusicLoop((MLoopMode)Game,true);
+        LoadScene( new TutorialGameScene() ); // temp
     }
     if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_menuCreditsButton.GetState() == Active )
     {

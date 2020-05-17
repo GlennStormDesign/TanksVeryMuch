@@ -57,8 +57,7 @@ int main()
     frameTimer.restart();
 
     // scene
-    NewScene( TestTankScene() );
-    //NewScene( TutorialGameScene() );
+    NewScene( new TestTankScene() ); // sandbox used during splash and menu
 
     // ui
     UIInit( rWin.getSize() );

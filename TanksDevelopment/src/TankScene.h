@@ -70,14 +70,14 @@ protected:
     unsigned int m_playerIndex = 0;
 public:
     TankScene() { }
-    ~TankScene() { } // remove all in tank pool and shot pool (REVIEW: also, virtual destructor needed?)
+    virtual ~TankScene() { } // remove all in tank pool and shot pool
 
     virtual void LevelInit() { } // level configuration in subclasses
 
     void SceneInit();
 
     void UnloadScene();
-    void LoadScene( const TankScene& level );
+    void LoadScene( TankScene* level );
 
     SceneType& GetSceneType();
     void SetSceneType( const SceneType& type );
@@ -102,14 +102,12 @@ public:
 
     void DrawScene( sf::RenderWindow& window );
 private:
-    virtual void UpdateLevel( const float& timeDelta ) {
-        SetDebugText( FormatDebugHeader() );
-        AddDebugText( "BASE CLASS OF TANK SCENE CALLED" ); } // define in subclasses
+    virtual void UpdateLevel( const float& timeDelta ) { }
 };
 
-extern void NewScene( const TankScene& level );
+extern void NewScene( TankScene* level );
 extern void UnloadScene();
-extern void LoadScene( const TankScene& level );
+extern void LoadScene( TankScene* level );
 extern SceneType& GetSceneType();
 extern void SetSceneType( const SceneType& type );
 extern void AddTank( Tank t );
@@ -189,8 +187,7 @@ public:
 
     void UpdateLevel( const float& timeDelta ) override
     {
-        SetDebugText( FormatDebugHeader() );
-        AddDebugText( "THIS IS THE TEST LEVEL" );
+        //
     }
 };
 
@@ -200,7 +197,7 @@ public:
     void LevelInit() override
     {
         // level specific config
-        m_type = Sandbox;
+        m_type = Campaign;
         // tanks
         m_tankPool.reserve(2);
         Tank tempTank = Tank( LocalPlayer, 512.f, 512.f, 0.f, 1.f );
@@ -247,7 +244,30 @@ public:
 
     void UpdateLevel( const float& timeDelta ) override
     {
+        /*
         SetDebugText( FormatDebugHeader() );
-        AddDebugText( "THIS IS THE TUTORIAL LEVEL" );
+        AddDebugText( "THIS IS THE TUTORIAL LEVEL\n" );
+        if ( stats.isSceneActive )
+            AddDebugText("ACTIVE");
+        else
+            AddDebugText("INACTIVE");
+        */
+
+        if ( stats.isSceneActive )
+        {
+            if ( GetActiveTankCount() == 1 )
+            {
+                if ( GetLocalPlayerTank().GetActiveState() )
+                    LaunchMusicEnd(true); // win
+                else
+                    LaunchMusicEnd(false); // lose
+                stats.isSceneActive = false;
+            }
+            else if ( !GetLocalPlayerTank().GetActiveState() )
+            {
+                LaunchMusicEnd(false); // lose
+                stats.isSceneActive = false;
+            }
+        }
     }
 };

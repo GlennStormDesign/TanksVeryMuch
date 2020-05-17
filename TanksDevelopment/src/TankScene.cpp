@@ -2,61 +2,61 @@
 
 // TankScene Definitions
 
-static TankScene currentScene;
+static TankScene* currentScene; // WARNING: c-style pointer, manage mem explicitly
 
 // TankScene interface
 
-extern void NewScene( const TankScene& level )
+extern void NewScene( TankScene* level )
 {
     currentScene = level;
 }
 extern void UnloadScene()
 {
-    currentScene.UnloadScene();
+    currentScene->UnloadScene();
 }
-extern void LoadScene( const TankScene& level )
+extern void LoadScene( TankScene* level )
 {
-    currentScene.LoadScene( level );
+    currentScene->LoadScene( level );
 }
 extern SceneType& GetSceneType()
 {
-    return currentScene.GetSceneType();
+    return currentScene->GetSceneType();
 }
 extern void SetSceneType( const SceneType& type )
 {
-    currentScene.SetSceneType( type );
+    currentScene->SetSceneType( type );
 }
 extern void AddTank( Tank t )
 {
-    currentScene.AddTank( t );
+    currentScene->AddTank( t );
 }
 extern void AddTank( Tank t, sf::Color c )
 {
-    currentScene.AddTank( t, c );
+    currentScene->AddTank( t, c );
 }
 extern void RemoveTank( Tank& t )
 {
-    currentScene.RemoveTank( t );
+    currentScene->RemoveTank( t );
 }
 extern Tank& GetTank( const unsigned int& index )
 {
-    return currentScene.GetTank( index );
+    return currentScene->GetTank( index );
 }
 extern Tank& GetLocalPlayerTank()
 {
-    return currentScene.GetLocalPlayerTank();
+    return currentScene->GetLocalPlayerTank();
 }
 extern unsigned int GetActiveTankCount()
 {
-    return currentScene.GetActiveTankCount();
+    return currentScene->GetActiveTankCount();
 }
 extern int GetTotalTankCount()
 {
-    return currentScene.GetTotalTankCount();
+    return currentScene->GetTotalTankCount();
 }
 extern void AddObject( SceneObject o )
 {
-    currentScene.AddObject( o );
+    currentScene->AddObject( o );
 }
 /*
 extern void RemoveObject( const SceneObject& o )
@@ -66,35 +66,35 @@ extern void RemoveObject( const SceneObject& o )
 */
 extern void SetObject( const unsigned int& index, const SceneObject& o )
 {
-    currentScene.SetObject( index, o );
+    currentScene->SetObject( index, o );
 }
 extern const SceneObject& GetObject( const unsigned int& index )
 {
-    return currentScene.GetObject( index );
+    return currentScene->GetObject( index );
 }
 extern void AddPlayer( PlayerStats p )
 {
-    currentScene.AddPlayer( p );
+    currentScene->AddPlayer( p );
 }
 extern void RemovePlayer( const PlayerStats p )
 {
-    currentScene.RemovePlayer( p );
+    currentScene->RemovePlayer( p );
 }
 extern PlayerStats& GetPlayer( const unsigned int& index )
 {
-    return currentScene.GetPlayer( index );
+    return currentScene->GetPlayer( index );
 }
 extern PlayerStats& GetLocalPlayer()
 {
-    return currentScene.GetLocalPlayer();
+    return currentScene->GetLocalPlayer();
 }
 extern void UpdateScene( const float& timeDelta )
 {
-    currentScene.UpdateScene( timeDelta );
+    currentScene->UpdateScene( timeDelta );
 }
 extern void DrawScene( sf::RenderWindow& window )
 {
-    currentScene.DrawScene( window );
+    currentScene->DrawScene( window );
 }
 
 // pool element comparison operator overloads
@@ -126,10 +126,6 @@ void TankScene::SceneInit()
     // specific configuration
     // REVIEW: set terrainMgr view offset
     SetTerrain( m_terrain );
-
-    // launch scene
-    // REVIEW: remove once LoadScene() is implemented
-    stats.isSceneActive = true;
 }
 
 void TankScene::UnloadScene()
@@ -139,17 +135,17 @@ void TankScene::UnloadScene()
         stats.isSceneActive = false;
         // handle stats (recording, etc)
         // cleanup
+        delete currentScene; // new from LoadScene() or NewScene()
     }
 }
-void TankScene::LoadScene( const TankScene& level )
+void TankScene::LoadScene( TankScene* level )
 {
     UnloadScene();
     // validate
     // initialize
+    currentScene = level;
     // launch
-    SceneStats newStats;
-    stats = newStats;
-    stats.isSceneActive = true;
+    currentScene->stats.isSceneActive = true;
 }
 
 SceneType& TankScene::GetSceneType()
@@ -350,16 +346,7 @@ void TankScene::UpdateScene( const float& timeDelta )
                                 SFXLoopKill();
                             LaunchSFXKill();
                             //LaunchSFXKill(m_tankPool[n].GetBaseSprite().getPosition());
-                            // TODO: end game check now done within level update
-                            if ( GetActiveTankCount() == 1 )
-                            {
-                                if ( GetLocalPlayerTank().GetActiveState() )
-                                    LaunchMusicEnd(true); // win
-                                else
-                                    LaunchMusicEnd(false); // lose
-                            }
-                            else if ( GetLocalPlayerTank() == m_tankPool[n] )
-                                LaunchMusicEnd(false); // lose
+                            // end game check in level update
                         }
                         else
                         {

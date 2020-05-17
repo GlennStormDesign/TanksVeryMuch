@@ -70,7 +70,7 @@ protected:
     unsigned int m_playerIndex = 0;
 public:
     TankScene() { }
-    ~TankScene() { } // remove all in tank pool and shot pool
+    ~TankScene() { } // remove all in tank pool and shot pool (REVIEW: also, virtual destructor needed?)
 
     virtual void LevelInit() { } // level configuration in subclasses
 
@@ -98,11 +98,13 @@ public:
     PlayerStats& GetPlayer( const unsigned int& index );
     PlayerStats& GetLocalPlayer();
 
-    virtual void UpdateLevel( const float& timeDelta ) { } // define in subclasses
     void UpdateScene( const float& timeDelta );
 
     void DrawScene( sf::RenderWindow& window );
 private:
+    virtual void UpdateLevel( const float& timeDelta ) {
+        SetDebugText( FormatDebugHeader() );
+        AddDebugText( "BASE CLASS OF TANK SCENE CALLED" ); } // define in subclasses
 };
 
 extern void NewScene( const TankScene& level );
@@ -132,7 +134,7 @@ extern void DrawScene( sf::RenderWindow& window );
 
 class TestTankScene : public TankScene {
 public:
-    TestTankScene() { TankScene(); SceneInit(); }
+    TestTankScene() { SceneInit(); }
     void LevelInit() override
     {
         // level specific config
@@ -194,7 +196,7 @@ public:
 
 class TutorialGameScene : public TankScene {
 public:
-    TutorialGameScene() { TankScene(); SceneInit(); }
+    TutorialGameScene() { SceneInit(); }
     void LevelInit() override
     {
         // level specific config

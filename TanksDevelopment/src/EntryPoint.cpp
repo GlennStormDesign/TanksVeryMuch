@@ -57,8 +57,8 @@ int main()
     frameTimer.restart();
 
     // scene
-    //NewScene( TestTankScene() );
-    NewScene( TutorialGameScene() );
+    NewScene( TestTankScene() );
+    //NewScene( TutorialGameScene() );
 
     // ui
     UIInit( rWin.getSize() );

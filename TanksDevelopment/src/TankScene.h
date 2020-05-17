@@ -3,6 +3,7 @@
 #include <string>
 
 #include "AudioHandle.h"
+#include "UIHandle.h"
 #include "Tank.h"
 #include "Terrain.h"
 #include "SceneObject.h"
@@ -253,6 +254,13 @@ public:
             AddDebugText("ACTIVE");
         else
             AddDebugText("INACTIVE");
+        */
+
+        /*
+        if ( GetTutorialStage() == Welcome )
+        {
+            GetTank(1).controller.SetActiveState(false);
+        }
         */
 
         if ( stats.isSceneActive )

@@ -22,6 +22,18 @@ extern void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
 {
     uiMgr.DrawUIMgr(window,uiOffset);
 }
+extern void SetTutorialPauseTime( const float& time )
+{
+    uiMgr.SetTutorialPauseTime(time);
+}
+extern UIManager::TutorialStage& GetTutorialStage()
+{
+    return uiMgr.GetTutorialStage();
+}
+extern void SetTutorialStage( const UIManager::TutorialStage& stage )
+{
+    uiMgr.SetTutorialStage( stage );
+}
 
 // PanelRect method
 
@@ -791,6 +803,19 @@ void UIManager::ResetHUD()
     m_tutorialTimer.restart();
 }
 
+void UIManager::SetTutorialPauseTime( const float& time )
+{
+    m_tutorialPauseTime = time;
+}
+UIManager::TutorialStage& UIManager::GetTutorialStage()
+{
+    return m_tutStage;
+}
+void UIManager::SetTutorialStage( const UIManager::TutorialStage& stage )
+{
+    m_tutStage = stage;
+}
+
 void UIManager::UpdateUIMgr( const float& timeDelta )
 {
     // update based on ui state
@@ -832,7 +857,7 @@ void UIManager::UpdateMenu( const float& timeDelta )
 void UIManager::UpdateHUD( const float& timeDelta )
 {
     //
-    if ( m_tutorialTimer.getElapsedTime().asSeconds() > 3.f && !m_tutorialDisplay )
+    if ( m_tutorialTimer.getElapsedTime().asSeconds() > m_tutorialPauseTime && !m_tutorialDisplay )
     {
         m_tutWelcome.visible = ( m_tutStage == Welcome );
         m_tutHUD.visible = ( m_tutStage == HUDTutorial );
@@ -841,7 +866,6 @@ void UIManager::UpdateHUD( const float& timeDelta )
         m_tutCombat.visible = ( m_tutStage == CombatTutorial );
         m_tutQuest.visible = ( m_tutStage == QuestTutorial );
         m_tutorialTimer.restart();
-        m_uiInputTimer.restart();
         m_tutorialDisplay = true;
     }
 }
@@ -900,6 +924,7 @@ void UIManager::DrawMenu( sf::RenderWindow& window, const sf::Vector2f& uiOffset
             GetTank(i).SetActiveState(true);
             GetTank(i).TankReset();
         }
+        SetTutorialPauseTime(3.f);
         LaunchMusicLoop((MLoopMode)Pause,true); // temp
         LoadScene( new TutorialGameScene() ); // temp
     }
@@ -953,69 +978,77 @@ void UIManager::DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset 
     }
 
     // tutorial pops
-    m_tutWelcome.DrawUI(window,uiOffset);
-    if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_tutWelcome.GetCallBack() == 1 )
+    if ( m_quitButton.GetState() == Normal )
     {
-        LaunchSFXUIFwd();
-        m_tutWelcome.visible = false;
-        m_tutorialDisplay = false;
-        m_tutStage = HUDTutorial;
-        m_tutorialTimer.restart();
-        m_uiInputTimer.restart();
+        m_tutWelcome.DrawUI(window,uiOffset);
+        if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_tutWelcome.GetCallBack() == 1 )
+        {
+            LaunchSFXUIFwd();
+            m_tutWelcome.visible = false;
+            m_tutorialDisplay = false;
+            m_tutorialPauseTime = 2.f;
+            m_tutStage = HUDTutorial;
+            m_tutorialTimer.restart();
+            m_uiInputTimer.restart();
+        }
+        m_tutHUD.DrawUI(window,uiOffset);
+        if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_tutHUD.GetCallBack() == 1 )
+        {
+            LaunchSFXUIFwd();
+            m_tutHUD.visible = false;
+            m_tutorialDisplay = false;
+            m_tutorialPauseTime = 3.f;
+            m_tutStage = MoveTutorial;
+            m_tutorialTimer.restart();
+            m_uiInputTimer.restart();
+        }
+        m_tutMove.DrawUI(window,uiOffset);
+        if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_tutMove.GetCallBack() == 1 )
+        {
+            LaunchSFXUIFwd();
+            m_tutMove.visible = false;
+            m_tutorialDisplay = false;
+            m_tutorialPauseTime = 8.f;
+            //m_tutStage = TurretTutorial; // advance in UpdateLeve()
+            m_tutorialTimer.restart();
+            m_uiInputTimer.restart();
+        }
+        m_tutTurret.DrawUI(window,uiOffset);
+        if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_tutTurret.GetCallBack() == 1 )
+        {
+            LaunchSFXUIFwd();
+            m_tutTurret.visible = false;
+            m_tutorialDisplay = false;
+            m_tutorialPauseTime = 15.f;
+            //m_tutStage = CombatTutorial; // advance in UpdateLeve()
+            m_tutorialTimer.restart();
+            m_uiInputTimer.restart();
+        }
+        m_tutCombat.DrawUI(window,uiOffset);
+        if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_tutCombat.GetCallBack() == 1 )
+        {
+            LaunchSFXUIFwd();
+            m_tutCombat.visible = false;
+            m_tutorialDisplay = false;
+            m_tutorialPauseTime = 15.f;
+            //m_tutStage = QuestTutorial; // advance in UpdateLeve()
+            m_tutorialTimer.restart();
+            m_uiInputTimer.restart();
+            LaunchMusicLoop((MLoopMode)Game, false);
+        }
+        m_tutQuest.DrawUI(window,uiOffset);
+        if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_tutQuest.GetCallBack() == 1 )
+        {
+            LaunchSFXUIFwd();
+            m_tutQuest.visible = false;
+            m_tutorialDisplay = false;
+            m_tutStage = TutorialComplete;
+            m_tutorialTimer.restart();
+            m_uiInputTimer.restart();
+            LaunchMusicLoop((MLoopMode)Pause, true);
+        }
+        // TODO: detect completed quest
     }
-    m_tutHUD.DrawUI(window,uiOffset);
-    if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_tutHUD.GetCallBack() == 1 )
-    {
-        LaunchSFXUIFwd();
-        m_tutHUD.visible = false;
-        m_tutorialDisplay = false;
-        m_tutStage = MoveTutorial;
-        m_tutorialTimer.restart();
-        m_uiInputTimer.restart();
-    }
-    m_tutMove.DrawUI(window,uiOffset);
-    if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_tutMove.GetCallBack() == 1 )
-    {
-        LaunchSFXUIFwd();
-        m_tutMove.visible = false;
-        m_tutorialDisplay = false;
-        m_tutStage = TurretTutorial;
-        m_tutorialTimer.restart();
-        m_uiInputTimer.restart();
-    }
-    m_tutTurret.DrawUI(window,uiOffset);
-    if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_tutTurret.GetCallBack() == 1 )
-    {
-        LaunchSFXUIFwd();
-        m_tutTurret.visible = false;
-        m_tutorialDisplay = false;
-        m_tutStage = CombatTutorial;
-        m_tutorialTimer.restart();
-        m_uiInputTimer.restart();
-    }
-    m_tutCombat.DrawUI(window,uiOffset);
-    if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_tutCombat.GetCallBack() == 1 )
-    {
-        LaunchSFXUIFwd();
-        m_tutCombat.visible = false;
-        m_tutorialDisplay = false;
-        m_tutStage = QuestTutorial;
-        m_tutorialTimer.restart();
-        m_uiInputTimer.restart();
-        LaunchMusicLoop((MLoopMode)Game, false);
-    }
-    m_tutQuest.DrawUI(window,uiOffset);
-    if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_tutQuest.GetCallBack() == 1 )
-    {
-        LaunchSFXUIFwd();
-        m_tutQuest.visible = false;
-        m_tutorialDisplay = false;
-        m_tutStage = TutorialComplete;
-        m_tutorialTimer.restart();
-        m_uiInputTimer.restart();
-        LaunchMusicLoop((MLoopMode)Pause, true);
-    }
-    // TODO: detect completed quest
 
     // win/lose banners
     if ( GetLocalPlayerTank().GetActiveState() )

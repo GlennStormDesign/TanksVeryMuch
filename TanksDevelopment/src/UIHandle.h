@@ -30,10 +30,6 @@ enum ButtonState {
     Disabled
 };
 
-extern void UIInit( const sf::Vector2u& winSize );
-extern void UpdateUI( const float& timeDelta );
-extern void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset );
-
 sf::Sprite PanelRect( sf::RenderTexture& rt, const sf::IntRect& rect );
 
 // UI functional modules
@@ -331,6 +327,7 @@ private:
     UIButton m_quitButton;
     // Tutorial popups
     sf::Clock m_tutorialTimer;
+    float m_tutorialPauseTime = 2.f;
     UIAlert m_tutWelcome;
     UIAlert m_tutHUD;
     UIAlert m_tutMove;
@@ -360,6 +357,10 @@ public:
     void ResetMenu();
     void ResetHUD();
 
+    void SetTutorialPauseTime( const float& time );
+    TutorialStage& GetTutorialStage();
+    void SetTutorialStage( const TutorialStage& stage );
+
     void UpdateUIMgr( const float& timeDelta );
     void DrawUIMgr( sf::RenderWindow& window, const sf::Vector2f& uiOffset );
 
@@ -372,3 +373,10 @@ public:
     void DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset );
 private:
 };
+
+extern void UIInit( const sf::Vector2u& winSize );
+extern void UpdateUI( const float& timeDelta );
+extern void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset );
+extern void SetTutorialPauseTime( const float& time );
+extern UIManager::TutorialStage& GetTutorialStage();
+extern void SetTutorialStage( const UIManager::TutorialStage& stage );

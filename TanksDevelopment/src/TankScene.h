@@ -98,9 +98,7 @@ public:
     PlayerStats& GetPlayer( const unsigned int& index );
     PlayerStats& GetLocalPlayer();
 
-    virtual void UpdateLevel( const float& timeDelta ) {
-        SetDebugText( FormatDebugHeader() );
-        AddDebugText( "BASE CLASS VERSION CALLED" ); }
+    virtual void UpdateLevel( const float& timeDelta ) { } // define in subclasses
     void UpdateScene( const float& timeDelta );
 
     void DrawScene( sf::RenderWindow& window );

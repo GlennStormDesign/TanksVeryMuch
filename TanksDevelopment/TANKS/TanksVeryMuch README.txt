@@ -3,7 +3,7 @@
 // C++, SFML, OpenGL, GLSL
 
 Tank Prototype
-(latest addition: Level 0)
+(latest addition: Levels)
 5.17.2020
 
 Controls:

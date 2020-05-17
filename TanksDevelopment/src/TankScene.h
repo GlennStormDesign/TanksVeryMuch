@@ -108,6 +108,8 @@ private:
 extern void NewScene( TankScene* level );
 extern void UnloadScene();
 extern void LoadScene( TankScene* level );
+extern bool GetSceneActive();
+extern void SetSceneActive( const bool& active );
 extern SceneType& GetSceneType();
 extern void SetSceneType( const SceneType& type );
 extern void AddTank( Tank t );

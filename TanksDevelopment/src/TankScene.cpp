@@ -18,6 +18,14 @@ extern void LoadScene( TankScene* level )
 {
     currentScene->LoadScene( level );
 }
+extern bool GetSceneActive()
+{
+    return currentScene->stats.isSceneActive;
+}
+extern void SetSceneActive( const bool& active )
+{
+    currentScene->stats.isSceneActive = active;
+}
 extern SceneType& GetSceneType()
 {
     return currentScene->GetSceneType();

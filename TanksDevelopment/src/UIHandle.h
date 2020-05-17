@@ -279,6 +279,7 @@ public:
         TurretTutorial,
         CombatTutorial,
         QuestTutorial,
+        TutorialComplete
     };
 private:
     sf::Vector2u m_windowSize;

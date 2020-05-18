@@ -729,12 +729,12 @@ void UIManager::HUDInit()
     m_quitButton = UIButton( sf::IntRect(((int)(m_windowSize.x - 64 -8)),((int)(m_windowSize.y - 32 - 8)),64,32), sf::Color(128,200,64,128), ql );
 
     // tutorial pops
-    m_tutWelcome = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 128, 512, 256 ), sf::Color::White, "Welcome", "Get ready to battle with tanks", "OK" );
-    m_tutHUD = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 200, 512, 400 ), sf::Color::White, "Heads Up Display", "First, look at your HUD\nThe top left corner shows armor\nThe bottom left has how many\nenemy tanks are left", "OK" );
-    m_tutMove = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 200, 512, 400 ), sf::Color::White, "Movement","Move your tank with arrow keys\nUp and down is forward and back\nLeft and right turns your tank\nMove and turn now","OK");
-    m_tutTurret = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 200, 512, 400 ), sf::Color::White, "Turret", "Your turret also turns\nUse the bracket keys to aim\nUse the backslash to fire\nAim and fire now", "OK" );
-    m_tutCombat = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 200, 512, 400 ), sf::Color::White, "Combat","Now it is time to fight\nThere is a red tank somewhere\nto the left\nSeek and Destroy","OK" );
-    m_tutQuest = UIAlert(sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 128, 512, 256 ), sf::Color::White, "Quest", "Find the green ring\nIt is just off screen above\nFind it and move to it", "OK");
+    m_tutWelcome = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 128, 512, 256 ), sf::Color(148,240,100,255), "Welcome", "Get ready to battle with tanks", "OK" );
+    m_tutHUD = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 200, 512, 400 ), sf::Color(148,240,100,255), "Heads Up Display", "First, look at your HUD\nThe top left corner shows armor\nThe bottom left has how many\nenemy tanks are left", "OK" );
+    m_tutMove = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 200, 512, 400 ), sf::Color(148,240,100,255), "Movement","Move your tank with arrow keys\nUp and down is forward and back\nLeft and right turns your tank\nMove and turn now","OK");
+    m_tutTurret = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 200, 512, 400 ), sf::Color(148,240,100,255), "Turret", "Your turret also turns\nUse the bracket keys to aim\nUse the backslash to fire\nAim and fire now", "OK" );
+    m_tutCombat = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 200, 512, 400 ), sf::Color(148,240,100,255), "Combat","Now it is time to fight\nThere is a red tank somewhere\nto the left\nSeek and Destroy","OK" );
+    m_tutQuest = UIAlert(sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 128, 512, 256 ), sf::Color(148,240,100,255), "Quest", "Find the green ring\nIt is just off screen above\nFind it and move to it", "OK");
 
     // win/lose banners
     MainTitle wlf;

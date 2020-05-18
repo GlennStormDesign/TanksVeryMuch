@@ -188,10 +188,7 @@ public:
         stats.maxPlayers = 1;
     }
 
-    void UpdateLevel( const float& timeDelta ) override
-    {
-        //
-    }
+    void UpdateLevel( const float& timeDelta ) override;
 };
 
 class TutorialGameScene : public TankScene {
@@ -245,39 +242,5 @@ public:
         stats.maxPlayers = 1;
     }
 
-    void UpdateLevel( const float& timeDelta ) override
-    {
-        /*
-        SetDebugText( FormatDebugHeader() );
-        AddDebugText( "THIS IS THE TUTORIAL LEVEL\n" );
-        if ( stats.isSceneActive )
-            AddDebugText("ACTIVE");
-        else
-            AddDebugText("INACTIVE");
-        */
-
-        /*
-        if ( GetTutorialStage() == Welcome )
-        {
-            GetTank(1).controller.SetActiveState(false);
-        }
-        */
-
-        if ( stats.isSceneActive )
-        {
-            if ( GetActiveTankCount() == 1 )
-            {
-                if ( GetLocalPlayerTank().GetActiveState() )
-                    LaunchMusicEnd(true); // win
-                else
-                    LaunchMusicEnd(false); // lose
-                stats.isSceneActive = false;
-            }
-            else if ( !GetLocalPlayerTank().GetActiveState() )
-            {
-                LaunchMusicEnd(false); // lose
-                stats.isSceneActive = false;
-            }
-        }
-    }
+    void UpdateLevel( const float& timeDelta ) override;
 };

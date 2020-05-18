@@ -521,3 +521,44 @@ void TankScene::DrawScene( sf::RenderWindow& window )
         m_tankPool[t].DrawKillOverVFX( window );
     // do draw calls for scene objects
 }
+
+// individual level updates
+
+void TestTankScene::UpdateLevel( const float& timeDelta )
+{
+    //
+}
+
+void TutorialGameScene::UpdateLevel( const float& timeDelta )
+{
+    /*
+    SetDebugText( FormatDebugHeader() );
+    AddDebugText( "THIS IS THE TUTORIAL LEVEL\n" );
+    if ( stats.isSceneActive )
+        AddDebugText("ACTIVE");
+    else
+        AddDebugText("INACTIVE");
+    */
+
+    if ( GetTutorialStage() == UIManager::Welcome )
+    {
+        GetTank(1).controller.SetActiveState(false);
+    }
+
+    if ( stats.isSceneActive )
+    {
+        if ( GetActiveTankCount() == 1 )
+        {
+            if ( GetLocalPlayerTank().GetActiveState() )
+                LaunchMusicEnd(true); // win
+            else
+                LaunchMusicEnd(false); // lose
+            stats.isSceneActive = false;
+        }
+        else if ( !GetLocalPlayerTank().GetActiveState() )
+        {
+            LaunchMusicEnd(false); // lose
+            stats.isSceneActive = false;
+        }
+    }
+}

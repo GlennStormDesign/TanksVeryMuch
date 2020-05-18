@@ -531,21 +531,51 @@ void TestTankScene::UpdateLevel( const float& timeDelta )
 
 void TutorialGameScene::UpdateLevel( const float& timeDelta )
 {
-    /*
-    SetDebugText( FormatDebugHeader() );
-    AddDebugText( "THIS IS THE TUTORIAL LEVEL\n" );
-    if ( stats.isSceneActive )
-        AddDebugText("ACTIVE");
-    else
-        AddDebugText("INACTIVE");
-    */
-
-    if ( GetTutorialStage() == UIManager::Welcome )
+    // handle tutorial sequence
+    switch ( GetTutorialStage() )
     {
+    case UIManager::Welcome:
         GetTank(1).controller.SetActiveState(false);
+        break;
+    case UIManager::HUDTutorial:
+        //
+        break;
+    case UIManager::MoveTutorial:
+        if ( abs(GetLocalPlayerTank().GetBaseSprite().getPosition().x - 512.f) > 15.f &&
+                abs(GetLocalPlayerTank().GetBaseSprite().getPosition().y - 512.f) > 15.f &&
+                abs(GetLocalPlayerTank().GetBaseSprite().getRotation()) > 30.f )
+        {
+            SetTutorialStage( UIManager::TurretTutorial );
+            SetTutorialPauseTime(4.f);
+        }
+        break;
+    case UIManager::TurretTutorial:
+        if ( abs(GetLocalPlayerTank().GetTurretSprite().getRotation()) > 30.f &&
+                GetLocalPlayerTank().shots[0].active )
+        {
+            SetTutorialStage( UIManager::CombatTutorial );
+            SetTutorialPauseTime(5.f);
+            GetTank(1).controller.SetActiveState(true);
+        }
+        break;
+    case UIManager::CombatTutorial:
+        if ( !GetTank(1).GetActiveState() )
+        {
+            SetTutorialStage( UIManager::QuestTutorial );
+            SetTutorialPauseTime(5.f);
+        }
+        break;
+    case UIManager::QuestTutorial:
+        if ( abs(GetLocalPlayerTank().GetBaseSprite().getPosition().x) < 10.f &&
+                abs(GetLocalPlayerTank().GetBaseSprite().getPosition().y) < 10.f )
+        {
+            SetTutorialStage( UIManager::TutorialComplete );
+            SetTutorialPauseTime(1.f);
+        }
+        break;
     }
 
-    if ( stats.isSceneActive )
+    if ( GetTutorialStage() == UIManager::TutorialComplete && stats.isSceneActive )
     {
         if ( GetActiveTankCount() == 1 )
         {

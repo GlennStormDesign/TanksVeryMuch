@@ -202,7 +202,7 @@ public:
         m_tankPool.reserve(2);
         Tank tempTank = Tank( LocalPlayer, 512.f, 512.f, 0.f, 1.f );
         AddTank( tempTank, DEF_TANK_COLOR );
-        tempTank = Tank( Drone, -100.f, -100.f, 0.f, 1.f );
+        tempTank = Tank( Drone, -200.f, 500.f, 0.f, 1.f );
         AddTank( tempTank, sf::Color(128.f, 16.f, 32.f, 255.f) );
         // terrain
         m_terrain = SubstanceMeadow();
@@ -233,7 +233,8 @@ public:
 
         SceneTrigger tempTrigger;
         tempTrigger.SetObjPos( sf::Vector2f( 0.f, 0.f ) );
-        tmpSprite.setTexture( TexMaskRadial() );
+        tmpSprite.setTexture( TexMaskRing() );
+        tmpSprite.setColor( sf::Color::Green );
         tempTrigger.SetSprite( tmpSprite );
         tempTrigger.SetObjectID( m_objIndex++ );
         m_objectPool.push_back( tempTrigger.clone() );

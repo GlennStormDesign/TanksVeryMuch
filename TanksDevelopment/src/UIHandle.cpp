@@ -730,11 +730,11 @@ void UIManager::HUDInit()
 
     // tutorial pops
     m_tutWelcome = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 128, 512, 256 ), sf::Color(148,240,100,255), "Welcome", "Get ready to battle with tanks", "OK" );
-    m_tutHUD = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 200, 512, 400 ), sf::Color(148,240,100,255), "Heads Up Display", "First, look at your HUD\nThe top left corner shows armor\nThe bottom left has how many\nenemy tanks are left", "OK" );
+    m_tutHUD = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 200, 512, 400 ), sf::Color(148,240,100,255), "Heads Up Display", "First, look at your HUD\nThe top left corner shows armor\nThe bottom left shows how\nmany enemy tanks remain", "OK" );
     m_tutMove = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 200, 512, 400 ), sf::Color(148,240,100,255), "Movement","Move your tank with arrow keys\nUp and down is forward and back\nLeft and right turns your tank\nMove and turn now","OK");
     m_tutTurret = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 200, 512, 400 ), sf::Color(148,240,100,255), "Turret", "Your turret also turns\nUse the bracket keys to aim\nUse the backslash to fire\nAim and fire now", "OK" );
     m_tutCombat = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 200, 512, 400 ), sf::Color(148,240,100,255), "Combat","Now it is time to fight\nThere is a red tank somewhere\nto the left\nSeek and Destroy","OK" );
-    m_tutQuest = UIAlert(sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 128, 512, 256 ), sf::Color(148,240,100,255), "Quest", "Find the green ring\nIt is just off screen above\nFind it and move to it", "OK");
+    m_tutQuest = UIAlert(sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 128, 512, 256 ), sf::Color(148,240,100,255), "Quest", "Find the green ring marker\nIt is somewhere close by\nFind it and enter it to win", "OK");
 
     // win/lose banners
     MainTitle wlf;
@@ -986,7 +986,7 @@ void UIManager::DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset 
             LaunchSFXUIFwd();
             m_tutWelcome.visible = false;
             m_tutorialDisplay = false;
-            m_tutorialPauseTime = 2.f;
+            m_tutorialPauseTime = 1.f;
             m_tutStage = HUDTutorial;
             m_tutorialTimer.restart();
             m_uiInputTimer.restart();
@@ -1009,7 +1009,7 @@ void UIManager::DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset 
             m_tutMove.visible = false;
             m_tutorialDisplay = false;
             m_tutorialPauseTime = 8.f;
-            //m_tutStage = TurretTutorial; // advance in UpdateLeve()
+            // advance in UpdateLevel()
             m_tutorialTimer.restart();
             m_uiInputTimer.restart();
         }
@@ -1020,7 +1020,7 @@ void UIManager::DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset 
             m_tutTurret.visible = false;
             m_tutorialDisplay = false;
             m_tutorialPauseTime = 15.f;
-            //m_tutStage = CombatTutorial; // advance in UpdateLeve()
+            // advance in UpdateLevel()
             m_tutorialTimer.restart();
             m_uiInputTimer.restart();
         }
@@ -1031,7 +1031,7 @@ void UIManager::DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset 
             m_tutCombat.visible = false;
             m_tutorialDisplay = false;
             m_tutorialPauseTime = 15.f;
-            //m_tutStage = QuestTutorial; // advance in UpdateLeve()
+            // advance in UpdateLevel()
             m_tutorialTimer.restart();
             m_uiInputTimer.restart();
             LaunchMusicLoop((MLoopMode)Game, false);
@@ -1042,22 +1042,25 @@ void UIManager::DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset 
             LaunchSFXUIFwd();
             m_tutQuest.visible = false;
             m_tutorialDisplay = false;
-            m_tutStage = TutorialComplete;
+            m_tutorialPauseTime = 15.f;
+            // advance in UpdateLevel()
             m_tutorialTimer.restart();
             m_uiInputTimer.restart();
             LaunchMusicLoop((MLoopMode)Pause, true);
         }
-        // TODO: detect completed quest
     }
 
     // win/lose banners
-    if ( GetLocalPlayerTank().GetActiveState() )
+    if ( !GetSceneActive() )
     {
-        if ( GetActiveTankCount() == 1 )
-            m_winBanner.DrawUI(window,uiOffset);
+        if ( GetLocalPlayerTank().GetActiveState() )
+        {
+            if ( GetActiveTankCount() == 1 )
+                m_winBanner.DrawUI(window,uiOffset);
+        }
+        else
+            m_loseBanner.DrawUI(window,uiOffset);
     }
-    else
-        m_loseBanner.DrawUI(window,uiOffset);
 
     // quit confirm
     if ( m_displayQuit )

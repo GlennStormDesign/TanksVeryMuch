@@ -91,7 +91,11 @@ int main()
         }
 
         // audio update
-        //sf::Listener::setPosition( vw.getCenter().x, 0.f, vw.getCenter().y ); // REVIEW: z = y? -y? (no worky)
+        //sf::Vector3f lPos;
+        //lPos.x = GetLocalPlayerTank().GetBaseSprite().getPosition().x;
+        //lPos.y = GetLocalPlayerTank().GetBaseSprite().getPosition().y;
+        //lPos.z = 0.f;
+        //sf::Listener::setPosition( lPos );
         MusicStingUpdate( timeDelta );
         MusicLoopUpdate( timeDelta );
         SFXLoopUpdate( timeDelta );

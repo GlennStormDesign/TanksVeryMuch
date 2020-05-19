@@ -149,7 +149,7 @@ void LaunchSFXSting( const sf::SoundBuffer& sb )
     for ( int i=0; i<MAX_SFX_STINGS; i++ ) {
         if ( fxs[i].getStatus() == sf::Sound::Stopped )
         {
-            fxs[i].setRelativeToListener( false ); // REVIEW: music never relative, sfx
+            //fxs[i].setRelativeToListener( false ); // REVIEW: music never relative, sfx
             fxs[i].setBuffer( sb );
             fxs[i].play();
             break;
@@ -166,7 +166,7 @@ void LaunchSFXSting( const sf::SoundBuffer& sb, const sf::Vector2f& sPos )
             //fxs[i].setRelativeToListener(true);
             //fxs[i].setMinDistance(38.1f);
             //fxs[i].setAttenuation(0.1f);
-            //fxs[i].setPosition(sPos.x, sPos.y, 0.f);
+            //fxs[i].setPosition(sPos.x, sPos.y, 0);
             fxs[i].setBuffer( sb );
             fxs[i].play();
             break;

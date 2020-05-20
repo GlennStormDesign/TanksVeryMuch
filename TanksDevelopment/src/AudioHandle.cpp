@@ -48,6 +48,7 @@ extern void SFXLoopUpdate( const float& timeDelta )
 }
 extern void LocalTankEngage( const bool& idle, const bool& turret )
 {
+    // TODO: (temp) this could be used to indicate that this tank is not relative to listener, but nix sfxMgr properties
     sfxMgr.pIdleEngaged = idle;
     sfxMgr.pTurretEngaged = turret;
 }

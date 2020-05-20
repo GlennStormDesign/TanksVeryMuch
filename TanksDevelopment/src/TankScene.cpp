@@ -550,7 +550,7 @@ void TutorialGameScene::UpdateLevel( const float& timeDelta )
         }
         break;
     case UIManager::TurretTutorial:
-        if ( abs(GetLocalPlayerTank().GetTurretSprite().getRotation()) > 30.f &&
+        if ( abs(GetLocalPlayerTank().GetTurretSprite().getRotation()-GetLocalPlayerTank().GetBaseSprite().getRotation()) > 30.f &&
                 GetLocalPlayerTank().shots[0].active )
         {
             SetTutorialStage( UIManager::CombatTutorial );

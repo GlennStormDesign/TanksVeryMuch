@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "TankCore.h"
+#include "AudioHandle.h"
 #include "VFXHandle.h"
 
 // Tank Declarations
@@ -120,6 +121,11 @@ private:
     bool m_active = true;
     float m_posX, m_posY, m_baseR, m_turretR;
     bool m_tankMoving, m_turretMoving;
+    // sfx loop slot for audioMgr reference, limit to loops available
+    int m_idleLoop = -1;
+    int m_turretLoop = -1;
+    float m_idleVol = IDLE_MIN_VOLUME;
+    float m_idlePitch = IDLE_MIN_PITCH;
     float m_localScale = 1.f;
     float m_moveSpeed = 20.f;
     float m_rotSpeed = 45.f;
@@ -169,6 +175,10 @@ public:
         m_turretR = t.m_turretR;
         m_tankMoving = t.m_tankMoving;
         m_turretMoving = t.m_turretMoving;
+        m_idleLoop = t.m_idleLoop;
+        m_turretLoop = t.m_turretLoop;
+        m_idleVol = t.m_idleVol;
+        m_idlePitch = t.m_idlePitch;
         m_localScale = t.m_localScale;
         m_moveSpeed = t.m_moveSpeed;
         m_rotSpeed = t.m_rotSpeed;

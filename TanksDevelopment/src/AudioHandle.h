@@ -87,6 +87,7 @@ private:
 
 class AudioSFXManager {
 public:
+    // temp (used to track local player tank sfx loops)
     int pIdleLoop = -1;
     int pTurretLoop = -1;
     bool pIdleEngaged = false;
@@ -96,6 +97,7 @@ private:
     bool m_sfxOkay = true;
     // sfx loop
     sf::SoundBuffer fxbIdle, fxbTurret;
+    // temp (used to track local player tank sfx loops)
     float pIdleVol = IDLE_MIN_VOLUME;
     float pIdlePitch = IDLE_MIN_PITCH;
     // sfx sting

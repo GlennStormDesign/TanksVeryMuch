@@ -264,6 +264,7 @@ void Tank::TankInit()
     m_turretR = 0.f;
     m_tankMoving = false;
     m_turretMoving = false;
+    // TODO: set tank sfx loops for idle and turret
     SetTankColor( DEF_TANK_COLOR );
     for ( int i=0; i<4; i++ ) { shots[i].active = false; }
 }

@@ -15,6 +15,11 @@ const sf::Vector2f SHOTVFX_ORIGIN = sf::Vector2f(16.f, 41.f);
 const sf::Color DEF_TANK_COLOR = sf::Color(32.f, 128.f, 80.f);
 const sf::Color DEF_SHOTVFX_COLOR = sf::Color(255.f, 240.f, 220.f);
 const unsigned int MAX_SHOTVFX_FRAMES = 7;
+const float IDLE_SHIFT_SPEED = 0.618f;
+const float IDLE_MIN_VOLUME = 38.1f;
+const float IDLE_MAX_VOLUME = 61.8f;
+const float IDLE_MIN_PITCH = 0.618f;
+const float IDLE_MAX_PITCH = 1.1f;
 
 enum TankControllerType { LocalPlayer, RemotePlayer, Scripted, Drone };
 enum LocalInputType { NoLocalInput, Keyboard, GameController, TouchScreen };

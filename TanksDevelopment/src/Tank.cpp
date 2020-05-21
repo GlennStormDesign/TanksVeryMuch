@@ -264,7 +264,7 @@ void Tank::TankInit()
     m_turretR = 0.f;
     m_tankMoving = false;
     m_turretMoving = false;
-    // TODO: set tank sfx loops for idle and turret
+    // REVIEW: set tank sfx loops for idle and turret?
     SetTankColor( DEF_TANK_COLOR );
     for ( int i=0; i<4; i++ ) { shots[i].active = false; }
 }
@@ -389,6 +389,7 @@ void Tank::TransformShotVFX()
 }
 void Tank::UpdateSFXLoops( const float& timeDelta )
 {
+    // TODO: send tank position to sfxMgr for spacial audio
     if ( m_tankMoving )
     {
         if ( m_idleLoop == -1 )
@@ -498,13 +499,6 @@ void Tank::UpdateTank( const float& timeDelta )
         m_turretMoving = true;
     }
     TransformTank();
-    /*
-    if ( controller.GetControllerType() == LocalPlayer ) {
-        // handle spacial sound and non-player tank sound
-        // NOTE: Listener updated in main game loop on sound update
-        //LocalTankEngage( m_tankMoving, m_turretMoving ); // temp - now handled in this translation unit
-    }
-    */
     UpdateSFXLoops( timeDelta );
     if ( m_shotFrame == 0 && controller.GetControl( BIT_FIRE ) )
     {

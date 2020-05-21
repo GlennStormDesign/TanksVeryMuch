@@ -98,11 +98,7 @@ int main()
         //sf::Listener::setPosition( lPos );
         MusicStingUpdate( timeDelta );
         MusicLoopUpdate( timeDelta );
-        SFXLoopUpdate( timeDelta );
-
-        // TEMP: audio testing [note: overrides normal audio handling]
         //MusicTesting( true );
-        //SFXTesting( false, timeDelta );
 
         // scene update
         UpdateScene( timeDelta );

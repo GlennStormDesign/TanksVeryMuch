@@ -42,10 +42,6 @@ extern void MusicTesting( const bool& debug )
 
 // AudioSFXManager interface
 
-extern void SFXLoopUpdate( const float& timeDelta )
-{
-    sfxMgr.SFXLoopUpdate(timeDelta);
-}
 extern int LaunchLoopIdle( const unsigned int& tankID, const float& vol, const float& pitch )
 {
     return sfxMgr.LaunchLoopIdle(tankID, vol, pitch);
@@ -53,12 +49,6 @@ extern int LaunchLoopIdle( const unsigned int& tankID, const float& vol, const f
 extern int LaunchLoopTurret( const unsigned int& tankID, const float& vol, const float& pitch )
 {
     return sfxMgr.LaunchLoopTurret(tankID, vol, pitch);
-}
-extern void LocalTankEngage( const bool& idle, const bool& turret )
-{
-    // TODO: (temp) this could be used to indicate that this tank is not relative to listener, but nix sfxMgr properties
-    sfxMgr.pIdleEngaged = idle;
-    sfxMgr.pTurretEngaged = turret;
 }
 extern void LaunchSFXUIFwd()
 {
@@ -68,12 +58,6 @@ extern void LaunchSFXUIBack()
 {
     sfxMgr.LaunchSFXUIBack();
 }
-/*
-extern void SFXLoopKill()
-{
-    sfxMgr.SFXLoopKill();
-}
-*/
 extern void LaunchSFXShot()
 {
     sfxMgr.LaunchSFXShot();
@@ -97,10 +81,6 @@ extern void LaunchSFXKill()
 extern void LaunchSFXKill( const sf::Vector2f& sPos )
 {
     sfxMgr.LaunchSFXKill(sPos);
-}
-extern void SFXTesting( const bool& debug, const float& timeDelta )
-{
-    sfxMgr.Testing(debug,timeDelta);
 }
 
 int LaunchSFXLoop( const sf::SoundBuffer& sb )
@@ -411,45 +391,6 @@ int AudioSFXManager::LaunchLoopTurret( const unsigned int& tankID, const float& 
     // REVIEW: use tankID to assess priority
     return LaunchSFXLoop( fxbTurret, vol, pitch );
 }
-void AudioSFXManager::SFXLoopUpdate( const float& timeDelta )
-{
-    // TODO: handle other tank idle and turret as 3D sound relative to listener
-    if ( pIdleEngaged )
-    {
-        if ( pIdleLoop == -1 )
-            pIdleLoop = LaunchSFXLoop( fxbIdle, IDLE_MIN_VOLUME, IDLE_MIN_PITCH );
-        else
-        {
-            pIdleVol += IDLE_SHIFT_SPEED * timeDelta;
-            if ( pIdleVol > IDLE_MAX_VOLUME )
-                pIdleVol = IDLE_MAX_VOLUME;
-            pIdlePitch += IDLE_SHIFT_SPEED * timeDelta;
-            if ( pIdlePitch > IDLE_MAX_PITCH )
-                pIdlePitch = IDLE_MAX_PITCH;
-            TouchSFXLoop( pIdleLoop, pIdleVol, pIdlePitch, false );
-        }
-    }
-    else if ( pIdleLoop > -1 )
-    {
-        pIdleVol -= IDLE_SHIFT_SPEED * timeDelta;
-        if ( pIdleVol < IDLE_MIN_VOLUME )
-            pIdleVol = IDLE_MIN_VOLUME;
-        pIdlePitch -= IDLE_SHIFT_SPEED * timeDelta;
-        if ( pIdlePitch < IDLE_MIN_PITCH )
-            pIdlePitch = IDLE_MIN_PITCH;
-        TouchSFXLoop( pIdleLoop, pIdleVol, pIdlePitch, false );
-    }
-    if ( pTurretEngaged )
-    {
-        if ( pTurretLoop == -1 )
-            pTurretLoop = LaunchSFXLoop( fxbTurret, 61.8f, .8f );
-    }
-    else if ( pTurretLoop > -1 )
-    {
-        TouchSFXLoop( pTurretLoop, 61.8f, .8f, true );
-        pTurretLoop = -1;
-    }
-}
 
 bool AudioSFXManager::SafeSFXInterval()
 {
@@ -487,70 +428,3 @@ void AudioSFXManager::LaunchSFXKill( const sf::Vector2f& sPos )
 {
     LaunchSFXSting(fxbKill,sPos);
 }
-
-void AudioSFXManager::Testing( const bool& debug, const float& timeDelta )
-{
-    if ( !debug || !m_sfxOkay )
-        return;
-
-    if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Num1) )
-    {
-        if ( pIdleLoop == -1 )
-            pIdleLoop = LaunchSFXLoop( fxbIdle, IDLE_MIN_VOLUME, IDLE_MIN_PITCH );
-        else
-        {
-            pIdleVol += IDLE_SHIFT_SPEED * timeDelta;
-            if ( pIdleVol > IDLE_MAX_VOLUME )
-                pIdleVol = IDLE_MAX_VOLUME;
-            pIdlePitch += IDLE_SHIFT_SPEED * timeDelta;
-            if ( pIdlePitch > IDLE_MAX_PITCH )
-                pIdlePitch = IDLE_MAX_PITCH;
-            TouchSFXLoop( pIdleLoop, pIdleVol, pIdlePitch, false );
-        }
-    }
-    else if ( pIdleLoop > -1 )
-    {
-        pIdleVol -= IDLE_SHIFT_SPEED * timeDelta;
-        if ( pIdleVol < IDLE_MIN_VOLUME )
-            pIdleVol = IDLE_MIN_VOLUME;
-        pIdlePitch -= IDLE_SHIFT_SPEED * timeDelta;
-        if ( pIdlePitch < IDLE_MIN_PITCH )
-            pIdlePitch = IDLE_MIN_PITCH;
-        TouchSFXLoop( pIdleLoop, pIdleVol, pIdlePitch, false );
-    }
-    if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Num2) )
-    {
-        if ( pTurretLoop == -1 )
-            pTurretLoop = LaunchSFXLoop( fxbTurret, 61.8f, .8f );
-    }
-    else if ( pTurretLoop > -1 )
-    {
-        TouchSFXLoop( pTurretLoop, 61.8f, .8f, true );
-        pTurretLoop = -1;
-    }
-    if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Num3) )
-        LaunchSFXSting(fxbUIFwd);
-    if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Num4) )
-        LaunchSFXSting(fxbUIBack);
-    if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Num5) )
-        LaunchSFXSting(fxbShot);
-    if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Num6) )
-        LaunchSFXSting(fxbImpact);
-    if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Num7) )
-        LaunchSFXSting(fxbKill);
-}
-/*
-void AudioSFXManager::SFXLoopKill() // TODO: implement from tank
-{
-    if ( pIdleLoop > -1 )
-    {
-        TouchSFXLoop( pIdleLoop, pIdleVol, pIdlePitch, true );
-        pIdleLoop = -1;
-    }
-    if ( pTurretLoop > -1 )
-    {
-        TouchSFXLoop( pTurretLoop, 61.8f, .8f, true );
-        pTurretLoop = -1;
-    }
-}
-*/

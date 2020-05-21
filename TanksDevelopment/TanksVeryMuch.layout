@@ -2,79 +2,9 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="src\ImageHandle.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6766" topLine="205" />
-		</Cursor>
-	</File>
-	<File name="src\Terrain.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2680" topLine="76" />
-		</Cursor>
-	</File>
-	<File name="src\TankGame.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="138" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\TankCore.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1654" topLine="58" />
-		</Cursor>
-	</File>
-	<File name="src\Tank.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="8071" topLine="210" />
-		</Cursor>
-	</File>
-	<File name="src\VFXHandle.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3424" topLine="95" />
-		</Cursor>
-	</File>
-	<File name="src\TankScene.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="8752" topLine="224" />
-		</Cursor>
-	</File>
-	<File name="src\TankScene.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="9714" topLine="343" />
-		</Cursor>
-	</File>
-	<File name="src\UIHandle.cpp" open="1" top="1" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="37821" topLine="1074" />
-		</Cursor>
-	</File>
-	<File name="src\VFXHandle.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5125" topLine="124" />
-		</Cursor>
-	</File>
-	<File name="src\TankCore.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="158" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\UIHandle.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="13682" topLine="359" />
-		</Cursor>
-	</File>
-	<File name="src\SceneObject.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2227" topLine="185" />
-		</Cursor>
-	</File>
 	<File name="src\AudioHandle.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1362" topLine="29" />
-		</Cursor>
-	</File>
-	<File name="src\EntryPoint.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2270" topLine="59" />
+			<Cursor1 position="840" topLine="19" />
 		</Cursor>
 	</File>
 	<File name="src\TerrainTileBlend.glsl" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -82,19 +12,19 @@
 			<Cursor1 position="1702" topLine="33" />
 		</Cursor>
 	</File>
-	<File name="src\AudioHandle.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\TankGame.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1873" topLine="65" />
+			<Cursor1 position="138" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\EntryPoint.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\EntryPoint.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2765" topLine="100" />
+			<Cursor1 position="2270" topLine="59" />
 		</Cursor>
 	</File>
-	<File name="src\SceneObject.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\TankCore.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2981" topLine="124" />
+			<Cursor1 position="1654" topLine="58" />
 		</Cursor>
 	</File>
 	<File name="src\FontHandle.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -102,9 +32,14 @@
 			<Cursor1 position="4614" topLine="184" />
 		</Cursor>
 	</File>
-	<File name="src\Tank.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\TankScene.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="12131" topLine="422" />
+			<Cursor1 position="9714" topLine="343" />
+		</Cursor>
+	</File>
+	<File name="src\TankScene.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="8752" topLine="224" />
 		</Cursor>
 	</File>
 	<File name="src\ImageHandle.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -112,9 +47,74 @@
 			<Cursor1 position="3297" topLine="55" />
 		</Cursor>
 	</File>
+	<File name="src\SceneObject.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2981" topLine="124" />
+		</Cursor>
+	</File>
+	<File name="src\Terrain.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2680" topLine="76" />
+		</Cursor>
+	</File>
+	<File name="src\TankCore.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="158" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\SceneObject.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2227" topLine="185" />
+		</Cursor>
+	</File>
+	<File name="src\Tank.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="10930" topLine="383" />
+		</Cursor>
+	</File>
+	<File name="src\Tank.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="466" topLine="5" />
+		</Cursor>
+	</File>
+	<File name="src\AudioHandle.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1026" topLine="35" />
+		</Cursor>
+	</File>
+	<File name="src\VFXHandle.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3424" topLine="95" />
+		</Cursor>
+	</File>
+	<File name="src\EntryPoint.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2642" topLine="92" />
+		</Cursor>
+	</File>
 	<File name="src\FontHandle.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1712" topLine="67" />
+		</Cursor>
+	</File>
+	<File name="src\ImageHandle.cpp" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6766" topLine="205" />
+		</Cursor>
+	</File>
+	<File name="src\UIHandle.cpp" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="37821" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\VFXHandle.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5125" topLine="124" />
+		</Cursor>
+	</File>
+	<File name="src\UIHandle.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="13682" topLine="359" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

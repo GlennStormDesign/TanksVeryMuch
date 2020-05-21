@@ -11,12 +11,6 @@ static sf::Sound fxl[MAX_SFX_LOOPS];
 static sf::Sound fxs[MAX_SFX_STINGS];
 const float MIN_SFX_INTERVAL = 0.05f;
 
-const float IDLE_SHIFT_SPEED = 0.618f;
-const float IDLE_MIN_VOLUME = 38.1f;
-const float IDLE_MAX_VOLUME = 61.8f;
-const float IDLE_MIN_PITCH = 0.618f;
-const float IDLE_MAX_PITCH = 1.1f;
-
 enum MLoopMode { Silent, Menu, Game, Pause };
 enum MStingMode { None, Iron, Snare, Win, Lose }; // win and lose change MLoopMode to Silent
 
@@ -30,11 +24,8 @@ extern void LaunchMusicSting( const MStingMode& sting, const bool& interrupt );
 extern void LaunchMusicEnd( const bool& win );
 extern void MusicTesting( const bool& debug );
 
-extern void SFXLoopUpdate( const float& timeDelta );
 extern int LaunchLoopIdle( const unsigned int& tankID, const float& vol, const float& pitch );
 extern int LaunchLoopTurret( const unsigned int& tankID, const float& vol, const float& pitch );
-extern void LocalTankEngage( const bool& idle, const bool& turret ); // temp
-//extern void SFXLoopKill();
 extern void LaunchSFXUIFwd();
 extern void LaunchSFXUIBack();
 extern void LaunchSFXShot();
@@ -43,7 +34,6 @@ extern void LaunchSFXImpact();
 extern void LaunchSFXImpact( const sf::Vector2f& sPos );
 extern void LaunchSFXKill();
 extern void LaunchSFXKill( const sf::Vector2f& sPos );
-extern void SFXTesting( const bool& debug, const float& timeDelta );
 
 int LaunchSFXLoop( const sf::SoundBuffer& sb );
 int LaunchSFXLoop( const sf::SoundBuffer& sb, const float& volume, const float& pitch );
@@ -89,19 +79,11 @@ private:
 
 class AudioSFXManager {
 public:
-    // temp (used to track local player tank sfx loops)
-    int pIdleLoop = -1;
-    int pTurretLoop = -1;
-    bool pIdleEngaged = false;
-    bool pTurretEngaged = false;
 private:
     // validation
     bool m_sfxOkay = true;
     // sfx loop
     sf::SoundBuffer fxbIdle, fxbTurret;
-    // temp (used to track local player tank sfx loops)
-    float pIdleVol = IDLE_MIN_VOLUME;
-    float pIdlePitch = IDLE_MIN_PITCH;
     // sfx sting
     sf::SoundBuffer fxbUIFwd, fxbUIBack, fxbShot, fxbImpact, fxbKill;
     // safety
@@ -128,8 +110,5 @@ public:
     void LaunchSFXImpact( const sf::Vector2f& sPos );
     void LaunchSFXKill();
     void LaunchSFXKill( const sf::Vector2f& sPos );
-
-    void Testing( const bool& debug, const float& timeDelta );
-    //void SFXLoopKill();
 private:
 };

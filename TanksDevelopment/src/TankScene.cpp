@@ -367,13 +367,11 @@ void TankScene::UpdateScene( const float& timeDelta )
                         if ( m_tankPool[n].DamageTank(m_tankPool[i].shots[s].GetPower()) )
                         {
                             m_tankPool[n].KillSFXLoops();
-                            //LaunchSFXKill();
                             LaunchSFXKill(m_tankPool[n].GetBaseSprite().getPosition());
                             // end game check in level update
                         }
                         else
                         {
-                            //LaunchSFXImpact();
                             LaunchSFXImpact(m_tankPool[n].GetBaseSprite().getPosition());
                         }
                         m_tankPool[i].shots[s].Detonate();
@@ -469,7 +467,6 @@ void TankScene::UpdateScene( const float& timeDelta )
                             }
                             else
                             {
-                                //LaunchSFXImpact();
                                 LaunchSFXImpact(m_tankPool[t].shots[s].shot.getPosition());
                                 m_tankPool[t].shots[s].Detonate();
                             }
@@ -571,13 +568,15 @@ void TutorialGameScene::UpdateLevel( const float& timeDelta )
             SetTutorialStage( UIManager::CombatTutorial );
             SetTutorialPauseTime(5.f);
             GetTank(1).controller.SetActiveState(true);
+            LaunchMusicLoop((MLoopMode)Game, false);
         }
         break;
     case UIManager::CombatTutorial:
         if ( !GetTank(1).GetActiveState() )
         {
             SetTutorialStage( UIManager::QuestTutorial );
-            SetTutorialPauseTime(5.f);
+            SetTutorialPauseTime(15.f);
+            LaunchMusicLoop((MLoopMode)Pause, false);
         }
         break;
     case UIManager::QuestTutorial:

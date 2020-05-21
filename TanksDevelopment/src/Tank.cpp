@@ -1,7 +1,6 @@
 #include <cmath>
 #include <bitset>
 
-#include "AudioHandle.h"
 #include "Tank.h"
 #include "TankScene.h"
 
@@ -264,7 +263,6 @@ void Tank::TankInit()
     m_turretR = 0.f;
     m_tankMoving = false;
     m_turretMoving = false;
-    // REVIEW: set tank sfx loops for idle and turret?
     SetTankColor( DEF_TANK_COLOR );
     for ( int i=0; i<4; i++ ) { shots[i].active = false; }
 }
@@ -461,8 +459,6 @@ void Tank::UpdateTank( const float& timeDelta )
         return;
     float tankMoveFwdX = sin(m_baseR * DEG2RAD) * M_PI;
     float tankMoveFwdY = cos(m_baseR * DEG2RAD) * M_PI;
-    // handle spacial sound listener direction
-    //sf::Listener::setDirection(tankMoveFwdX,tankMoveFwdY,0.f); // REVIEW: not intuitive?
     if ( controller.GetControl( BIT_FWD ) )
     {
         m_posX += tankMoveFwdX * m_moveSpeed * timeDelta;
@@ -499,8 +495,8 @@ void Tank::UpdateTank( const float& timeDelta )
         m_turretR += m_rotSpeed * timeDelta;
         m_turretMoving = true;
     }
-    TransformTank();
     UpdateSFXLoops( timeDelta );
+    TransformTank();
     if ( m_shotFrame == 0 && controller.GetControl( BIT_FIRE ) )
     {
         bool shotAvailable = false;

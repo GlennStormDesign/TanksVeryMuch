@@ -128,7 +128,6 @@ private:
     bool m_active = true;
     float m_posX, m_posY, m_baseR, m_turretR;
     bool m_tankMoving, m_turretMoving;
-    // sfx loop slot for audioMgr reference, limit to loops available
     int m_idleLoop = -1;
     int m_turretLoop = -1;
     float m_idleVol = IDLE_MIN_VOLUME;

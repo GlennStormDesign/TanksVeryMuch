@@ -1030,11 +1030,10 @@ void UIManager::DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset 
             LaunchSFXUIFwd();
             m_tutCombat.visible = false;
             m_tutorialDisplay = false;
-            m_tutorialPauseTime = 15.f;
+            m_tutorialPauseTime = 20.f;
             // advance in UpdateLevel()
             m_tutorialTimer.restart();
             m_uiInputTimer.restart();
-            LaunchMusicLoop((MLoopMode)Game, false);
         }
         m_tutQuest.DrawUI(window,uiOffset);
         if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_tutQuest.GetCallBack() == 1 )
@@ -1046,7 +1045,6 @@ void UIManager::DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset 
             // advance in UpdateLevel()
             m_tutorialTimer.restart();
             m_uiInputTimer.restart();
-            LaunchMusicLoop((MLoopMode)Pause, true);
         }
     }
 

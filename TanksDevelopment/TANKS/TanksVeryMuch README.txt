@@ -3,8 +3,8 @@
 // C++, SFML, OpenGL, GLSL
 
 Tank Prototype
-(latest addition: Tutorial)
-5.18.2020
+(latest addition: spatial sound)
+5.21.2020
 
 Controls:
 Move with arrow keys
@@ -14,14 +14,6 @@ Fire = \
 
 Debug Control:
 ~ = display debug stats
-
-Music Control:
-Space = silent loop
-P = pause loop
-G = game loop
-M = menu loop
-I = 'iron' sting
-S = 'snare' sting
 
 Troubleshooting:
 * If nothing happens when

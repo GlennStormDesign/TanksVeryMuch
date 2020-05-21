@@ -115,8 +115,8 @@ int LaunchSFXLoop( const sf::SoundBuffer& sb, const float& volume, const float& 
             fxl[i].setVolume(volume);
             fxl[i].setPitch(pitch);
             fxl[i].setRelativeToListener(false);
-            fxl[i].setMinDistance(38.1f);
-            fxl[i].setAttenuation(0.381f);
+            fxl[i].setMinDistance(61.8f);
+            fxl[i].setAttenuation(0.618f);
             fxl[i].setPosition(sPos.x,sPos.y,0.f);
             fxl[i].play();
             slotIndex = i;
@@ -131,8 +131,8 @@ void TouchSFXLoop( const int& index, const float& volume, const float& pitch, co
     fxl[index].setVolume(volume);
     fxl[index].setPitch(pitch);
     fxl[index].setRelativeToListener(false);
-    fxl[index].setMinDistance(38.1f);
-    fxl[index].setAttenuation(0.381f);
+    fxl[index].setMinDistance(61.8f);
+    fxl[index].setAttenuation(0.618f);
     fxl[index].setPosition(sPos.x,sPos.y,0.f);
     if ( stop )
     {

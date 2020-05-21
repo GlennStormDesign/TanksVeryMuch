@@ -114,7 +114,7 @@ int LaunchSFXLoop( const sf::SoundBuffer& sb, const float& volume, const float& 
             fxl[i].setLoop(true);
             fxl[i].setVolume(volume);
             fxl[i].setPitch(pitch);
-            fxl[i].setRelativeToListener(true);
+            fxl[i].setRelativeToListener(false);
             fxl[i].setMinDistance(38.1f);
             fxl[i].setAttenuation(0.381f);
             fxl[i].setPosition(sPos.x,sPos.y,0.f);
@@ -130,7 +130,7 @@ void TouchSFXLoop( const int& index, const float& volume, const float& pitch, co
 {
     fxl[index].setVolume(volume);
     fxl[index].setPitch(pitch);
-    fxl[index].setRelativeToListener(true);
+    fxl[index].setRelativeToListener(false);
     fxl[index].setMinDistance(38.1f);
     fxl[index].setAttenuation(0.381f);
     fxl[index].setPosition(sPos.x,sPos.y,0.f);
@@ -139,7 +139,7 @@ void TouchSFXLoop( const int& index, const float& volume, const float& pitch, co
         fxl[index].setLoop(false);
         fxl[index].stop();
         fxl[index].setPosition(0.f,0.f,0.f);
-        fxl[index].setRelativeToListener(false);
+        fxl[index].setRelativeToListener(true);
         fxl[index].setMinDistance(1.f);
         fxl[index].setAttenuation(1.f);
         fxl[index].resetBuffer();
@@ -153,7 +153,7 @@ void LaunchSFXSting( const sf::SoundBuffer& sb )
     for ( int i=0; i<MAX_SFX_STINGS; i++ ) {
         if ( fxs[i].getStatus() == sf::Sound::Stopped )
         {
-            fxs[i].setRelativeToListener(false);
+            fxs[i].setRelativeToListener(true);
             fxs[i].setBuffer(sb);
             fxs[i].play();
             break;
@@ -167,7 +167,7 @@ void LaunchSFXSting( const sf::SoundBuffer& sb, const sf::Vector2f& sPos )
     for ( int i=0; i<MAX_SFX_STINGS; i++ ) {
         if ( fxs[i].getStatus() == sf::Sound::Stopped )
         {
-            fxs[i].setRelativeToListener(true);
+            fxs[i].setRelativeToListener(false);
             fxs[i].setMinDistance(38.1f);
             fxs[i].setAttenuation(0.1f);
             fxs[i].setPosition(sPos.x,sPos.y,0.f);
@@ -364,7 +364,7 @@ void AudioMusicManager::MusicLoopInit()
         m_musicOkay = false;
     mloop.setBuffer(msbMenu);
     mloop.setVolume(MUSIC_LOOP_MAX_VOLUME);
-    mloop.setRelativeToListener(false);
+    mloop.setRelativeToListener(true);
 }
 void AudioMusicManager::MusicStingInit()
 {
@@ -374,7 +374,7 @@ void AudioMusicManager::MusicStingInit()
             !msbLose.loadFromFile("audio/Music_Sting_Lose.wav") )
         m_musicOkay = false;
     msting.setVolume(100.f); // stings always full volume
-    msting.setRelativeToListener(false);
+    msting.setRelativeToListener(true);
 }
 
 // AudioSFXManager implementation

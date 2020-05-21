@@ -91,11 +91,17 @@ int main()
         }
 
         // audio update
-        //sf::Vector3f lPos;
-        //lPos.x = GetLocalPlayerTank().GetBaseSprite().getPosition().x;
+        /*
+        sf::Vector3f lPos;
+        lPos.x = GetLocalPlayerTank().GetBaseSprite().getPosition().x;
         //lPos.y = GetLocalPlayerTank().GetBaseSprite().getPosition().y;
         //lPos.z = 0.f;
-        //sf::Listener::setPosition( lPos );  // FIXME: when implemented, non-relative sounds stop, and still at origin
+        lPos.y = 0.f;
+        lPos.z = GetLocalPlayerTank().GetBaseSprite().getPosition().y;
+        sf::Listener::setPosition( lPos );  // FIXME: when implemented, non-relative sounds stop, and still at origin
+        sf::Listener::setDirection(0.f,0.f,1.f);
+        sf::Listener::setUpVector(0.f,1.f,0.f);
+        */
         MusicStingUpdate( timeDelta );
         MusicLoopUpdate( timeDelta );
         //MusicTesting( true );

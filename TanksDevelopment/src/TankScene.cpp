@@ -349,9 +349,7 @@ void TankScene::UpdateScene( const float& timeDelta )
                     {
                         if ( m_tankPool[n].DamageTank(m_tankPool[i].shots[s].GetPower()) )
                         {
-                            // REVIEW: other tank sfx loop kill
-                            if ( !GetLocalPlayerTank().GetActiveState() )
-                                SFXLoopKill();
+                            m_tankPool[n].KillSFXLoops();
                             LaunchSFXKill();
                             //LaunchSFXKill(m_tankPool[n].GetBaseSprite().getPosition());
                             // end game check in level update

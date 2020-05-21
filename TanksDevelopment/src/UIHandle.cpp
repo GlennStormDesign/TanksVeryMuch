@@ -1080,12 +1080,13 @@ void UIManager::DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset 
         GetLocalPlayerTank().SetBaseRotation(0.f);
         GetLocalPlayerTank().SetTurretRotation(0.f);
         GetLocalPlayerTank().SetArmor(100.f);
-        SFXLoopKill();
+        GetLocalPlayerTank().KillSFXLoops();
         for ( int i=1; i<GetTotalTankCount(); i++ )
         {
             GetTank(i).SetPosition((200.f+(i*150.f)),300.f);
             GetTank(i).SetBaseRotation( rand() % 360 );
             GetTank(i).SetTurretRotation(0.f);
+            GetTank(i).KillSFXLoops();
         }
         m_quitButton.SetState(Normal);
         m_displayQuit = false;

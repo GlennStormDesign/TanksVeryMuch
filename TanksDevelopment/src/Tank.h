@@ -229,6 +229,8 @@ public:
     void SetSpriteScale( const float& globalScale );
     void TransformTank();
     void TransformShotVFX();
+    void UpdateSFXLoops( const float& timeDelta );
+    void KillSFXLoops();
     void UpdateTank( const float& timeDelta );
     float& GetArmor();
     void SetArmor( const float& armor );

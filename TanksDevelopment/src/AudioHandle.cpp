@@ -46,6 +46,14 @@ extern void SFXLoopUpdate( const float& timeDelta )
 {
     sfxMgr.SFXLoopUpdate(timeDelta);
 }
+extern int LaunchLoopIdle( const unsigned int& tankID, const float& vol, const float& pitch )
+{
+    return sfxMgr.LaunchLoopIdle(tankID, vol, pitch);
+}
+extern int LaunchLoopTurret( const unsigned int& tankID, const float& vol, const float& pitch )
+{
+    return sfxMgr.LaunchLoopTurret(tankID, vol, pitch);
+}
 extern void LocalTankEngage( const bool& idle, const bool& turret )
 {
     // TODO: (temp) this could be used to indicate that this tank is not relative to listener, but nix sfxMgr properties
@@ -60,10 +68,12 @@ extern void LaunchSFXUIBack()
 {
     sfxMgr.LaunchSFXUIBack();
 }
+/*
 extern void SFXLoopKill()
 {
     sfxMgr.SFXLoopKill();
 }
+*/
 extern void LaunchSFXShot()
 {
     sfxMgr.LaunchSFXShot();
@@ -391,6 +401,16 @@ void AudioSFXManager::SFXStingInit()
             !fxbKill.loadFromFile("audio/SFX_Explosion_Kill.wav") )
         m_sfxOkay = false;
 }
+int AudioSFXManager::LaunchLoopIdle( const unsigned int& tankID, const float& vol, const float& pitch )
+{
+    // REVIEW: use tankID to assess priority
+    return LaunchSFXLoop( fxbIdle, vol, pitch );
+}
+int AudioSFXManager::LaunchLoopTurret( const unsigned int& tankID, const float& vol, const float& pitch )
+{
+    // REVIEW: use tankID to assess priority
+    return LaunchSFXLoop( fxbTurret, vol, pitch );
+}
 void AudioSFXManager::SFXLoopUpdate( const float& timeDelta )
 {
     // TODO: handle other tank idle and turret as 3D sound relative to listener
@@ -519,7 +539,8 @@ void AudioSFXManager::Testing( const bool& debug, const float& timeDelta )
     if ( sf::Keyboard::isKeyPressed(sf::Keyboard::Num7) )
         LaunchSFXSting(fxbKill);
 }
-void AudioSFXManager::SFXLoopKill()
+/*
+void AudioSFXManager::SFXLoopKill() // TODO: implement from tank
 {
     if ( pIdleLoop > -1 )
     {
@@ -532,3 +553,4 @@ void AudioSFXManager::SFXLoopKill()
         pTurretLoop = -1;
     }
 }
+*/

@@ -31,8 +31,10 @@ extern void LaunchMusicEnd( const bool& win );
 extern void MusicTesting( const bool& debug );
 
 extern void SFXLoopUpdate( const float& timeDelta );
-extern void LocalTankEngage( const bool& idle, const bool& turret );
-extern void SFXLoopKill();
+extern int LaunchLoopIdle( const unsigned int& tankID, const float& vol, const float& pitch );
+extern int LaunchLoopTurret( const unsigned int& tankID, const float& vol, const float& pitch );
+extern void LocalTankEngage( const bool& idle, const bool& turret ); // temp
+//extern void SFXLoopKill();
 extern void LaunchSFXUIFwd();
 extern void LaunchSFXUIBack();
 extern void LaunchSFXShot();
@@ -114,6 +116,8 @@ public:
 
     void SFXLoopInit();
     void SFXStingInit();
+    int LaunchLoopIdle( const unsigned int& tankID, const float& vol, const float& pitch );
+    int LaunchLoopTurret( const unsigned int& tankID, const float& vol, const float& pitch );
     void SFXLoopUpdate( const float& timeDelta );
     bool SafeSFXInterval();
     void LaunchSFXUIFwd();
@@ -126,6 +130,6 @@ public:
     void LaunchSFXKill( const sf::Vector2f& sPos );
 
     void Testing( const bool& debug, const float& timeDelta );
-    void SFXLoopKill();
+    //void SFXLoopKill();
 private:
 };

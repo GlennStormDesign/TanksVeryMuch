@@ -387,6 +387,57 @@ void Tank::TransformShotVFX()
     m_shotVFX.setPosition(m_posX, m_posY);
     m_shotVFX.setRotation(m_baseR + m_turretR);
 }
+void Tank::UpdateSFXLoops( const float& timeDelta )
+{
+    if ( m_tankMoving )
+    {
+        if ( m_idleLoop == -1 )
+            m_idleLoop = LaunchLoopIdle( tankID, IDLE_MIN_VOLUME, IDLE_MIN_PITCH );
+        else
+        {
+            m_idleVol += IDLE_SHIFT_SPEED * timeDelta;
+            if ( m_idleVol > IDLE_MAX_VOLUME )
+                m_idleVol = IDLE_MAX_VOLUME;
+            m_idlePitch += IDLE_SHIFT_SPEED * timeDelta;
+            if ( m_idlePitch > IDLE_MAX_PITCH )
+                m_idlePitch = IDLE_MAX_PITCH;
+            TouchSFXLoop( m_idleLoop, m_idleVol, m_idlePitch, false );
+        }
+    }
+    else if ( m_idleLoop > -1 )
+    {
+        m_idleVol -= IDLE_SHIFT_SPEED * timeDelta;
+        if ( m_idleVol < IDLE_MIN_VOLUME )
+            m_idleVol = IDLE_MIN_VOLUME;
+        m_idlePitch -= IDLE_SHIFT_SPEED * timeDelta;
+        if ( m_idlePitch < IDLE_MIN_PITCH )
+            m_idlePitch = IDLE_MIN_PITCH;
+        TouchSFXLoop( m_idleLoop, m_idleVol, m_idlePitch, false );
+    }
+    if ( m_turretMoving )
+    {
+        if ( m_turretLoop == -1 )
+            m_turretLoop = LaunchLoopTurret( tankID, 61.8f, .8f );
+    }
+    else if ( m_turretLoop > -1 )
+    {
+        TouchSFXLoop( m_turretLoop, 61.8f, .8f, true );
+        m_turretLoop = -1;
+    }
+}
+void Tank::KillSFXLoops()
+{
+    if ( m_idleLoop > -1 )
+    {
+        TouchSFXLoop( m_idleLoop, m_idleVol, m_idlePitch, true );
+        m_idleLoop = -1;
+    }
+    if ( m_turretLoop > -1 )
+    {
+        TouchSFXLoop( m_turretLoop, 61.8f, .8f, true );
+        m_turretLoop = -1;
+    }
+}
 void Tank::UpdateTank( const float& timeDelta )
 {
     controller.Update();
@@ -447,11 +498,14 @@ void Tank::UpdateTank( const float& timeDelta )
         m_turretMoving = true;
     }
     TransformTank();
+    /*
     if ( controller.GetControllerType() == LocalPlayer ) {
         // handle spacial sound and non-player tank sound
         // NOTE: Listener updated in main game loop on sound update
-        LocalTankEngage( m_tankMoving, m_turretMoving );
+        //LocalTankEngage( m_tankMoving, m_turretMoving ); // temp - now handled in this translation unit
     }
+    */
+    UpdateSFXLoops( timeDelta );
     if ( m_shotFrame == 0 && controller.GetControl( BIT_FIRE ) )
     {
         bool shotAvailable = false;

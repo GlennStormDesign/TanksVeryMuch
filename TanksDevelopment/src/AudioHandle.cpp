@@ -2,6 +2,7 @@
 #include <SFML/Audio.hpp>
 
 #include "AudioHandle.h"
+#include "TankScene.h"
 
 // Audio Definitions
 
@@ -91,7 +92,7 @@ int LaunchSFXLoop( const sf::SoundBuffer& sb )
     for ( int i=0; i<MAX_SFX_LOOPS; i++ ) {
         if ( !fxl[i].getLoop() )
         {
-            fxl[i].setBuffer( sb );
+            fxl[i].setBuffer(sb);
             fxl[i].setLoop(true);
             fxl[i].play();
             slotIndex = i;
@@ -101,7 +102,7 @@ int LaunchSFXLoop( const sf::SoundBuffer& sb )
     return slotIndex;
 }
 
-int LaunchSFXLoop( const sf::SoundBuffer& sb, const float& volume, const float& pitch )
+int LaunchSFXLoop( const sf::SoundBuffer& sb, const float& volume, const float& pitch, const sf::Vector2f& sPos )
 {
     if ( !sfxMgr.SafeSFXInterval() )
         return -1;
@@ -109,10 +110,14 @@ int LaunchSFXLoop( const sf::SoundBuffer& sb, const float& volume, const float& 
     for ( int i=0; i<MAX_SFX_LOOPS; i++ ) {
         if ( !fxl[i].getLoop() )
         {
-            fxl[i].setBuffer( sb );
+            fxl[i].setBuffer(sb);
             fxl[i].setLoop(true);
             fxl[i].setVolume(volume);
             fxl[i].setPitch(pitch);
+            fxl[i].setRelativeToListener(true);
+            fxl[i].setMinDistance(38.1f);
+            fxl[i].setAttenuation(0.381f);
+            fxl[i].setPosition(sPos.x,sPos.y,0.f);
             fxl[i].play();
             slotIndex = i;
             break;
@@ -121,14 +126,22 @@ int LaunchSFXLoop( const sf::SoundBuffer& sb, const float& volume, const float& 
     return slotIndex;
 }
 
-void TouchSFXLoop( const int& index, const float& volume, const float& pitch, const bool& stop )
+void TouchSFXLoop( const int& index, const float& volume, const float& pitch, const sf::Vector2f& sPos, const bool& stop )
 {
     fxl[index].setVolume(volume);
     fxl[index].setPitch(pitch);
+    fxl[index].setRelativeToListener(true);
+    fxl[index].setMinDistance(38.1f);
+    fxl[index].setAttenuation(0.381f);
+    fxl[index].setPosition(sPos.x,sPos.y,0.f);
     if ( stop )
     {
         fxl[index].setLoop(false);
         fxl[index].stop();
+        fxl[index].setPosition(0.f,0.f,0.f);
+        fxl[index].setRelativeToListener(false);
+        fxl[index].setMinDistance(1.f);
+        fxl[index].setAttenuation(1.f);
         fxl[index].resetBuffer();
     }
 }
@@ -140,8 +153,8 @@ void LaunchSFXSting( const sf::SoundBuffer& sb )
     for ( int i=0; i<MAX_SFX_STINGS; i++ ) {
         if ( fxs[i].getStatus() == sf::Sound::Stopped )
         {
-            //fxs[i].setRelativeToListener( false ); // REVIEW: music never relative, sfx
-            fxs[i].setBuffer( sb );
+            fxs[i].setRelativeToListener(false);
+            fxs[i].setBuffer(sb);
             fxs[i].play();
             break;
         }
@@ -154,11 +167,11 @@ void LaunchSFXSting( const sf::SoundBuffer& sb, const sf::Vector2f& sPos )
     for ( int i=0; i<MAX_SFX_STINGS; i++ ) {
         if ( fxs[i].getStatus() == sf::Sound::Stopped )
         {
-            //fxs[i].setRelativeToListener(true);
-            //fxs[i].setMinDistance(38.1f);
-            //fxs[i].setAttenuation(0.1f);
-            //fxs[i].setPosition(sPos.x, sPos.y, 0);
-            fxs[i].setBuffer( sb );
+            fxs[i].setRelativeToListener(true);
+            fxs[i].setMinDistance(38.1f);
+            fxs[i].setAttenuation(0.1f);
+            fxs[i].setPosition(sPos.x,sPos.y,0.f);
+            fxs[i].setBuffer(sb);
             fxs[i].play();
             break;
         }
@@ -383,13 +396,15 @@ void AudioSFXManager::SFXStingInit()
 }
 int AudioSFXManager::LaunchLoopIdle( const unsigned int& tankID, const float& vol, const float& pitch )
 {
-    // REVIEW: use tankID to assess priority
-    return LaunchSFXLoop( fxbIdle, vol, pitch );
+    // use tankID to assess priority
+    Tank t = GetTankByID( tankID );
+    return LaunchSFXLoop( fxbIdle, vol, pitch, t.GetBaseSprite().getPosition() );
 }
 int AudioSFXManager::LaunchLoopTurret( const unsigned int& tankID, const float& vol, const float& pitch )
 {
-    // REVIEW: use tankID to assess priority
-    return LaunchSFXLoop( fxbTurret, vol, pitch );
+    // use tankID to assess priority
+    Tank t = GetTankByID( tankID );
+    return LaunchSFXLoop( fxbTurret, vol, pitch, t.GetBaseSprite().getPosition() );
 }
 
 bool AudioSFXManager::SafeSFXInterval()

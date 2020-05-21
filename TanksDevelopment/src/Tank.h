@@ -20,6 +20,8 @@ const float IDLE_MIN_VOLUME = 38.1f;
 const float IDLE_MAX_VOLUME = 61.8f;
 const float IDLE_MIN_PITCH = 0.618f;
 const float IDLE_MAX_PITCH = 1.1f;
+const float TURRET_VOLUME = 61.8f;
+const float TURRET_PITCH = 0.8f;
 
 enum TankControllerType { LocalPlayer, RemotePlayer, Scripted, Drone };
 enum LocalInputType { NoLocalInput, Keyboard, GameController, TouchScreen };

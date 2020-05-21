@@ -389,7 +389,6 @@ void Tank::TransformShotVFX()
 }
 void Tank::UpdateSFXLoops( const float& timeDelta )
 {
-    // TODO: send tank position to sfxMgr for spacial audio
     if ( m_tankMoving )
     {
         if ( m_idleLoop == -1 )
@@ -402,7 +401,7 @@ void Tank::UpdateSFXLoops( const float& timeDelta )
             m_idlePitch += IDLE_SHIFT_SPEED * timeDelta;
             if ( m_idlePitch > IDLE_MAX_PITCH )
                 m_idlePitch = IDLE_MAX_PITCH;
-            TouchSFXLoop( m_idleLoop, m_idleVol, m_idlePitch, false );
+            TouchSFXLoop( m_idleLoop, m_idleVol, m_idlePitch, GetBaseSprite().getPosition(), false );
         }
     }
     else if ( m_idleLoop > -1 )
@@ -413,16 +412,18 @@ void Tank::UpdateSFXLoops( const float& timeDelta )
         m_idlePitch -= IDLE_SHIFT_SPEED * timeDelta;
         if ( m_idlePitch < IDLE_MIN_PITCH )
             m_idlePitch = IDLE_MIN_PITCH;
-        TouchSFXLoop( m_idleLoop, m_idleVol, m_idlePitch, false );
+        TouchSFXLoop( m_idleLoop, m_idleVol, m_idlePitch, GetBaseSprite().getPosition(), false );
     }
     if ( m_turretMoving )
     {
         if ( m_turretLoop == -1 )
-            m_turretLoop = LaunchLoopTurret( tankID, 61.8f, .8f );
+            m_turretLoop = LaunchLoopTurret( tankID, TURRET_VOLUME, TURRET_PITCH );
+        else
+            TouchSFXLoop( m_turretLoop, TURRET_VOLUME, TURRET_PITCH, GetBaseSprite().getPosition(), false );
     }
     else if ( m_turretLoop > -1 )
     {
-        TouchSFXLoop( m_turretLoop, 61.8f, .8f, true );
+        TouchSFXLoop( m_turretLoop, TURRET_VOLUME, TURRET_PITCH, sf::Vector2f(0.f,0.f), true );
         m_turretLoop = -1;
     }
 }
@@ -430,12 +431,12 @@ void Tank::KillSFXLoops()
 {
     if ( m_idleLoop > -1 )
     {
-        TouchSFXLoop( m_idleLoop, m_idleVol, m_idlePitch, true );
+        TouchSFXLoop( m_idleLoop, m_idleVol, m_idlePitch, sf::Vector2f(0.f,0.f), true );
         m_idleLoop = -1;
     }
     if ( m_turretLoop > -1 )
     {
-        TouchSFXLoop( m_turretLoop, 61.8f, .8f, true );
+        TouchSFXLoop( m_turretLoop, TURRET_VOLUME, TURRET_PITCH, sf::Vector2f(0.f,0.f), true );
         m_turretLoop = -1;
     }
 }

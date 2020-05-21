@@ -88,6 +88,7 @@ public:
     void RemoveTank( Tank& t );
     Tank& GetTank( const unsigned int& index );
     Tank& GetLocalPlayerTank();
+    Tank& GetTankByID( const unsigned int& tankid );
     unsigned int GetActiveTankCount();
     int GetTotalTankCount();
     void AddObject( SceneObject o );
@@ -118,6 +119,7 @@ extern void AddTank( Tank t, sf::Color c );
 extern void RemoveTank( Tank& t );
 extern Tank& GetTank( const unsigned int& index );
 extern Tank& GetLocalPlayerTank();
+extern Tank& GetTankByID( const unsigned int& tankid );
 extern unsigned int GetActiveTankCount();
 extern int GetTotalTankCount();
 extern void AddObject( SceneObject o );

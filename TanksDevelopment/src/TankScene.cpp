@@ -54,6 +54,10 @@ extern Tank& GetLocalPlayerTank()
 {
     return currentScene->GetLocalPlayerTank();
 }
+extern Tank& GetTankByID( const unsigned int& tankid )
+{
+    return currentScene->GetTankByID( tankid );
+}
 extern unsigned int GetActiveTankCount()
 {
     return currentScene->GetActiveTankCount();
@@ -211,6 +215,19 @@ Tank& TankScene::GetLocalPlayerTank()
     }
     return m_tankPool[idx];
 }
+Tank& TankScene::GetTankByID( const unsigned int& tankid )
+{
+    unsigned int idx = 0;
+    for ( unsigned int i=0; i<m_tankPool.size(); i++ )
+    {
+        if ( m_tankPool[i].GetTankID() == tankid )
+        {
+            idx = i;
+            break;
+        }
+    }
+    return m_tankPool[idx];
+}
 unsigned int TankScene::GetActiveTankCount()
 {
     unsigned int cnt = 0;
@@ -350,14 +367,14 @@ void TankScene::UpdateScene( const float& timeDelta )
                         if ( m_tankPool[n].DamageTank(m_tankPool[i].shots[s].GetPower()) )
                         {
                             m_tankPool[n].KillSFXLoops();
-                            LaunchSFXKill();
-                            //LaunchSFXKill(m_tankPool[n].GetBaseSprite().getPosition());
+                            //LaunchSFXKill();
+                            LaunchSFXKill(m_tankPool[n].GetBaseSprite().getPosition());
                             // end game check in level update
                         }
                         else
                         {
-                            LaunchSFXImpact();
-                            //LaunchSFXImpact(m_tankPool[n].GetBaseSprite().getPosition());
+                            //LaunchSFXImpact();
+                            LaunchSFXImpact(m_tankPool[n].GetBaseSprite().getPosition());
                         }
                         m_tankPool[i].shots[s].Detonate();
                     }
@@ -452,8 +469,8 @@ void TankScene::UpdateScene( const float& timeDelta )
                             }
                             else
                             {
-                                LaunchSFXImpact();
-                                //LaunchSFXImpact(m_tankPool[t].shots[s].shot.getPosition());
+                                //LaunchSFXImpact();
+                                LaunchSFXImpact(m_tankPool[t].shots[s].shot.getPosition());
                                 m_tankPool[t].shots[s].Detonate();
                             }
                         }

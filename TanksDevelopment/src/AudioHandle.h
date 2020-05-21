@@ -36,8 +36,8 @@ extern void LaunchSFXKill();
 extern void LaunchSFXKill( const sf::Vector2f& sPos );
 
 int LaunchSFXLoop( const sf::SoundBuffer& sb );
-int LaunchSFXLoop( const sf::SoundBuffer& sb, const float& volume, const float& pitch );
-void TouchSFXLoop( const int& index, const float& volume, const float& pitch, const bool& stop );
+int LaunchSFXLoop( const sf::SoundBuffer& sb, const float& volume, const float& pitch, const sf::Vector2f& sPos );
+void TouchSFXLoop( const int& index, const float& volume, const float& pitch, const sf::Vector2f& sPos, const bool& stop );
 void LaunchSFXSting( const sf::SoundBuffer& sb );
 void LaunchSFXSting( const sf::SoundBuffer& sb, sf::Vector2f& sPos );
 

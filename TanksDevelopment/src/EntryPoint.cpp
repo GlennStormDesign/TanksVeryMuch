@@ -66,7 +66,7 @@ int main()
     DebugInit( DetailFont() );
 
     // sfx start
-    // REVIEW: how to 'touch' local player tank to start engine idle loop
+    // REVIEW: how to 'touch' local player tank to start engine idle loop (if controller is activated?)
     // music start
     LaunchMusicLoop( Pause, true );
 
@@ -95,7 +95,7 @@ int main()
         //lPos.x = GetLocalPlayerTank().GetBaseSprite().getPosition().x;
         //lPos.y = GetLocalPlayerTank().GetBaseSprite().getPosition().y;
         //lPos.z = 0.f;
-        //sf::Listener::setPosition( lPos );
+        //sf::Listener::setPosition( lPos );  // FIXME: when implemented, non-relative sounds stop, and still at origin
         MusicStingUpdate( timeDelta );
         MusicLoopUpdate( timeDelta );
         //MusicTesting( true );

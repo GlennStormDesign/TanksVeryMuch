@@ -66,8 +66,8 @@ int main()
     DebugInit( DetailFont() );
 
     // audio
-    sf::Listener::setDirection(0.f,0.f,-1.f);
-    sf::Listener::setUpVector(0.f,1.f,0.f);
+    sf::Listener::setDirection(0.f,0.f,1.f);
+    sf::Listener::setUpVector(0.f,-1.f,0.f);
     // music start
     LaunchMusicLoop( Pause, true );
 

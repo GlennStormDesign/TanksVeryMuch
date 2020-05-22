@@ -135,6 +135,21 @@ extern void DrawScene( sf::RenderWindow& window );
 
 // level definitions
 
+class BlankScene : public TankScene {
+public:
+    BlankScene() { SceneInit(); }
+    void LevelInit() override
+    {
+        m_type = Sandbox;
+        m_tankPool.reserve(1);
+        m_terrain = SubstanceSoil();
+        SetTerrainViewOffset( sf::Vector2f(0.f,0.f) );
+        stats.maxPlayers = 0;
+    }
+
+    void UpdateLevel( const float& timeDelta ) override;
+};
+
 class TestTankScene : public TankScene {
 public:
     TestTankScene() { SceneInit(); }

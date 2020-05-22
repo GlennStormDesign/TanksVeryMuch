@@ -536,6 +536,11 @@ void TankScene::DrawScene( sf::RenderWindow& window )
 
 // individual level updates
 
+void BlankScene::UpdateLevel( const float& timeDelta )
+{
+    //
+}
+
 void TestTankScene::UpdateLevel( const float& timeDelta )
 {
     //

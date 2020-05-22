@@ -150,10 +150,13 @@ void TankScene::UnloadScene()
         GetTank(i).SetActiveState(false);
         GetTank(i).KillSFXLoops();
     }
+    m_tankPool.clear();
     for ( int o=0; o<m_objectPool.size(); o++ )
     {
         delete m_objectPool[o]; // new from any SceneObject subclass clone() called during AddObject()
     }
+    m_objectPool.clear();
+    m_playerPool.clear();
     // delete scene
     delete currentScene; // new from LoadScene() or NewScene()
 }

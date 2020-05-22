@@ -123,7 +123,7 @@ public:
     float fwdMove = 0.f;
     float baseRot = 0.f;
     float turretRot = 0.f;
-    TankShot* shots = new TankShot[4]; // REVIEW: plug mem leak with delete[] in destructor, but why does that crash?
+    TankShot* shots = new TankShot[4];
 private:
     bool m_active = true;
     float m_posX, m_posY, m_baseR, m_turretR;
@@ -174,6 +174,7 @@ public:
         turretRot = t.turretRot;
         shots = new TankShot[4];
         *shots = *t.shots;
+        delete[] &t.shots; // new from copied tank class (public)
         m_active = t.m_active; // wow, copy constructor ignores private modifier? (automatic friend?)
         m_posX = t.m_posX;
         m_posY = t.m_posY;
@@ -207,7 +208,7 @@ public:
         m_killDebris = t.m_killDebris;
         m_killFlash = t.m_killFlash;
     }
-    ~Tank() { /* delete[] shots; */ }
+    ~Tank() { delete[] shots; } // new from tank class (public)
 
     void TankInit();
     void TankReset();

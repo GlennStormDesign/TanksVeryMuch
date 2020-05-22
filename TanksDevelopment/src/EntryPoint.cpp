@@ -111,6 +111,7 @@ int main()
 
         // ui draw
         sf::Vector2f uiOffset = GetLocalPlayerTank().GetBaseSprite().getPosition(); // REVIEW: use view position? (cam shake)
+        // REVIEW: release mode differs : the uiOffset can't find splash / menu display position (interaction still available)
         uiOffset.x -= rWin.getSize().x / 2;
         uiOffset.y -= rWin.getSize().y / 2;
         DrawUI( rWin, uiOffset );

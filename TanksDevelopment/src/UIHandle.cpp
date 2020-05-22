@@ -918,12 +918,8 @@ void UIManager::DrawMenu( sf::RenderWindow& window, const sf::Vector2f& uiOffset
     if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_menuPlayButton.GetState() == Active )
     {
         LaunchSFXUIFwd();
+        m_menuPlayButton.SetState(Normal); // REVIEW: failing to reset the button state results in continuous game scene load!
         SetUIState(Game);
-        for ( int i=0; i<GetTotalTankCount(); i++ )
-        {
-            GetTank(i).SetActiveState(true);
-            GetTank(i).TankReset();
-        }
         SetTutorialPauseTime(3.f);
         LaunchMusicLoop((MLoopMode)Pause,true); // temp
         LoadScene( new TutorialGameScene() ); // temp
@@ -1068,24 +1064,9 @@ void UIManager::DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset 
     if ( m_inputCallback == 1 )
     {
         LaunchSFXUIBack();
-        SetSceneActive(false);
-        SetUIState(Menu);
-        for ( int i=1; i<GetTotalTankCount(); i++ )
-            GetTank(i).SetActiveState(false);
+        LoadScene( new BlankScene() );
         LaunchMusicLoop((MLoopMode)Menu,true);
-        // GAME RESET (temp)
-        GetLocalPlayerTank().SetPosition(512.f,512.f);
-        GetLocalPlayerTank().SetBaseRotation(0.f);
-        GetLocalPlayerTank().SetTurretRotation(0.f);
-        GetLocalPlayerTank().SetArmor(100.f);
-        GetLocalPlayerTank().KillSFXLoops();
-        for ( int i=1; i<GetTotalTankCount(); i++ )
-        {
-            GetTank(i).SetPosition((200.f+(i*150.f)),300.f);
-            GetTank(i).SetBaseRotation( rand() % 360 );
-            GetTank(i).SetTurretRotation(0.f);
-            GetTank(i).KillSFXLoops();
-        }
+        SetUIState(Menu);
         m_quitButton.SetState(Normal);
         m_displayQuit = false;
         m_inputCallback = 0;

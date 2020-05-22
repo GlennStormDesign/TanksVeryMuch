@@ -142,13 +142,16 @@ void TankScene::SceneInit()
 
 void TankScene::UnloadScene()
 {
-    if ( stats.isSceneActive )
+    stats.isSceneActive = false; // force inactive if quit early
+    // handle stats (recording, etc)
+    // cleanup scene elements
+    for ( int i=0; i<GetTotalTankCount(); i++ )
     {
-        stats.isSceneActive = false;
-        // handle stats (recording, etc)
-        // cleanup
-        delete currentScene; // new from LoadScene() or NewScene()
+        GetTank(i).SetActiveState(false);
+        GetTank(i).KillSFXLoops();
     }
+    // delete scene
+    delete currentScene; // new from LoadScene() or NewScene()
 }
 void TankScene::LoadScene( TankScene* level )
 {

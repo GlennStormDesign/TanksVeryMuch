@@ -759,9 +759,18 @@ void UIManager::SetUIState( const UIManager::UIState& state )
             ResetMenu();
         else if ( m_uiState == Game )
             ResetHUD();
+        SetStateDisplay(false);
     }
     m_uiStateTimer.restart();
     m_uiState = state;
+}
+const bool& UIManager::GetStateDisplay()
+{
+    return m_stateDisplay;
+}
+void UIManager::SetStateDisplay( const bool& display )
+{
+    m_stateDisplay = display;
 }
 int UIManager::GetInputCallBack()
 {
@@ -839,19 +848,21 @@ void UIManager::DrawUIMgr( sf::RenderWindow& window, const sf::Vector2f& uiOffse
 
 void UIManager::UpdateSplash( const float& timeDelta )
 {
-    if ( m_uiStateTimer.getElapsedTime().asSeconds() > m_UI_STATE_TIMER_INTERVAL && m_splashStartButton.GetState() == Disabled )
+    if ( m_uiStateTimer.getElapsedTime().asSeconds() > m_UI_STATE_TIMER_INTERVAL && !GetStateDisplay() )
     {
         m_splashStartButton.SetState(Normal);
+        SetStateDisplay(true);
     }
 }
 void UIManager::UpdateMenu( const float& timeDelta )
 {
-    if ( m_uiStateTimer.getElapsedTime().asSeconds() > m_UI_STATE_TIMER_INTERVAL && m_menuPlayButton.GetState() == Disabled )
+    if ( m_uiStateTimer.getElapsedTime().asSeconds() > m_UI_STATE_TIMER_INTERVAL && !GetStateDisplay() )
     {
         m_menuHowToButton.SetState(Normal);
         m_menuPlayButton.SetState(Normal);
         m_menuCreditsButton.SetState(Normal);
         m_menuQuitButton.SetState(Normal);
+        SetStateDisplay(true);
     }
 }
 void UIManager::UpdateHUD( const float& timeDelta )
@@ -901,7 +912,7 @@ void UIManager::DrawMenu( sf::RenderWindow& window, const sf::Vector2f& uiOffset
     if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_menuHowToButton.GetState() == Active )
     {
         LaunchSFXUIFwd();
-        m_menuHowToButton.visible = false;
+        m_menuHowToButton.SetState(Disabled);
         m_menuPlayButton.SetState(Disabled);
         m_menuCreditsButton.SetState(Disabled);
         m_menuQuitButton.SetState(Disabled);
@@ -912,7 +923,10 @@ void UIManager::DrawMenu( sf::RenderWindow& window, const sf::Vector2f& uiOffset
     {
         LaunchSFXUIBack();
         m_menuHowToPop.visible = false;
-        m_menuHowToButton.visible = true;
+        m_menuHowToButton.SetState(Normal);
+        m_menuPlayButton.SetState(Normal);
+        m_menuCreditsButton.SetState(Normal);
+        m_menuQuitButton.SetState(Normal);
         m_uiInputTimer.restart();
     }
     if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_menuPlayButton.GetState() == Active )
@@ -927,18 +941,21 @@ void UIManager::DrawMenu( sf::RenderWindow& window, const sf::Vector2f& uiOffset
     if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_menuCreditsButton.GetState() == Active )
     {
         LaunchSFXUIFwd();
-        m_menuCreditsButton.visible = false;
+        m_menuCreditsPop.visible = true;
         m_menuHowToButton.SetState(Disabled);
         m_menuPlayButton.SetState(Disabled);
+        m_menuCreditsButton.SetState(Disabled);
         m_menuQuitButton.SetState(Disabled);
-        m_menuCreditsPop.visible = true;
         m_uiInputTimer.restart();
     }
     if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_menuCreditsPop.GetCallBack() == 1 )
     {
         LaunchSFXUIBack();
         m_menuCreditsPop.visible = false;
-        m_menuCreditsButton.visible = true;
+        m_menuHowToButton.SetState(Normal);
+        m_menuPlayButton.SetState(Normal);
+        m_menuCreditsButton.SetState(Normal);
+        m_menuQuitButton.SetState(Normal);
         m_uiInputTimer.restart();
     }
     if ( m_uiInputTimer.getElapsedTime().asSeconds() > m_UI_INPUT_TIMER_MIN && m_menuQuitButton.GetState() == Active )

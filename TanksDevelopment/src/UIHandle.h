@@ -282,6 +282,7 @@ private:
 
     sf::Clock m_uiStateTimer;
     const float m_UI_STATE_TIMER_INTERVAL = 0.618f;
+    bool m_stateDisplay = false;
 
     UIState m_uiState = Splash; // temp
     TutorialStage m_tutStage = Welcome;
@@ -351,6 +352,8 @@ public:
 
     const UIManager::UIState& GetUIState();
     void SetUIState( const UIManager::UIState& state );
+    const bool& GetStateDisplay();
+    void SetStateDisplay( const bool& display );
     int GetInputCallBack();
 
     void ResetSplash();

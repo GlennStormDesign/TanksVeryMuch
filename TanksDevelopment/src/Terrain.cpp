@@ -44,6 +44,11 @@ void TerrainSubstance::AddLayer( const sf::Texture& tex )
     m_layers.push_back( t );
 }
 
+void TerrainSubstance::ClearLayers()
+{
+    m_layers.clear();
+}
+
 // TerrainManager implementation
 
 void TerrainManager::Init()

@@ -145,6 +145,7 @@ void TankScene::UnloadScene()
     stats.isSceneActive = false; // force inactive if quit early
     // handle stats (recording, etc)
     // cleanup scene elements
+    m_terrain.ClearLayers();
     for ( int i=0; i<GetTotalTankCount(); i++ )
     {
         GetTank(i).SetActiveState(false);
@@ -153,6 +154,7 @@ void TankScene::UnloadScene()
     m_tankPool.clear();
     for ( int o=0; o<m_objectPool.size(); o++ )
     {
+        m_objectPool[o]->ClearObjectVectors();
         delete m_objectPool[o]; // new from any SceneObject subclass clone() called during AddObject()
     }
     m_objectPool.clear();

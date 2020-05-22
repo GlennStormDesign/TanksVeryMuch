@@ -31,6 +31,7 @@ public:
     sf::Color GetDustColor() { return m_dustColor; }
     void SetDustColor( const sf::Color& color ) { m_dustColor = color; }
     TerrainLayer GetLayer( const unsigned int& layerIndex ) { return m_layers[layerIndex]; }
+    void ClearLayers();
 protected:
     void AddLayer( const sf::Texture& tex );
 };

@@ -137,6 +137,13 @@ void SceneObject::DestroyObject()
     // switch image tex, launch vfx
 }
 
+void SceneObject::ClearObjectVectors()
+{
+    m_imageSequence.clear();
+    m_damagedImage.clear();
+    m_destroyVFX.clear();
+}
+
 // SceneDecoration implementation (subclass of SceneObject)
 
 // AnimatedDecoration implementation (subclass of SceneDecoration)

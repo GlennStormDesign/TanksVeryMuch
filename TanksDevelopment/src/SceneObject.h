@@ -126,6 +126,8 @@ public:
     void DestroyObject();
 
     void SceneObjectUpdate( const float& timeDelta );
+
+    void ClearObjectVectors();
 protected:
 private:
 };

@@ -71,7 +71,7 @@ protected:
     unsigned int m_playerIndex = 0;
 public:
     TankScene() { }
-    virtual ~TankScene() { } // remove all in tank pool and shot pool
+    virtual ~TankScene() { }
 
     virtual void LevelInit() { } // level configuration in subclasses
 
@@ -142,8 +142,11 @@ public:
     {
         m_type = Sandbox;
         m_tankPool.reserve(1);
+        Tank tempTank = Tank( LocalPlayer, 512.f, 512.f, 0.f, 1.f );
+        tempTank.controller.SetInputType( NoLocalInput );
+        AddTank( tempTank, DEF_TANK_COLOR );
         m_terrain = SubstanceSoil();
-        SetTerrainViewOffset( sf::Vector2f(0.f,0.f) );
+        SetTerrainViewOffset( sf::Vector2f(-512.f,-512.f) );
         stats.maxPlayers = 0;
     }
 

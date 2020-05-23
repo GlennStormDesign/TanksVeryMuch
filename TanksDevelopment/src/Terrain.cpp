@@ -98,10 +98,10 @@ void TerrainManager::DrawTerrain( sf::RenderWindow& window, const sf::Vector2f& 
     }
 }
 
-TerrainSubstance TerrainManager::GetTerrain() { return m_substance; }
+const TerrainSubstance& TerrainManager::GetTerrain() { return m_substance; }
 void TerrainManager::SetTerrain( const TerrainSubstance& terrain ) { m_substance = terrain; ComposeTerrain(); }
 
-const sf::Uint8 TerrainManager::GetNoiseInt( const int& x, const int& y )
+const sf::Uint8& TerrainManager::GetNoiseInt( const int& x, const int& y )
 {
     return ( m_noiseMap[( ( ( y % 32 ) * 32 ) + ( x % 32 ) )] );
 }
@@ -127,6 +127,8 @@ void TerrainManager::ComposeTerrain()
     layerSprite.setTexture(terrainLayer);
     // draw base layer
     m_renderTexture.draw(layerSprite);
+    // cleanup texture pointer
+    delete layerSprite.getTexture();
     // compose terrain layers by re-using texture and sprite as 32x32 non-repeated tiles
     layerSprite.setTexture(terrainLayer);
     layerSprite.setTextureRect(sf::IntRect(0,0,32,32));
@@ -184,6 +186,8 @@ void TerrainManager::ComposeTerrain()
                 }
             }
         }
+        // cleanup texture pointer
+        delete layerSprite.getTexture();
     }
     // finalize terrain sprite
     m_renderTexture.display();

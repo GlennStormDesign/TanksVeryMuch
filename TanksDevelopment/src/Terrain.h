@@ -26,11 +26,11 @@ public:
 
     void SubstanceInit();
 
-    int GetMaxLayers() { return m_maxLayers; }
+    const int& GetMaxLayers() { return m_maxLayers; }
     void SetMaxLayers( const unsigned int& maxLayers ) { m_maxLayers = maxLayers; }
-    sf::Color GetDustColor() { return m_dustColor; }
+    const sf::Color& GetDustColor() { return m_dustColor; }
     void SetDustColor( const sf::Color& color ) { m_dustColor = color; }
-    TerrainLayer GetLayer( const unsigned int& layerIndex ) { return m_layers[layerIndex]; }
+    const TerrainLayer& GetLayer( const unsigned int& layerIndex ) { return m_layers[layerIndex]; }
     void ClearLayers();
 protected:
     void AddLayer( const sf::Texture& tex );
@@ -59,10 +59,10 @@ public:
 
     void DrawTerrain( sf::RenderWindow& window, const sf::Vector2f& viewPos );
 
-    TerrainSubstance GetTerrain();
+    const TerrainSubstance& GetTerrain();
     void SetTerrain( const TerrainSubstance& terrain );
 private:
-    const sf::Uint8 GetNoiseInt( const int& x, const int& y );
+    const sf::Uint8& GetNoiseInt( const int& x, const int& y );
     const float GetNoiseFloat( const int& x, const int& y );
     const float GetNoiseSmoothed( const float& baseVal, const int& x, const int& y );
     void ComposeTerrain();

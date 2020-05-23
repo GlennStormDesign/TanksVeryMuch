@@ -267,6 +267,8 @@ void ParticleEmitter::DrawParticles( sf::RenderWindow& window )
 
 void ParticleEmitter::ClearParticleVector()
 {
+    for ( int p=0; p<m_particles.size(); p++ )
+        delete m_particles[p].GetSprite().getTexture();
     m_particles.clear();
 }
 

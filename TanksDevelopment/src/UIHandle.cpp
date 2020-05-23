@@ -26,7 +26,7 @@ extern void SetTutorialPauseTime( const float& time )
 {
     uiMgr.SetTutorialPauseTime(time);
 }
-extern UIManager::TutorialStage& GetTutorialStage()
+extern const UIManager::TutorialStage& GetTutorialStage()
 {
     return uiMgr.GetTutorialStage();
 }
@@ -816,7 +816,7 @@ void UIManager::SetTutorialPauseTime( const float& time )
 {
     m_tutorialPauseTime = time;
 }
-UIManager::TutorialStage& UIManager::GetTutorialStage()
+const UIManager::TutorialStage& UIManager::GetTutorialStage()
 {
     return m_tutStage;
 }

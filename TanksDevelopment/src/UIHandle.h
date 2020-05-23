@@ -361,7 +361,7 @@ public:
     void ResetHUD();
 
     void SetTutorialPauseTime( const float& time );
-    TutorialStage& GetTutorialStage();
+    const TutorialStage& GetTutorialStage();
     void SetTutorialStage( const TutorialStage& stage );
 
     void UpdateUIMgr( const float& timeDelta );
@@ -381,5 +381,5 @@ extern void UIInit( const sf::Vector2u& winSize );
 extern void UpdateUI( const float& timeDelta );
 extern void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset );
 extern void SetTutorialPauseTime( const float& time );
-extern UIManager::TutorialStage& GetTutorialStage();
+extern const UIManager::TutorialStage& GetTutorialStage();
 extern void SetTutorialStage( const UIManager::TutorialStage& stage );

@@ -26,7 +26,7 @@ private:
     sf::Sprite m_sprite;
 public:
     Entity() { }
-    ~Entity() { delete m_sprite.getTexture(); }
+    ~Entity() { }
 
     bool& GetVisible();
     sf::Color& GetColor();

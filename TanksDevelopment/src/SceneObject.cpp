@@ -11,7 +11,7 @@ void DisplayObject::SetTexture( const sf::Texture& texture )
     m_sprite.setScale( globalScale, globalScale );
     m_sprite.setOrigin( sf::Vector2f(16.f, 16.f) );
 }
-sf::Sprite& DisplayObject::GetSprite()
+const sf::Sprite& DisplayObject::GetSprite()
 {
     return m_sprite;
 }

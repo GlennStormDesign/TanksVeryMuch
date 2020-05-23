@@ -145,6 +145,8 @@ void TankScene::UnloadScene()
     stats.isSceneActive = false; // force inactive if quit early
     // handle stats (recording, etc)
     // cleanup scene elements
+    for ( int i=0; i<m_terrain.GetMaxLayers(); i++ )
+        delete m_terrain.GetLayer(i).image.getPixelsPtr(); // (shhh. sf::Image contains a hidden pointer)
     m_terrain.ClearLayers();
     for ( int i=0; i<GetTotalTankCount(); i++ )
     {

@@ -150,6 +150,7 @@ void TankScene::UnloadScene()
     {
         GetTank(i).SetActiveState(false);
         GetTank(i).KillSFXLoops();
+        GetTank(i).ClearAllVFXVectors();
     }
     m_tankPool.clear();
     for ( int o=0; o<m_objectPool.size(); o++ )

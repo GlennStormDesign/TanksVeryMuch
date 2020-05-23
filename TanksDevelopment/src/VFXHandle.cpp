@@ -265,6 +265,11 @@ void ParticleEmitter::DrawParticles( sf::RenderWindow& window )
     }
 }
 
+void ParticleEmitter::ClearParticleVector()
+{
+    m_particles.clear();
+}
+
 void ParticleEmitter::EmitOne( const int& index )
 {
     m_particles[index].x = emitX + RangeFloat( m_particleStartPosition.baseValue, m_particleStartPosition.maxValue );

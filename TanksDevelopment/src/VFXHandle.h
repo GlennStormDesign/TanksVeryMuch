@@ -111,6 +111,8 @@ public:
     void UpdateEmitter( const float& timeDelta );
     void UpdateEmitter( const float& timeDelta, const sf::Vector2f& parentPos, const float& parentRot, const sf::Vector2f& offset );
     void DrawParticles( sf::RenderWindow& window );
+
+    void ClearParticleVector();
 private:
     void EmitOne( const int& index );
 };

@@ -252,6 +252,11 @@ void TankShot::DrawShotVFX( sf::RenderWindow& window )
     if ( m_impactVFX.active )
         m_impactVFX.DrawParticles( window );
 }
+void TankShot::ClearShotVectors()
+{
+    m_impactVFX.ClearParticleVector();
+    m_sparksVFX.ClearParticleVector();
+}
 
 // Tank implementation
 
@@ -600,4 +605,20 @@ void Tank::DrawKillOverVFX( sf::RenderWindow& window )
     m_killFire.DrawParticles( window );
     m_killSparks.DrawParticles( window );
     m_killFlash.DrawParticles( window );
+}
+
+void Tank::ClearAllVFXVectors()
+{
+    for ( int i=0; i<4; i++ )
+    {
+        shots[i].ClearShotVectors();
+    }
+    m_dust.ClearParticleVector();
+    m_exhaust.ClearParticleVector();
+    m_killStain.ClearParticleVector();
+    m_killRing.ClearParticleVector();
+    m_killSparks.ClearParticleVector();
+    m_killFire.ClearParticleVector();
+    m_killDebris.ClearParticleVector();
+    m_killFlash.ClearParticleVector();
 }

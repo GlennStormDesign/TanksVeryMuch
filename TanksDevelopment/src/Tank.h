@@ -113,6 +113,8 @@ public:
     void Detonate();
     void DrawShot( sf::RenderWindow& window );
     void DrawShotVFX( sf::RenderWindow& window );
+
+    void ClearShotVectors();
 private:
 };
 
@@ -248,4 +250,6 @@ public:
     void DrawTankExhaustVFX( sf::RenderWindow& window );
     void DrawKillUnderVFX( sf::RenderWindow& window );
     void DrawKillOverVFX( sf::RenderWindow& window );
+
+    void ClearAllVFXVectors();
 };

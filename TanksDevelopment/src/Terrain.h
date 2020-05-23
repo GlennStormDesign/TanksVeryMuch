@@ -8,7 +8,7 @@
 const sf::Color DEFAULT_DUST_COLOR = sf::Color( 160, 150, 140, 200 );
 
 struct TerrainLayer {
-    sf::Image       image; // instead of storying sf::Texture, using sf::Image to preserve alpha
+    sf::Image       image; // instead of storing sf::Texture, using sf::Image to preserve alpha
     sf::Vector2u    noiseOffset = sf::Vector2u( 0, 0 );
 };
 

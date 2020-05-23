@@ -734,7 +734,7 @@ void UIManager::HUDInit()
     m_tutMove = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 200, 512, 400 ), sf::Color(148,240,100,255), "Movement","Move your tank with arrow keys\nUp and down is forward and back\nLeft and right turns your tank\nMove and turn now","OK");
     m_tutTurret = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 200, 512, 400 ), sf::Color(148,240,100,255), "Turret", "Your turret also turns\nUse the bracket keys to aim\nUse the backslash to fire\nAim and fire now", "OK" );
     m_tutCombat = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 200, 512, 400 ), sf::Color(148,240,100,255), "Combat","Now it is time to fight\nThere is a red tank somewhere\nto the left\nSeek and Destroy","OK" );
-    m_tutQuest = UIAlert(sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 128, 512, 256 ), sf::Color(148,240,100,255), "Quest", "Find the green ring marker\nIt is somewhere close by\nFind it and enter it to win", "OK");
+    m_tutQuest = UIAlert( sf::IntRect( m_windowSize.x/2 - 256, m_windowSize.y/2 - 128, 512, 256 ), sf::Color(148,240,100,255), "Quest", "Find the green ring marker\nIt is somewhere close by\nFind it and enter it to win", "OK");
 
     // win/lose banners
     MainTitle wlf;

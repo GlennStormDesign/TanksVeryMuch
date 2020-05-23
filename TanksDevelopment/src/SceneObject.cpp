@@ -139,8 +139,14 @@ void SceneObject::DestroyObject()
 
 void SceneObject::ClearObjectVectors()
 {
+    for ( int i=0; i<m_imageSequence.size(); i++ )
+        delete m_imageSequence[i].getPixelsPtr();
     m_imageSequence.clear();
+    for ( int i=0; i<m_damagedImage.size(); i++ )
+        delete m_damagedImage[i].getPixelsPtr();
     m_damagedImage.clear();
+    for ( int i=0; i<m_destroyVFX.size(); i++ )
+        m_destroyVFX[i].ClearParticleVector();
     m_destroyVFX.clear();
 }
 

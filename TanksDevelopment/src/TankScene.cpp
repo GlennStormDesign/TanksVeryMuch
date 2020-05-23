@@ -157,7 +157,7 @@ void TankScene::UnloadScene()
     m_tankPool.clear();
     for ( int o=0; o<m_objectPool.size(); o++ )
     {
-        m_objectPool[o]->ClearObjectVectors();
+        m_objectPool[o]->ClearObjectVectors(); // includes deleting image and particle emitter elements
         delete m_objectPool[o]; // new from any SceneObject subclass clone() called during AddObject()
     }
     m_objectPool.clear();

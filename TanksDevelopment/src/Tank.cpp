@@ -553,7 +553,7 @@ float& Tank::GetArmor()
 void Tank::SetArmor( const float& armor )
 {
     m_armor = armor;
-    m_exhaust.VFXTankExhauseDamage( 1.f - ( armor / 100.f ) );
+    m_exhaust.VFXTankExhaustDamage( 1.f - ( armor / 100.f ) );
 }
 bool Tank::DamageTank( const float& damage )
 {

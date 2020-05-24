@@ -119,7 +119,7 @@ private:
 
 class VFXShotImpact : public ParticleEmitter {
 public:
-    VFXShotImpact( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, TexParticleDust() ); EmitInit(); }
+    VFXShotImpact( const float& x, const float& y, const float& r ) { EmitInit(); }
     void VFXInit() override
     {
         active = false;
@@ -156,7 +156,7 @@ public:
 
 class VFXShotSparks : public ParticleEmitter {
 public:
-    VFXShotSparks( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, TexParticleSparks() ); EmitInit(); }
+    VFXShotSparks( const float& x, const float& y, const float& r ) { EmitInit(); }
     void VFXInit() override
     {
         active = false;
@@ -193,7 +193,7 @@ public:
 
 class VFXKillStain : public ParticleEmitter {
 public:
-    VFXKillStain( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, TexMaskRadial() ); EmitInit(); }
+    VFXKillStain( const float& x, const float& y, const float& r ) { EmitInit(); }
     void VFXInit() override
     {
         active = false;
@@ -230,7 +230,7 @@ public:
 
 class VFXKillRing : public ParticleEmitter {
 public:
-    VFXKillRing( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, TexMaskRing() ); EmitInit(); }
+    VFXKillRing( const float& x, const float& y, const float& r ) { EmitInit(); }
     void VFXInit() override
     {
         active = false;
@@ -267,7 +267,7 @@ public:
 
 class VFXKillFlash : public ParticleEmitter {
 public:
-    VFXKillFlash( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, TexMaskRadial() ); EmitInit(); }
+    VFXKillFlash( const float& x, const float& y, const float& r ) { EmitInit(); }
     void VFXInit() override
     {
         active = false;
@@ -304,7 +304,7 @@ public:
 
 class VFXKillSparks : public ParticleEmitter {
 public:
-    VFXKillSparks( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, TexParticleSparks() ); EmitInit(); }
+    VFXKillSparks( const float& x, const float& y, const float& r ) { EmitInit(); }
     void VFXInit() override
     {
         active = false;
@@ -341,7 +341,7 @@ public:
 
 class VFXKillFire : public ParticleEmitter {
 public:
-    VFXKillFire( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, TexParticleDust() ); EmitInit(); }
+    VFXKillFire( const float& x, const float& y, const float& r ) { EmitInit(); }
     void VFXInit() override
     {
         active = false;
@@ -379,7 +379,7 @@ public:
 class VFXKillDebris : public ParticleEmitter {
     sf::Color m_tankColor;
 public:
-    VFXKillDebris( const float& x, const float& y, const float& r, const sf::Color& tankColor ) { m_tankColor = tankColor; ParticleEmitter( x, y, r, TexParticleDebris() ); EmitInit(); }
+    VFXKillDebris( const float& x, const float& y, const float& r, const sf::Color& tankColor ) { SetDebrisColor( tankColor ); EmitInit(); }
     void SetDebrisColor( const sf::Color& tankColor )
     {
         m_tankColor = tankColor;
@@ -422,7 +422,7 @@ public:
 
 class VFXTankDust : public ParticleEmitter {
 public:
-    VFXTankDust( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, TexParticleDust() ); EmitInit(); }
+    VFXTankDust( const float& x, const float& y, const float& r ) { EmitInit(); }
     void SetVFXDustColor( const sf::Color& color ) { m_particleLifeGradient.baseValue = color; m_particleLifeGradient.maxValue *= color; }
     void VFXTankDustEmit( const bool& emit )
     {
@@ -473,13 +473,13 @@ class VFXTankExhaust : public ParticleEmitter {
     sf::Color m_startExhaustColor = sf::Color(80,80,100,128);
     sf::Color m_damagedExhaustColor = sf::Color(0,0,0,255);
 public:
-    VFXTankExhaust( const float& x, const float& y, const float& r ) { ParticleEmitter( x, y, r, TexParticleDust() ); EmitInit(); }
+    VFXTankExhaust( const float& x, const float& y, const float& r ) { EmitInit(); }
     void VFXTankExhaustEmit( const bool& emit )
     {
         emitting = emit;
         active = true;
     }
-    void VFXTankExhauseDamage( const float& damage )
+    void VFXTankExhaustDamage( const float& damage )
     {
         m_emitRate = EvalFloat( m_startExhaustRate, m_damagedExhaustRate, damage );
         m_particleLife.baseValue = EvalFloat( m_startExhaustLife, m_damagedExhaustLife, damage );

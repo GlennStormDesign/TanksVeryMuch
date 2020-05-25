@@ -139,18 +139,18 @@ void SceneObject::DestroyObject()
 
 void SceneObject::ClearObjectVectors()
 {
-    for ( int i=0; i<m_imageSequence.size(); i++ )
-        delete m_imageSequence[i].getPixelsPtr();
+    //for ( int i=0; i<m_imageSequence.size(); i++ )
+    //    delete m_imageSequence[i].getPixelsPtr();
     m_imageSequence.clear();
     std::vector<sf::Image> emptIS;
     m_imageSequence.swap(emptIS); // deallocate
-    for ( int i=0; i<m_damagedImage.size(); i++ )
-        delete m_damagedImage[i].getPixelsPtr();
+    //for ( int i=0; i<m_damagedImage.size(); i++ )
+    //    delete m_damagedImage[i].getPixelsPtr();
     m_damagedImage.clear();
     std::vector<sf::Image> emptDI;
     m_damagedImage.swap(emptDI);
-    for ( int i=0; i<m_destroyVFX.size(); i++ )
-        m_destroyVFX[i].ClearParticleVector();
+    //for ( int i=0; i<m_destroyVFX.size(); i++ )
+    //    m_destroyVFX[i].ClearParticleVector();
     m_destroyVFX.clear();
     std::vector<ParticleEmitter> emptDV;
     m_destroyVFX.swap(emptDV);

@@ -159,7 +159,7 @@ void TankScene::UnloadScene()
     m_tankPool.swap(emptTP); // deallocate
     for ( int o=0; o<m_objectPool.size(); o++ )
     {
-        //m_objectPool[o]->ClearObjectVectors(); // includes deleting sf::Image and particle emitter elements
+        m_objectPool[o]->ClearObjectVectors(); // includes deleting sf::Image and particle emitter elements
         delete m_objectPool[o]; // new from any SceneObject subclass clone() called during AddObject()
     }
     m_objectPool.clear();

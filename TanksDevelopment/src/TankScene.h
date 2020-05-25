@@ -84,7 +84,7 @@ public:
     void SetSceneType( const SceneType& type );
 
     void AddTank( Tank t );
-    void AddTank( Tank t, sf::Color c );
+    void AddTank( Tank& t, sf::Color c );
     void RemoveTank( Tank& t );
     Tank& GetTank( const unsigned int& index );
     Tank& GetLocalPlayerTank();

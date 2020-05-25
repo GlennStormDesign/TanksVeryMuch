@@ -174,7 +174,7 @@ void ParticleEmitter::LaunchVFX( const float& x, const float& y, const float& r 
 void ParticleEmitter::UpdateEmitter( const float& timeDelta )
 {
     if ( !active )
-        return; // REVIEW: cleanup if not active?
+        return;
     if ( playing )
     {
         if ( emitting )

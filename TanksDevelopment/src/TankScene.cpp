@@ -147,7 +147,7 @@ void TankScene::UnloadScene()
     // cleanup scene elements
     //for ( int i=0; i<m_terrain.GetMaxLayers(); i++ )
     //    delete m_terrain.GetLayer(i).image.getPixelsPtr(); // (shhh. sf::Image contains a hidden pointer)
-    //m_terrain.ClearLayers();
+    m_terrain.ClearLayers();
     for ( int i=0; i<GetTotalTankCount(); i++ )
     {
         GetTank(i).SetActiveState(false);
@@ -162,12 +162,12 @@ void TankScene::UnloadScene()
         //m_objectPool[o]->ClearObjectVectors(); // includes deleting sf::Image and particle emitter elements
         delete m_objectPool[o]; // new from any SceneObject subclass clone() called during AddObject()
     }
-    //m_objectPool.clear();
-    //std::vector<SceneObject*> emptOP;
-    //m_objectPool.swap(emptOP);
-    //m_playerPool.clear();
-    //std::vector<PlayerStats> emptPP;
-    //m_playerPool.swap(emptPP);
+    m_objectPool.clear();
+    std::vector<SceneObject*> emptOP;
+    m_objectPool.swap(emptOP);
+    m_playerPool.clear();
+    std::vector<PlayerStats> emptPP;
+    m_playerPool.swap(emptPP);
     // delete scene
     delete currentScene; // new from LoadScene() or NewScene()
 }
@@ -206,7 +206,7 @@ void TankScene::AddTank( Tank t )
     }
     m_tankPool.push_back(t); // TODO: c++11 enhancement using emplace_back with complex constructor
 }
-void TankScene::AddTank( Tank t, sf::Color c )
+void TankScene::AddTank( Tank& t, sf::Color c )
 {
     t.SetTankColor( c );
     AddTank( t );

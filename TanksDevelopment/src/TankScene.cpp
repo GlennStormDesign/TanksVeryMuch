@@ -34,11 +34,11 @@ extern void SetSceneType( const SceneType& type )
 {
     currentScene->SetSceneType( type );
 }
-extern void AddTank( Tank t )
+extern void AddTank( Tank& t )
 {
     currentScene->AddTank( t );
 }
-extern void AddTank( Tank t, sf::Color c )
+extern void AddTank( Tank& t, sf::Color c )
 {
     currentScene->AddTank( t, c );
 }
@@ -66,7 +66,7 @@ extern int GetTotalTankCount()
 {
     return currentScene->GetTotalTankCount();
 }
-extern void AddObject( SceneObject o )
+extern void AddObject( SceneObject& o )
 {
     currentScene->AddObject( o );
 }
@@ -84,11 +84,11 @@ extern const SceneObject& GetObject( const unsigned int& index )
 {
     return currentScene->GetObject( index );
 }
-extern void AddPlayer( PlayerStats p )
+extern void AddPlayer( PlayerStats& p )
 {
     currentScene->AddPlayer( p );
 }
-extern void RemovePlayer( const PlayerStats p )
+extern void RemovePlayer( const PlayerStats& p )
 {
     currentScene->RemovePlayer( p );
 }
@@ -297,7 +297,7 @@ void TankScene::AddPlayer( PlayerStats p )
     m_playerPool.push_back(p);
     stats.currentPlayers++;
 }
-void TankScene::RemovePlayer( const PlayerStats p )
+void TankScene::RemovePlayer( const PlayerStats& p )
 {
     m_playerPool.erase( std::remove( m_playerPool.begin(), m_playerPool.end(), p ) );
     stats.currentPlayers--;

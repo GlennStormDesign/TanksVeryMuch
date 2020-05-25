@@ -152,11 +152,11 @@ void TankScene::UnloadScene()
     {
         GetTank(i).SetActiveState(false);
         GetTank(i).KillSFXLoops();
-        //GetTank(i).ClearAllVFXVectors();
+        GetTank(i).ClearAllVFXVectors();
     }
-    //m_tankPool.clear();
-    //std::vector<Tank> emptTP;
-    //m_tankPool.swap(emptTP); // deallocate
+    m_tankPool.clear();
+    std::vector<Tank> emptTP;
+    m_tankPool.swap(emptTP); // deallocate
     for ( int o=0; o<m_objectPool.size(); o++ )
     {
         //m_objectPool[o]->ClearObjectVectors(); // includes deleting sf::Image and particle emitter elements

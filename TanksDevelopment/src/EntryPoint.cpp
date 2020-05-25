@@ -145,7 +145,10 @@ int main()
         if ( debugInput.getElapsedTime().asSeconds() > 1.f && sf::Keyboard::isKeyPressed(sf::Keyboard::Num0) )
         {
             // TEST: try isolated elements and monitor
-            LoadScene( new TutorialGameScene() );
+            //LoadScene( new TutorialGameScene() );
+            Tank newTank( Drone, (rand() * 600.f), (rand() * 100.f), 0.f, 1.f );
+            newTank.SetActiveState(true);
+            AddTank(newTank);
             debugInput.restart();
         }
 

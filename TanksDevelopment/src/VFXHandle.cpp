@@ -286,8 +286,8 @@ void ParticleEmitter::KillAllParticles()
 }
 void ParticleEmitter::ClearParticleVector()
 {
-    for ( int p=0; p<m_particles.size(); p++ )
-        delete m_particles[p].GetSprite().getTexture();
+    //for ( int p=0; p<m_particles.size(); p++ )
+    //    delete m_particles[p].GetSprite().getTexture();
     m_particles.clear();
     std::vector<Entity> emptP;
     m_particles.swap(emptP); // dealloate

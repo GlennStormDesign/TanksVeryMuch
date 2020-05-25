@@ -142,7 +142,6 @@ void TouchSFXLoop( const int& index, const float& volume, const float& pitch, co
         fxl[index].setRelativeToListener(true);
         fxl[index].setMinDistance(1.f);
         fxl[index].setAttenuation(1.f);
-        fxl[index].resetBuffer();
     }
 }
 
@@ -153,8 +152,8 @@ void LaunchSFXSting( const sf::SoundBuffer& sb )
     for ( int i=0; i<MAX_SFX_STINGS; i++ ) {
         if ( fxs[i].getStatus() == sf::Sound::Stopped )
         {
-            fxs[i].setRelativeToListener(true);
             fxs[i].setBuffer(sb);
+            fxs[i].setRelativeToListener(true);
             fxs[i].play();
             break;
         }
@@ -167,11 +166,11 @@ void LaunchSFXSting( const sf::SoundBuffer& sb, const sf::Vector2f& sPos )
     for ( int i=0; i<MAX_SFX_STINGS; i++ ) {
         if ( fxs[i].getStatus() == sf::Sound::Stopped )
         {
+            fxs[i].setBuffer(sb);
             fxs[i].setRelativeToListener(false);
             fxs[i].setMinDistance(38.1f);
             fxs[i].setAttenuation(0.1f);
             fxs[i].setPosition(sPos.x,sPos.y,0.f);
-            fxs[i].setBuffer(sb);
             fxs[i].play();
             break;
         }

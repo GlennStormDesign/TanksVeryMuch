@@ -61,6 +61,8 @@ int main()
 
     // ui
     UIInit( rWin.getSize() );
+    //temp
+    sf::Clock debugInput;
 
     // debug feedback display
     DebugInit( DetailFont() );
@@ -138,6 +140,14 @@ int main()
         else
             SetDebugText("");
 #endif // _DEBUG
+
+        // debug mem
+        if ( debugInput.getElapsedTime().asSeconds() > 1.f && sf::Keyboard::isKeyPressed(sf::Keyboard::Num0) )
+        {
+            // TEST: try isolated elements and monitor
+            //LoadScene( new TutorialGameScene() );
+            debugInput.restart();
+        }
 
         // debug draw
         DrawDebug( rWin );

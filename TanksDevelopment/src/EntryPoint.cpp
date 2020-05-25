@@ -145,7 +145,7 @@ int main()
         if ( debugInput.getElapsedTime().asSeconds() > 1.f && sf::Keyboard::isKeyPressed(sf::Keyboard::Num0) )
         {
             // TEST: try isolated elements and monitor
-            //LoadScene( new TutorialGameScene() );
+            LoadScene( new TutorialGameScene() );
             debugInput.restart();
         }
 

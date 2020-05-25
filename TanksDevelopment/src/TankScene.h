@@ -109,7 +109,7 @@ private:
 
 extern void NewScene( TankScene* level );
 extern void UnloadScene();
-extern void LoadScene( TankScene* level );
+extern void LoadScene( TankScene* level ); // does this copy?
 extern bool GetSceneActive();
 extern void SetSceneActive( const bool& active );
 extern SceneType& GetSceneType();

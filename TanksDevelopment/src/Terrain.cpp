@@ -49,6 +49,8 @@ void TerrainSubstance::AddLayer( const sf::Texture& tex )
 void TerrainSubstance::ClearLayers()
 {
     m_layers.clear();
+    std::vector<TerrainLayer> empt;
+    m_layers.swap(empt); // deallocate
 }
 
 // TerrainManager implementation

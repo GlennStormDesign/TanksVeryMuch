@@ -46,8 +46,8 @@ public:
     sf::Sprite& GetSprite();
 
     void UpdateEntity( const float& timeDelta );
-private:
     void EntityDeath();
+private:
 };
 
 struct ParticleValueFloat {
@@ -107,11 +107,14 @@ public:
 
     void EmitInit();
 
+    void ResetEmitter(); // REVIEW: used where?
+
     void LaunchVFX( const float& x, const float& y, const float& r );
     void UpdateEmitter( const float& timeDelta );
     void UpdateEmitter( const float& timeDelta, const sf::Vector2f& parentPos, const float& parentRot, const sf::Vector2f& offset );
     void DrawParticles( sf::RenderWindow& window );
 
+    void KillAllParticles();
     void ClearParticleVector();
 private:
     void EmitOne( const int& index );

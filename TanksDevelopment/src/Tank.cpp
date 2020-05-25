@@ -254,7 +254,9 @@ void TankShot::DrawShotVFX( sf::RenderWindow& window )
 }
 void TankShot::ClearShotVectors()
 {
+    m_impactVFX.KillAllParticles();
     m_impactVFX.ClearParticleVector();
+    m_sparksVFX.KillAllParticles();
     m_sparksVFX.ClearParticleVector();
 }
 
@@ -613,12 +615,20 @@ void Tank::ClearAllVFXVectors()
     {
         shots[i].ClearShotVectors();
     }
+    m_dust.KillAllParticles();
     m_dust.ClearParticleVector();
+    m_exhaust.KillAllParticles();
     m_exhaust.ClearParticleVector();
+    m_killStain.KillAllParticles();
     m_killStain.ClearParticleVector();
+    m_killRing.KillAllParticles();
     m_killRing.ClearParticleVector();
+    m_killSparks.KillAllParticles();
     m_killSparks.ClearParticleVector();
+    m_killFire.KillAllParticles();
     m_killFire.ClearParticleVector();
+    m_killDebris.KillAllParticles();
     m_killDebris.ClearParticleVector();
+    m_killFlash.KillAllParticles();
     m_killFlash.ClearParticleVector();
 }

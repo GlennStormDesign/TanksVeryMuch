@@ -148,6 +148,20 @@ void ParticleEmitter::EmitInit()
     }
 }
 
+void ParticleEmitter::ResetEmitter()
+{
+    for ( int i=0; i<m_maxParticles; i++ )
+    {
+        m_particles[i].SetVisible(false);
+        m_particles[i].x = emitX;
+        m_particles[i].y = emitY;
+        m_particles[i].r = emitR;
+        m_particles[i].SetColor( RangeColor( m_particleStartColor.baseValue, m_particleStartColor.maxValue ) );
+    }
+    m_emitTimer = m_emitTime;
+    m_emitNextTime = ( 1.f / m_emitRate );
+}
+
 void ParticleEmitter::LaunchVFX( const float& x, const float& y, const float& r )
 {
     if ( active )
@@ -265,11 +279,18 @@ void ParticleEmitter::DrawParticles( sf::RenderWindow& window )
     }
 }
 
+void ParticleEmitter::KillAllParticles()
+{
+    for ( int p=0; p<m_particles.size(); p++ )
+        m_particles[p].EntityDeath();
+}
 void ParticleEmitter::ClearParticleVector()
 {
     for ( int p=0; p<m_particles.size(); p++ )
         delete m_particles[p].GetSprite().getTexture();
     m_particles.clear();
+    std::vector<Entity> emptP;
+    m_particles.swap(emptP); // dealloate
 }
 
 void ParticleEmitter::EmitOne( const int& index )

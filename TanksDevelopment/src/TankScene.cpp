@@ -155,13 +155,19 @@ void TankScene::UnloadScene()
         GetTank(i).ClearAllVFXVectors();
     }
     m_tankPool.clear();
+    std::vector<Tank> emptTP;
+    m_tankPool.swap(emptTP); // deallocate
     for ( int o=0; o<m_objectPool.size(); o++ )
     {
         m_objectPool[o]->ClearObjectVectors(); // includes deleting sf::Image and particle emitter elements
         delete m_objectPool[o]; // new from any SceneObject subclass clone() called during AddObject()
     }
     m_objectPool.clear();
+    std::vector<SceneObject*> emptOP;
+    m_objectPool.swap(emptOP);
     m_playerPool.clear();
+    std::vector<PlayerStats> emptPP;
+    m_playerPool.swap(emptPP);
     // delete scene
     delete currentScene; // new from LoadScene() or NewScene()
 }

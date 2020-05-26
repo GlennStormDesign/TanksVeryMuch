@@ -155,7 +155,7 @@ private:
     VFXKillFlash m_killFlash = VFXKillFlash(0.f,0.f,0.f);
 public:
     Tank() { TankInit(); }
-    Tank( TankController control, const float& xPos, const float& yPos, const float& rot, const float& scale )
+    Tank( const TankController& control, const float& xPos, const float& yPos, const float& rot, const float& scale )
     {
         TankInit();
         SetController(control);
@@ -245,7 +245,7 @@ public:
     void SetArmor( const float& armor );
     bool DamageTank( const float& damage );
     void DestroyTank();
-    void ScoreAward( Tank target );
+    void ScoreAward( const Tank& target );
     void DrawTankDustVFX( sf::RenderWindow& window );
     void DrawTankExhaustVFX( sf::RenderWindow& window );
     void DrawKillUnderVFX( sf::RenderWindow& window );

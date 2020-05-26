@@ -15,7 +15,7 @@ const sf::Sprite& DisplayObject::GetSprite()
 {
     return m_sprite;
 }
-void DisplayObject::SetSprite( sf::Sprite sprite )
+void DisplayObject::SetSprite( const sf::Sprite& sprite )
 {
     m_sprite = sprite;
 }

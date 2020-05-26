@@ -583,7 +583,7 @@ void Tank::DestroyTank()
     m_killSparks.LaunchVFX( m_posX, m_posY, m_baseR );
     m_killFlash.LaunchVFX( m_posX, m_posY, m_baseR );
 }
-void Tank::ScoreAward( Tank target )
+void Tank::ScoreAward( const Tank& target )
 {
     // score to player
     controller.controllerScore += 1;

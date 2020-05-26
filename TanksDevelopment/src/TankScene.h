@@ -115,7 +115,7 @@ extern void SetSceneActive( const bool& active );
 extern SceneType& GetSceneType();
 extern void SetSceneType( const SceneType& type );
 extern void AddTank( Tank& t );
-extern void AddTank( Tank& t, sf::Color c );
+extern void AddTank( Tank& t, sf::Color c ); // REVIEW: safe to pass by reference here, but then (copy) pass by value at end?
 extern void RemoveTank( Tank& t );
 extern Tank& GetTank( const unsigned int& index );
 extern Tank& GetLocalPlayerTank();
@@ -144,7 +144,7 @@ public:
         m_tankPool.reserve(1);
         Tank tempTank = Tank( LocalPlayer, 512.f, 512.f, 0.f, 1.f );
         tempTank.controller.SetInputType( NoLocalInput );
-        AddTank( tempTank, DEF_TANK_COLOR );
+        TankScene::AddTank( tempTank, DEF_TANK_COLOR );
         m_terrain = SubstanceSoil();
         SetTerrainViewOffset( sf::Vector2f(-512.f,-512.f) );
         stats.maxPlayers = 0;
@@ -163,13 +163,13 @@ public:
         // tanks
         m_tankPool.reserve(4);
         Tank tempTank = Tank( LocalPlayer, 512.f, 512.f, 0.f, 1.f );
-        AddTank( tempTank, DEF_TANK_COLOR );
+        TankScene::AddTank( tempTank, DEF_TANK_COLOR );
         tempTank = Tank( Drone, 640.f, 320.f, 0.f, 1.f );
-        AddTank( tempTank, sf::Color(128.f, 16.f, 32.f, 255.f) );
+        TankScene::AddTank( tempTank, sf::Color(128.f, 16.f, 32.f, 255.f) );
         tempTank = Tank( Drone, 420.f, 420.f, 180.f, 1.f );
-        AddTank( tempTank, sf::Color(200.f,200.f,32.f,255.f) );
+        TankScene::AddTank( tempTank, sf::Color(200.f,200.f,32.f,255.f) );
         tempTank = Tank( Drone, 420.f, 580.f, 180.f, 1.f );
-        AddTank( tempTank, sf::Color(16.f,32.f,200.f,255.f) );
+        TankScene::AddTank( tempTank, sf::Color(16.f,32.f,200.f,255.f) );
         // terrain
         m_terrain = SubstanceSoil();
         SetTerrainViewOffset( -(GetLocalPlayerTank().GetBaseSprite().getPosition()) );
@@ -221,9 +221,9 @@ public:
         // tanks
         m_tankPool.reserve(2);
         Tank tempTank = Tank( LocalPlayer, 512.f, 512.f, 0.f, 1.f );
-        AddTank( tempTank, DEF_TANK_COLOR );
+        TankScene::AddTank( tempTank, DEF_TANK_COLOR );
         tempTank = Tank( Drone, -200.f, 500.f, 0.f, 1.f );
-        AddTank( tempTank, sf::Color(128.f, 16.f, 32.f, 255.f) );
+        TankScene::AddTank( tempTank, sf::Color(128.f, 16.f, 32.f, 255.f) );
         // terrain
         m_terrain = SubstanceMeadow();
         SetTerrainViewOffset( -(GetLocalPlayerTank().GetBaseSprite().getPosition()) );

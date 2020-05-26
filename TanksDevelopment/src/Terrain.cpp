@@ -42,8 +42,6 @@ void TerrainSubstance::AddLayer( const sf::Texture& tex )
     t.image = tex.copyToImage();
     t.noiseOffset = sf::Vector2u( (rand()%32),(rand()%32) );
     m_layers.push_back( t );
-    // cleanup
-    delete t.image.getPixelsPtr(); // REVIEW: helpful and safe?
 }
 
 void TerrainSubstance::ClearLayers()

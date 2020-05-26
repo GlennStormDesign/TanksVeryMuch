@@ -306,20 +306,20 @@ PlayerStats& TankScene::GetPlayer( const unsigned int& index )
 }
 PlayerStats& TankScene::GetLocalPlayer()
 {
-    PlayerStats returnPlayer;
+    unsigned int foundP = 0;
     for ( unsigned int i=0; i<m_tankPool.size(); i++ )
     {
         if ( m_tankPool[i].controller.GetControllerType() == LocalPlayer )
         {
             unsigned int tid = m_tankPool[i].GetTankID();
-            for ( unsigned int p=0; i<m_playerPool.size(); i++ )
+            for ( unsigned int p=0; p<m_playerPool.size(); p++ )
             {
                 if ( m_playerPool[p].playerTankID == tid )
-                    returnPlayer = m_playerPool[p];
+                    foundP = p;
             }
         }
     }
-    return returnPlayer;
+    return m_playerPool[foundP];
 }
 
 void TankScene::UpdateScene( const float& timeDelta )

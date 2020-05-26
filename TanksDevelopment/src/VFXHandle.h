@@ -71,7 +71,9 @@ public:
     bool active = true;
     bool playing = true;
     bool emitting = true;
-    float emitX, emitY, emitR;
+    float emitX = 0.f;
+    float emitY = 0.f;
+    float emitR = 0.f;
 protected:
     std::vector<Entity> m_particles; // REVIEW: getting away w/o (deep) copy constructor b/c it contains simple members?
     int m_maxParticles = 12;

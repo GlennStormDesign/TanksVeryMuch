@@ -121,7 +121,7 @@ class UIIcon : public UIElement {
 public:
 private:
     sf::Texture m_texture;
-    float m_scaleFactor;
+    float m_scaleFactor = 1.f;
 public:
     UIIcon() { UIInit(); }
     UIIcon( const sf::IntRect& r, const sf::Color& c, const sf::Texture& t, const float& scale )
@@ -217,9 +217,9 @@ class UIProgressBar : public UIElement {
 public:
 private:
     sf::Color m_backgroundColor;
-    float m_progress;
-    bool m_toLeft; // REVIEW: any reason to progress from top or bottom?
-    int m_border;
+    float m_progress = 0.f;
+    bool m_toLeft = false; // REVIEW: any reason to progress from top or bottom?
+    int m_border = 1;
 public:
     UIProgressBar() { UIInit(); }
     UIProgressBar( const sf::IntRect& r, const sf::Color& c, const sf::Color& bgColor, const bool& toLeft, const int& border )

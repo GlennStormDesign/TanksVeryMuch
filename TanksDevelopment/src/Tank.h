@@ -78,7 +78,7 @@ public:
     bool active = true;
     sf::RectangleShape shot;
 private:
-    unsigned int m_launchTank;
+    unsigned int m_launchTank = 0;
     float m_posX, m_posY, m_rot;
     float m_speed, m_power, m_life;
     VFXShotImpact m_impactVFX = VFXShotImpact( 0.f, 0.f, 0.f );

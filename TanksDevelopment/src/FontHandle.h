@@ -39,12 +39,12 @@ class FontHeading {
 public:
 protected:
     sf::Font m_font;
-    int m_fontSize;
+    int m_fontSize = 0;
     sf::Color m_fontColor;
     sf::Color m_shadowColor; // if drop shadow used
-    HeadingAlignment m_fontAlign;
-    float m_charSpace; // pct of char size (horizontal centering adjust)
-    float m_lineSpace; // pct of char size (vertical centering adjust)
+    HeadingAlignment m_fontAlign = Center;
+    float m_charSpace = 0.1f; // pct of char size (horizontal centering adjust)
+    float m_lineSpace = 0.05f; // pct of char size (vertical centering adjust)
 public:
     FontHeading() { HeadingInit(); }
     ~FontHeading() { }

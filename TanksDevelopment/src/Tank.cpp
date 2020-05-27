@@ -280,14 +280,6 @@ void Tank::TankReset()
     m_dust.active = true;
     m_exhaust.active = true;
 }
-bool& Tank::IsTankMoving()
-{
-    return m_tankMoving;
-}
-bool& Tank::IsTurretMoving()
-{
-    return m_turretMoving;
-}
 bool& Tank::GetActiveState()
 {
     return m_active;

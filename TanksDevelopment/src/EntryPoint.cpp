@@ -52,9 +52,8 @@ int main()
     vw.setCenter(512.f, 512.f);
 
     // time
-    float timeDelta = 0.f;
     sf::Clock frameTimer;
-    frameTimer.restart();
+    float timeDelta = frameTimer.restart().asSeconds() * globalTime;
 
     // scene
     NewScene( new BlankScene() ); // sandbox used during splash and menu

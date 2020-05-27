@@ -70,7 +70,7 @@ private:
 
 class SubstanceSoil : public TerrainSubstance {
 public:
-    SubstanceSoil() { TerrainSubstance(); SubstanceInit(); }
+    SubstanceSoil() { SubstanceInit(); }
     void TerrainInit() override
     {
         SetMaxLayers( 6 );
@@ -87,7 +87,7 @@ public:
 
 class SubstanceSnow : public TerrainSubstance {
 public:
-    SubstanceSnow() { TerrainSubstance(); SubstanceInit(); }
+    SubstanceSnow() { SubstanceInit(); }
     void TerrainInit() override
     {
         SetMaxLayers( 4 );
@@ -102,7 +102,7 @@ public:
 
 class SubstanceSand : public TerrainSubstance {
 public:
-    SubstanceSand() { TerrainSubstance(); SubstanceInit(); }
+    SubstanceSand() { SubstanceInit(); }
     void TerrainInit() override
     {
         SetMaxLayers( 4 );
@@ -117,7 +117,7 @@ public:
 
 class SubstanceMeadow : public TerrainSubstance {
 public:
-    SubstanceMeadow() { TerrainSubstance(); SubstanceInit(); }
+    SubstanceMeadow() { SubstanceInit(); }
     void TerrainInit() override
     {
         SetMaxLayers( 4 );

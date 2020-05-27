@@ -424,7 +424,6 @@ void UIBox::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     sf::IntRect boxItemR = m_uiRect;
     boxItemR.top = m_uiRect.top + 8;
     boxItemR.height *= 0.381f;
-    int itemSpacing = boxItemR.height;
     PanelTitle ft;
     UILabel bt( boxItemR, sf::Color::White, ft, true, m_boxTitle );
     PanelLabel fd;
@@ -473,7 +472,6 @@ void UIAlert::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     sf::IntRect boxItemR = m_uiRect;
     boxItemR.top = m_uiRect.top + 8;
     boxItemR.height *= 0.381f;
-    int itemSpacing = boxItemR.height;
     PanelTitle ft;
     UILabel bt( boxItemR, sf::Color::White, ft, true, m_boxTitle );
     PanelLabel fd;
@@ -522,7 +520,6 @@ void UIConfirm::DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset )
     sf::IntRect boxItemR = m_uiRect;
     boxItemR.top = m_uiRect.top + 8;
     boxItemR.height *= 0.381f;
-    int itemSpacing = boxItemR.height;
     PanelTitle ft;
     UILabel bt( boxItemR, sf::Color::White, ft, true, m_boxTitle );
     PanelLabel fd;
@@ -806,7 +803,7 @@ void UIManager::ResetHUD()
     m_tutTurret.visible = false;
     m_tutCombat.visible = false;
     m_tutQuest.visible = false;
-    m_tutorialDisplay = false;
+    m_stateDisplay = false;
     m_tutStage = Welcome;
     m_uiInputTimer.restart();
     m_tutorialTimer.restart();

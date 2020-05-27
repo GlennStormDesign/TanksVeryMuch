@@ -57,7 +57,8 @@ private:
     unsigned int m_localJoy = 0;
 public:
     TankController() { }
-    TankController( const TankControllerType& type ) : m_type(type), m_input(Keyboard) {};
+    TankController( const TankControllerType& type, const LocalInputType& input = Keyboard )
+        : m_type(type), m_input(input) {};
     ~TankController() { }
 
     bool GetActiveState();
@@ -214,8 +215,6 @@ public:
 
     void TankInit();
     void TankReset();
-    bool& IsTankMoving();
-    bool& IsTurretMoving();
     bool& GetActiveState();
     void SetActiveState( const bool& active );
     unsigned int GetTankID();

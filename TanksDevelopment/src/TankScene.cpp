@@ -34,7 +34,7 @@ extern void SetSceneType( const SceneType& type )
 {
     currentScene->SetSceneType( type );
 }
-extern void AddTank( Tank& t )
+extern void AddTank( const Tank& t )
 {
     currentScene->AddTank( t );
 }
@@ -66,7 +66,7 @@ extern int GetTotalTankCount()
 {
     return currentScene->GetTotalTankCount();
 }
-extern void AddObject( SceneObject& o )
+extern void AddObject( const SceneObject& o )
 {
     currentScene->AddObject( o );
 }
@@ -84,7 +84,7 @@ extern const SceneObject& GetObject( const unsigned int& index )
 {
     return currentScene->GetObject( index );
 }
-extern void AddPlayer( PlayerStats& p )
+extern void AddPlayer( const PlayerStats& p )
 {
     currentScene->AddPlayer( p );
 }

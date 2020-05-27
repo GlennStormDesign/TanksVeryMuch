@@ -168,7 +168,8 @@ protected:
 public:
     UIBox() { UIInit(); }
     UIBox( const sf::IntRect& r, const sf::Color& c, const std::string& title, const std::string& message, const std::string& buttonLabel )
-        { m_uiRect = r; m_uiColor = c; m_boxTitle = title; m_boxMessage = message; m_boxButtonLabel = buttonLabel; UIInit(); }
+        : m_boxTitle(title), m_boxMessage(message), m_boxButtonLabel(buttonLabel)
+        { m_uiRect = r; m_uiColor = c; UIInit(); }
     void ElementInit() override;
 
     int GetCallBack();
@@ -203,8 +204,9 @@ private:
     UIButton m_cancelButton;
 public:
     UIConfirm() { UIInit(); }
-    UIConfirm( const sf::IntRect& r, const sf::Color& c, const std::string& title, const std::string& message, const std::string& buttonLabel, const std::string& altButtonLabel, const std::string& canceButtonLabel )
-        { m_uiRect = r; m_uiColor = c; m_boxTitle = title; m_boxMessage = message; m_boxButtonLabel = buttonLabel; m_altButtonLabel = altButtonLabel; m_cancelButtonLabel = canceButtonLabel; UIInit(); }
+    UIConfirm( const sf::IntRect& r, const sf::Color& c, const std::string& title, const std::string& message, const std::string& buttonLabel, const std::string& altButtonLabel, const std::string& cancelButtonLabel )
+        : m_altButtonLabel(altButtonLabel), m_cancelButtonLabel(cancelButtonLabel)
+        { m_uiRect = r; m_uiColor = c; m_boxTitle = title; m_boxMessage = message; m_boxButtonLabel = buttonLabel; UIInit(); }
     void ElementInit() override;
 
     void UIUpdate( const float& timeDelta ) override;
@@ -223,7 +225,8 @@ private:
 public:
     UIProgressBar() { UIInit(); }
     UIProgressBar( const sf::IntRect& r, const sf::Color& c, const sf::Color& bgColor, const bool& toLeft, const int& border )
-        { m_uiRect = r; m_uiColor = c; m_backgroundColor = bgColor; m_toLeft = toLeft; m_border = border; UIInit(); }
+        : m_backgroundColor(bgColor)
+        { m_uiRect = r; m_uiColor = c; m_toLeft = toLeft; m_border = border; UIInit(); }
     void ElementInit() override;
 
     float SetProgress( const float& progress );

@@ -207,7 +207,11 @@ public:
         m_killDebris = t.m_killDebris;
         m_killFlash = t.m_killFlash;
     }
-    ~Tank() { delete[] shots; } // new from tank class (public)
+    ~Tank()
+    {
+        ClearAllVFXVectors();
+        delete[] shots; // new from tank class (public)
+    }
 
     void TankInit();
     void TankReset();

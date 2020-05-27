@@ -103,7 +103,39 @@ public:
     ParticleEmitter( const float& x, const float& y, const float& r,
                         const sf::Texture& texture )
         : emitX(x), emitY(y), emitR(r), m_particleTexture(texture) { EmitInit(); }
-    ~ParticleEmitter() { /* TODO: cleanup each particle */ }
+    ~ParticleEmitter() { ClearParticleVector(); }
+    // REVIEW: This copy constructor (deep copy) done in an attempt to resolve Tank copy constructor issues
+    ParticleEmitter( const ParticleEmitter &e )
+    {
+        active = e.active;
+        playing = e.playing;
+        emitting = e.emitting;
+        emitX = e.emitX;
+        emitY = e.emitY;
+        emitR = e.emitR;
+        m_particles = e.m_particles;
+        m_maxParticles = e.m_maxParticles;
+        m_emitTime = e.m_emitTime;
+        m_emitTimer = e.m_emitTimer;
+        m_emitRate = e.m_emitRate;
+        m_emitNextTime = e.m_emitNextTime;
+        m_emitStarted = e.m_emitStarted;
+        m_recycleParticles = e.m_recycleParticles;
+        m_emitIndex = e.m_emitIndex;
+        m_particleTexture = e.m_particleTexture;
+        m_particleTexDivisions = e.m_particleTexDivisions;
+        m_particleLife = e.m_particleLife;
+        m_particleScale = e.m_particleScale;
+        m_particleLifeScale = e.m_particleLifeScale;
+        m_particleStartPosition = e.m_particleStartPosition;
+        m_particleSpeed = e.m_particleSpeed;
+        m_particleDrag = e.m_particleDrag;
+        m_particleStartRotation = e.m_particleStartRotation;
+        m_particleAngleSpeed = e.m_particleAngleSpeed;
+        m_particleAngleDrag = e.m_particleAngleDrag;
+        m_particleStartColor = e.m_particleStartColor;
+        m_particleLifeGradient = e.m_particleLifeGradient;
+    }
 
     virtual void VFXInit() { /* set parameters for individual vfx in subclass */ }
 
@@ -124,6 +156,7 @@ private:
 
 class VFXShotImpact : public ParticleEmitter {
 public:
+    VFXShotImpact() { EmitInit(); }
     VFXShotImpact( const float& x, const float& y, const float& r ) { EmitInit(); }
     void VFXInit() override
     {
@@ -161,6 +194,7 @@ public:
 
 class VFXShotSparks : public ParticleEmitter {
 public:
+    VFXShotSparks() { EmitInit(); }
     VFXShotSparks( const float& x, const float& y, const float& r ) { EmitInit(); }
     void VFXInit() override
     {

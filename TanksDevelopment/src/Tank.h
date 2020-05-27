@@ -82,8 +82,8 @@ private:
     unsigned int m_launchTank = 0;
     float m_posX, m_posY, m_rot;
     float m_speed, m_power, m_life;
-    VFXShotImpact m_impactVFX = VFXShotImpact( 0.f, 0.f, 0.f );
-    VFXShotSparks m_sparksVFX = VFXShotSparks( 0.f, 0.f, 0.f );
+    VFXShotImpact m_impactVFX = VFXShotImpact(0.f,0.f,0.f);
+    VFXShotSparks m_sparksVFX = VFXShotSparks(0.f,0.f,0.f);
 public:
     TankShot()
     {
@@ -169,9 +169,10 @@ public:
         m_exhaustOffset *= scale;
     }
     Tank( const Tank &t )
+        : controller(t.controller), m_color(t.m_color), m_base(t.m_base), m_turret(t.m_turret), m_shotVFX(t.m_shotVFX),
+            m_dustOffset(t.m_dustOffset), m_exhaustOffset(t.m_exhaustOffset)
     {
         tankID = t.tankID;
-        controller = t.controller;
         fwdMove = t.fwdMove;
         baseRot = t.baseRot;
         turretRot = t.turretRot;
@@ -195,15 +196,10 @@ public:
         m_animRate = t.m_animRate;
         m_shotTimer = t.m_shotTimer;
         m_shotFrame = t.m_shotFrame;
-        m_color = t.m_color;
-        m_base = t.m_base;
-        m_turret = t.m_turret;
-        m_shotVFX = t.m_shotVFX;
         m_armor = t.m_armor;
+        // REVIEW: why are the following copies problematic when done in the initializer list? (Particle Emitter subclasses)
         m_dust = t.m_dust;
-        m_dustOffset = t.m_dustOffset;
         m_exhaust = t.m_exhaust;
-        m_exhaustOffset = t.m_exhaustOffset;
         m_killStain = t.m_killStain;
         m_killRing = t.m_killRing;
         m_killSparks = t.m_killSparks;

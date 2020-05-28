@@ -34,7 +34,7 @@ extern void SetSceneType( const SceneType& type )
 {
     currentScene->SetSceneType( type );
 }
-extern void AddTank( const Tank& t )
+extern void AddTank( Tank& t )
 {
     currentScene->AddTank( t );
 }

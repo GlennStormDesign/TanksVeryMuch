@@ -145,9 +145,11 @@ int main()
         {
             // TEST: try isolated elements and monitor
             //LoadScene( new TutorialGameScene() );
+            /*
             Tank newTank( Drone, (rand() * 600.f), (rand() * 100.f), 0.f, 1.f );
             newTank.SetActiveState(true);
-            AddTank(newTank);
+            AddTank(newTank, sf::Color::White);
+            */
             debugInput.restart();
         }
 

@@ -114,7 +114,7 @@ extern bool GetSceneActive();
 extern void SetSceneActive( const bool& active );
 extern SceneType& GetSceneType();
 extern void SetSceneType( const SceneType& type );
-extern void AddTank( const Tank& t );
+extern void AddTank( Tank& t );
 extern void AddTank( Tank& t, sf::Color c ); // REVIEW: safe to pass by reference here, but then (copy) pass by value at end?
 extern void RemoveTank( Tank& t );
 extern Tank& GetTank( const unsigned int& index );

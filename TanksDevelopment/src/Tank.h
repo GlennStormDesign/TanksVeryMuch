@@ -207,6 +207,79 @@ public:
         m_killDebris = t.m_killDebris;
         m_killFlash = t.m_killFlash;
     }
+    // move constructor? (C++11 only?)
+    /*
+    Tank( Tank&& t )
+    {
+        tankID = t.tankID;
+        fwdMove = t.fwdMove;
+        baseRot = t.baseRot;
+        turretRot = t.turretRot;
+        shots = t.shots;
+        m_active = t.m_active;
+        m_posX = t.m_posX;
+        m_posY = t.m_posY;
+        m_baseR = t.m_baseR;
+        m_turretR = t.m_turretR;
+        m_tankMoving = t.m_tankMoving;
+        m_turretMoving = t.m_turretMoving;
+        m_idleLoop = t.m_idleLoop;
+        m_turretLoop = t.m_turretLoop;
+        m_idleVol = t.m_idleVol;
+        m_idlePitch = t.m_idlePitch;
+        m_localScale = t.m_localScale;
+        m_moveSpeed = t.m_moveSpeed;
+        m_rotSpeed = t.m_rotSpeed;
+        m_animRate = t.m_animRate;
+        m_shotTimer = t.m_shotTimer;
+        m_shotFrame = t.m_shotFrame;
+        m_armor = t.m_armor;
+        // REVIEW: why are the following copies problematic when done in the initializer list? (Particle Emitter subclasses)
+        // (perhaps because they themselves are copied at that point, and need copy constructor?)
+        m_dust = t.m_dust;
+        m_exhaust = t.m_exhaust;
+        m_killStain = t.m_killStain;
+        m_killRing = t.m_killRing;
+        m_killSparks = t.m_killSparks;
+        m_killFire = t.m_killFire;
+        m_killDebris = t.m_killDebris;
+        m_killFlash = t.m_killFlash;
+        // hollow out t
+        t.tankID = 0;
+        t.fwdMove = 0.f;
+        t.baseRot = 0.f;
+        t.turretRot = 0.f;
+        t.shots = nullptr;
+        t.m_active = false;
+        t.m_posX = 0.f;
+        t.m_posY = 0.f;
+        t.m_baseR = 0.f;
+        t.m_turretR = 0.f;
+        t.m_tankMoving = false;
+        t.m_turretMoving = false;
+        t.m_idleLoop = 0;
+        t.m_turretLoop = 0;
+        t.m_idleVol = 0.f;
+        t.m_idlePitch = 0.f;
+        t.m_localScale = 0.f;
+        t.m_moveSpeed = 0.f;
+        t.m_rotSpeed = 0.f;
+        t.m_animRate = 0.f;
+        t.m_shotTimer = 0.f;
+        t.m_shotFrame = 0;
+        t.m_armor = 0.f;
+        // REVIEW: how to 'hollow' these?
+        t.m_dust = t.m_dust;
+        t.m_exhaust = t.m_exhaust;
+        t.m_killStain = t.m_killStain;
+        t.m_killRing = t.m_killRing;
+        t.m_killSparks = t.m_killSparks;
+        t.m_killFire = t.m_killFire;
+        t.m_killDebris = t.m_killDebris;
+        t.m_killFlash = t.m_killFlash;
+    }
+    */
+
     ~Tank()
     {
         ClearAllVFXVectors();

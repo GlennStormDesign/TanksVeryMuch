@@ -13,7 +13,7 @@ static float globalTime = 1.f;
 static float globalScale = 2.f;
 
 extern void DebugInit( const sf::Font& font );
-extern std::string GetDebugText();
+extern const std::string& GetDebugText();
 extern void SetDebugText( const std::string& text );
 extern void AddDebugText( const std::string& text );
 extern std::string FormatDebugHeader();
@@ -33,7 +33,7 @@ public:
     DebugLogger() { };
     ~DebugLogger() { };
     void DebugInit( const sf::Font& font );
-    std::string GetDebugText();
+    const std::string& GetDebugText();
     void SetDebugText( const std::string& text );
     void AddDebugText( const std::string& text );
     std::string FormatDebugHeader();

@@ -240,7 +240,7 @@ void UILabel::ElementInit()
     //
 }
 
-std::string UILabel::GetString()
+const std::string& UILabel::GetString()
 {
     return m_string;
 }

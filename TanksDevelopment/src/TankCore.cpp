@@ -12,7 +12,7 @@ extern void DebugInit( const sf::Font& font )
 {
     debugMgr.DebugInit(font);
 }
-extern std::string GetDebugText()
+extern const std::string& GetDebugText()
 {
     return debugMgr.GetDebugText();
 }
@@ -57,7 +57,7 @@ void DebugLogger::DebugInit( const sf::Font& font )
     m_debugLine.setCharacterSize(12);
     m_debugLine.setFillColor(sf::Color::Yellow);
 }
-std::string DebugLogger::GetDebugText()
+const std::string& DebugLogger::GetDebugText()
 {
     return debugMgr.m_text;
 }

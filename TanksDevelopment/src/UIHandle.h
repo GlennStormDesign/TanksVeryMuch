@@ -108,7 +108,7 @@ public:
         { SetUIRect(r); SetUIColor(c); m_heading = f; m_dropShadow = dropShadow; m_string = s; UIInit(); }
     void ElementInit() override;
 
-    std::string GetString();
+    const std::string& GetString();
     void SetString( const std::string& s );
 
     void UIUpdate( const float& timeDelta ) override;

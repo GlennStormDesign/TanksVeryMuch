@@ -3,8 +3,8 @@
 // C++, SFML, OpenGL, GLSL
 
 Tank Prototype
-(latest addition: spatial sound)
-5.28.2020
+(latest addition: c++89->11)
+5.31.2020
 
 Controls:
 Move with arrow keys

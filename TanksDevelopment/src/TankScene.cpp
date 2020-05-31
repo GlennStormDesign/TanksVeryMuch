@@ -155,7 +155,7 @@ void TankScene::UnloadScene()
     m_tankPool.clear();
     std::vector<Tank> emptTP;
     m_tankPool.swap(emptTP); // deallocate
-    for ( int o=0; o<m_objectPool.size(); o++ )
+    for ( unsigned int o=0; o<m_objectPool.size(); o++ )
     {
         m_objectPool[o]->ClearObjectVectors(); // includes deleting sf::Image and particle emitter elements
         delete m_objectPool[o]; // new from any SceneObject subclass clone() called during AddObject()
@@ -462,7 +462,7 @@ void TankScene::UpdateScene( const float& timeDelta )
         {
             if ( m_tankPool[t].shots[s].active )
             {
-                for ( int o=0; o<m_objectPool.size(); o++ )
+                for ( unsigned int o=0; o<m_objectPool.size(); o++ )
                 {
                     if ( m_objectPool[o]->type == Trigger || m_objectPool[o]->type == Obstacle || m_objectPool[o]->type == Destructable )
                     {
@@ -610,6 +610,8 @@ void TutorialGameScene::UpdateLevel( const float& timeDelta )
             SetTutorialStage( UIManager::TutorialComplete );
             SetTutorialPauseTime(1.f);
         }
+        break;
+    case UIManager::TutorialComplete:
         break;
     }
 

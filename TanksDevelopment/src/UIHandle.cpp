@@ -569,7 +569,7 @@ void UIProgressBar::ElementInit()
     //
 }
 
-float UIProgressBar::SetProgress( const float& progress )
+void UIProgressBar::SetProgress( const float& progress )
 {
     m_progress = progress;
     // clamp between 0 and 1

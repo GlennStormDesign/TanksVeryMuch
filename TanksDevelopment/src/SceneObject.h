@@ -95,7 +95,7 @@ protected:
 public:
     SceneObject() { ObjectInit(); }
     virtual ~SceneObject() { } // virtual destructor for proper deletion of subclasses via pointer
-    virtual SceneObject* clone() const { } // defined in subclasses
+    virtual SceneObject* clone() const { return new SceneObject( *this ); } // defined in subclasses
 
     virtual void SceneObjectInit() { } // define in subclasses
 

@@ -281,7 +281,7 @@ void ParticleEmitter::DrawParticles( sf::RenderWindow& window )
 
 void ParticleEmitter::KillAllParticles()
 {
-    for ( int p=0; p<m_particles.size(); p++ )
+    for ( unsigned int p=0; p<m_particles.size(); p++ )
         m_particles[p].EntityDeath();
 }
 void ParticleEmitter::ClearParticleVector()

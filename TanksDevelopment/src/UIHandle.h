@@ -229,7 +229,7 @@ public:
         { m_uiRect = r; m_uiColor = c; m_toLeft = toLeft; m_border = border; UIInit(); }
     void ElementInit() override;
 
-    float SetProgress( const float& progress );
+    void SetProgress( const float& progress );
 
     void UIUpdate( const float& timeDelta ) override;
     void DrawUI( sf::RenderWindow& window, const sf::Vector2f& uiOffset ) override;

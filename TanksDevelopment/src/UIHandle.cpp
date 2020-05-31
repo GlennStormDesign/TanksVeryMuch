@@ -720,6 +720,7 @@ void UIManager::HUDInit()
     std::string tanksRemainString = "Enemy Tanks ";
     HUDLabelSemi trf;
     m_enemyTanksLabel = UILabel( sf::IntRect(8,((int)(m_windowSize.y - 64 - 8)),256,64), sf::Color::White, trf, true, tanksRemainString );
+    tanksRemainString = std::string(); // deallocate
     //  . quit button (launches quit confirm popup)
     ToolipHeading qbf;
     UILabel ql( sf::IntRect(((int)(m_windowSize.x - 64 -8)),((int)(m_windowSize.y - 32 - 8)),64,32), sf::Color::Black, qbf, true, "Exit" );
@@ -978,6 +979,7 @@ void UIManager::DrawHUD( sf::RenderWindow& window, const sf::Vector2f& uiOffset 
     HUDLabelSemi trf;
     m_enemyTanksLabel = UILabel( sf::IntRect(8,(m_windowSize.y - 64 - 8),256,64), sf::Color::White, trf, true, tanksRemainString );
     m_enemyTanksLabel.DrawUI(window,uiOffset);
+    tanksRemainString = std::string(); // deallocate
     //
     m_quitButton.DrawUI(window,uiOffset);
     if ( m_quitButton.GetState() == Active )

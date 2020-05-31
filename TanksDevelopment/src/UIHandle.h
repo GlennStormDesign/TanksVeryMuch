@@ -101,11 +101,13 @@ public:
 private:
     FontHeading m_heading;
     bool m_dropShadow = false;
-    std::string m_string = "";
+    std::string m_string;
 public:
     UILabel() { UIInit(); }
     UILabel( const sf::IntRect& r, const sf::Color& c, const FontHeading& f, const bool& dropShadow, const std::string& s )
         { SetUIRect(r); SetUIColor(c); m_heading = f; m_dropShadow = dropShadow; m_string = s; UIInit(); }
+    ~UILabel() { m_string = std::string(); }  // REVIEW: ensure this frees memory
+
     void ElementInit() override;
 
     const std::string& GetString();
@@ -170,6 +172,8 @@ public:
     UIBox( const sf::IntRect& r, const sf::Color& c, const std::string& title, const std::string& message, const std::string& buttonLabel )
         : m_boxTitle(title), m_boxMessage(message), m_boxButtonLabel(buttonLabel)
         { m_uiRect = r; m_uiColor = c; UIInit(); }
+    ~UIBox() { m_boxTitle = std::string(); m_boxMessage = std::string(); m_boxButtonLabel = std::string(); }
+
     void ElementInit() override;
 
     int GetCallBack();
@@ -207,6 +211,8 @@ public:
     UIConfirm( const sf::IntRect& r, const sf::Color& c, const std::string& title, const std::string& message, const std::string& buttonLabel, const std::string& altButtonLabel, const std::string& cancelButtonLabel )
         : m_altButtonLabel(altButtonLabel), m_cancelButtonLabel(cancelButtonLabel)
         { m_uiRect = r; m_uiColor = c; m_boxTitle = title; m_boxMessage = message; m_boxButtonLabel = buttonLabel; UIInit(); }
+    ~UIConfirm() { m_altButtonLabel = std::string(); m_cancelButtonLabel = std::string(); }
+
     void ElementInit() override;
 
     void UIUpdate( const float& timeDelta ) override;

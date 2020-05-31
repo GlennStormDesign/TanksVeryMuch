@@ -6,7 +6,7 @@
 
 // Core Declarations
 
-static const std::string TANKSVERYMUCH_VERSION = "v.0.26.20.05.30";
+static const std::string TANKSVERYMUCH_VERSION = "v.0.26.20.05.31";
 static const float DEG2RAD = 0.0174532f;
 
 static float globalTime = 1.f;
@@ -31,7 +31,7 @@ private:
     sf::Vector2f m_debugLineOffset = sf::Vector2f( -500.f, -288.f );
 public:
     DebugLogger() { };
-    ~DebugLogger() { };
+    ~DebugLogger() { m_text = std::string(); };
     void DebugInit( const sf::Font& font );
     const std::string& GetDebugText();
     void SetDebugText( const std::string& text );
